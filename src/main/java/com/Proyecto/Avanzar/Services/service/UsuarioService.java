@@ -1,4 +1,6 @@
 package com.Proyecto.Avanzar.Services.service;
 
-public interface UsuarioService {
+import com.Proyecto.Avanzar.Models.Usuario;
+
+public interface UsuarioService extends GenericService<Usuario,Long> {
 }
