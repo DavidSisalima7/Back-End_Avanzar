@@ -10,22 +10,32 @@ import java.util.Set;
 @Entity
 @Setter
 @Getter
-@Table(name = "Roles",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "nombre")
-        })
+@Table(name = "roles")
 public class Rol {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idRol;
-    private String nombre;
 
-    public Rol(Long idRol, String nombre, Set<Usuario> usuarioRoles) {
-        this.idRol = idRol;
-        this.nombre = nombre;
-        this.usuarioRoles = usuarioRoles;
+    @Id
+    private Long rolId;
+    private String rolNombre;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "rol")
+    private Set<UsuarioRol> usuarioRoles = new HashSet<>();
+
+    public Rol(){
+
     }
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "rol")
-    private Set<Usuario> usuarioRoles =new HashSet<>();
+    public Rol(Long rolId, String rolNombre) {
+        this.rolId = rolId;
+        this.rolNombre = rolNombre;
+    }
+
+
+
+    public Set<UsuarioRol> getUsuarioRoles() {
+        return usuarioRoles;
+    }
+
+    public void setUsuarioRoles(Set<UsuarioRol> usuarioRoles) {
+        this.usuarioRoles = usuarioRoles;
+    }
 }
