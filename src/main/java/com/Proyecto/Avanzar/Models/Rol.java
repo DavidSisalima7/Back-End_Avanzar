@@ -1,15 +1,12 @@
 package com.Proyecto.Avanzar.Models;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Setter
-@Getter
 @Table(name = "roles")
 public class Rol {
 
@@ -17,7 +14,8 @@ public class Rol {
     private Long rolId;
     private String rolNombre;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "rol")
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "rol")
+    @JsonIgnore
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
     public Rol(){
@@ -29,7 +27,21 @@ public class Rol {
         this.rolNombre = rolNombre;
     }
 
+    public Long getRolId() {
+        return rolId;
+    }
 
+    public void setRolId(Long rolId) {
+        this.rolId = rolId;
+    }
+
+    public String getRolNombre() {
+        return rolNombre;
+    }
+
+    public void setRolNombre(String rolNombre) {
+        this.rolNombre = rolNombre;
+    }
 
     public Set<UsuarioRol> getUsuarioRoles() {
         return usuarioRoles;

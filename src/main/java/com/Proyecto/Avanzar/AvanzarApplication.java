@@ -2,11 +2,16 @@ package com.Proyecto.Avanzar;
 
 import com.Proyecto.Avanzar.Services.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+import javax.annotation.Resource;
+
+@EnableScheduling
 @SpringBootApplication
-public class AvanzarApplication {
+public class AvanzarApplication implements CommandLineRunner {
 	@Autowired
 	private UsuarioService usuarioService;
 
@@ -14,4 +19,7 @@ public class AvanzarApplication {
 		SpringApplication.run(AvanzarApplication.class, args);
 	}
 
+	@Override
+	public void run(String... args) throws Exception {
+	}
 }

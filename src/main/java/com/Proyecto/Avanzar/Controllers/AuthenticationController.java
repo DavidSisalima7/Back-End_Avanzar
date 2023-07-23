@@ -1,6 +1,5 @@
 package com.Proyecto.Avanzar.Controllers;
 
-
 import com.Proyecto.Avanzar.Models.Usuario;
 import com.Proyecto.Avanzar.Security.JwtRequest;
 import com.Proyecto.Avanzar.Security.JwtResponse;

@@ -2,6 +2,7 @@ package com.Proyecto.Avanzar.Services.implement;
 
 import com.Proyecto.Avanzar.Services.service.GenericService;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.ResponseEntity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,8 +35,9 @@ public abstract class GenericServiceImpl <T, ID extends Serializable> implements
     }
 
     @Override
-    public void delete(ID id) {
+    public ResponseEntity<?> delete(ID id) {
         getDao().deleteById(id);
+        return null;
     }
 
     @Override

@@ -1,13 +1,8 @@
 package com.Proyecto.Avanzar.Models;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity
-@Setter
-@Getter
 public class UsuarioRol {
 
     @Id
@@ -17,8 +12,16 @@ public class UsuarioRol {
     @ManyToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Rol rol;
+
+    public Long getUsuarioRolId() {
+        return usuarioRolId;
+    }
+
+    public void setUsuarioRolId(Long usuarioRolId) {
+        this.usuarioRolId = usuarioRolId;
+    }
 
     public Usuario getUsuario() {
         return usuario;

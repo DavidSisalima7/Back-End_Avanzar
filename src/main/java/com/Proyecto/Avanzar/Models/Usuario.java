@@ -2,24 +2,23 @@ package com.Proyecto.Avanzar.Models;
 
 import com.Proyecto.Avanzar.Security.Authority;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Setter
 @Getter
-@Table(name = "usuarios",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "username")
-        })
+@AllArgsConstructor
+@Table(name = "usuarios")
 public class Usuario implements UserDetails {
 
     @Id
@@ -28,43 +27,34 @@ public class Usuario implements UserDetails {
 
     private String username;
     private String password;
-    private String cedula;
-    private String primerNombre;
-    private String segundoNombre;
-    private String primerApellido;
-    private String segundoApellido;
-    private String direccion;
-    private String celular;
-    private String genero;
-    private Date fechaNacimiento;
-    private String correo;
     private boolean enabled = true;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Persona persona;
 
+    // Columna para el eliminado logico no borrar
+    @Column(name = "visible")
+    private boolean visible;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
     @JsonIgnore
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
-    public Usuario(){
-
+    public Usuario() {
     }
 
-    public Usuario(Long id, String username, String password, String cedula, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, String direccion, String celular, String genero, Date fechaNacimiento, String correo, boolean enabled) {
+    public Usuario(Long id) {
+        super();
+        this.id = id;
+    }
+
+    public Usuario(Long id, String username, String password, boolean enabled) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.cedula = cedula;
-        this.primerNombre = primerNombre;
-        this.segundoNombre = segundoNombre;
-        this.primerApellido = primerApellido;
-        this.segundoApellido = segundoApellido;
-        this.direccion = direccion;
-        this.celular = celular;
-        this.genero = genero;
-        this.fechaNacimiento = fechaNacimiento;
-        this.correo = correo;
         this.enabled = enabled;
     }
+
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -89,6 +79,7 @@ public class Usuario implements UserDetails {
         });
         return autoridades;
     }
+
     public Set<UsuarioRol> getUsuarioRoles() {
         return usuarioRoles;
     }
@@ -96,4 +87,6 @@ public class Usuario implements UserDetails {
     public void setUsuarioRoles(Set<UsuarioRol> usuarioRoles) {
         this.usuarioRoles = usuarioRoles;
     }
+
+
 }
