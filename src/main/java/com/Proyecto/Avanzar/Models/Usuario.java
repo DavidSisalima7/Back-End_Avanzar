@@ -31,10 +31,8 @@ public class Usuario implements UserDetails {
     private boolean enabled = true;
     @ManyToOne(fetch = FetchType.EAGER)
     private Persona persona;
-
     // Columna para el eliminado logico no borrar
-    @Column(name = "visible")
-    private boolean visible;
+    private boolean estado;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
     @JsonIgnore
