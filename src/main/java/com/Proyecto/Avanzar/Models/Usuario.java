@@ -18,6 +18,7 @@ import java.util.Set;
 @Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "usuarios")
 public class Usuario implements UserDetails {
 
@@ -38,22 +39,6 @@ public class Usuario implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
     @JsonIgnore
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
-
-    public Usuario() {
-    }
-
-    public Usuario(Long id) {
-        super();
-        this.id = id;
-    }
-
-    public Usuario(Long id, String username, String password, boolean enabled) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-    }
-
 
     @Override
     public boolean isAccountNonExpired() {

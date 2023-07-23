@@ -1,7 +1,9 @@
 package com.Proyecto.Avanzar.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,7 +14,8 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "persona",uniqueConstraints = {@UniqueConstraint(columnNames = "cedula")})
 
 public class Persona implements Serializable {

@@ -1,6 +1,9 @@
 package com.Proyecto.Avanzar.Controllers;
 
+import com.Proyecto.Avanzar.Models.Persona;
+import com.Proyecto.Avanzar.Models.Rol;
 import com.Proyecto.Avanzar.Models.UsuarioRol;
+import com.Proyecto.Avanzar.Services.service.RolService;
 import com.Proyecto.Avanzar.Services.service.UsuarioRolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,14 +19,23 @@ import java.util.List;
 public class Usuario_Rol_Controller {
     @Autowired
     private UsuarioRolService usuarioService;
+    private RolService roleservice;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    @GetMapping("/listarv")
+    @GetMapping("/listarol")
+    public ResponseEntity<List<Rol>> obtenerRoles() {
+        try {
+            return new ResponseEntity<>(roleservice.findByAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/lista_us_rol")
     public ResponseEntity<List<UsuarioRol>> obtenerLista() {
         try {
-            System.out.println(usuarioService.listarv());
-
-            return new ResponseEntity<>(usuarioService.listarv(), HttpStatus.OK);
+            System.out.println(usuarioService.findByAll());
+            return new ResponseEntity<>(usuarioService.findByAll(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

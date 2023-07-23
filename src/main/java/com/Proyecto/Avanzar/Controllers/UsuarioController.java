@@ -48,7 +48,7 @@ public class UsuarioController {
         rolService.save(usuario3);
         rolService.save(usuario4);
     }
-    @PostMapping("/crear/{rolId}")
+    @PostMapping("/registrar/{rolId}")
     public ResponseEntity<Usuario> crear(@RequestBody Usuario r, @PathVariable Long rolId) {
         try {
             if (usuarioService.obtenerUsuario(r.getUsername()) == null) {
@@ -117,7 +117,7 @@ public class UsuarioController {
         }
     }
 
-    @PutMapping("/eliminarlogic/{id}")
+    @PutMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
         Usuario a = usuarioService.findById(id);
         if (a == null) {
