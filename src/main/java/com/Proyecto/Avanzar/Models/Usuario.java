@@ -32,7 +32,7 @@ public class Usuario implements UserDetails {
     @ManyToOne(fetch = FetchType.EAGER)
     private Persona persona;
     // Columna para el eliminado logico no borrar
-    private boolean estado;
+    private boolean visible;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
     @JsonIgnore
