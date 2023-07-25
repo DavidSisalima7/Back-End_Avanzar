@@ -46,18 +46,18 @@ public class PublicacionesController {
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Publicaciones> actualizar(@PathVariable Long id,@RequestBody Publicaciones p) {
-        Publicaciones productos = publicacionesService.findById(id);
-        if (productos == null) {
+        Publicaciones publicaciones = publicacionesService.findById(id);
+        if (publicaciones == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                productos.setTitulo(p.getTitulo());
-                productos.setDescripcion(p.getDescripcion());
-                productos.setFecha(p.getFecha());
-                productos.setHora(p.getHora());
-                productos.setEstado(p.isEstado());
+                publicaciones.setTitulo(p.getTitulo());
+                publicaciones.setDescripcion(p.getDescripcion());
+                publicaciones.setFecha(p.getFecha());
+                publicaciones.setHora(p.getHora());
+                publicaciones.setEstado(p.isEstado());
 
-                return new ResponseEntity<>(publicacionesService.save(productos), HttpStatus.CREATED);
+                return new ResponseEntity<>(publicacionesService.save(publicaciones), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
