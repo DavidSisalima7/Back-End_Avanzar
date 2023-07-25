@@ -49,7 +49,7 @@ public class CategoriaProductoController {
             try {
                 categoriaProducto.setNombreCategoria(p.getNombreCategoria());
                 categoriaProducto.setDescripcion(p.getDescripcion());
-                categoriaProducto.setEstado(p.getEstado());
+                categoriaProducto.setEstado(p.isEstado());
                 return new ResponseEntity<>(categoriaProductoService.save(categoriaProducto), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

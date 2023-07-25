@@ -20,4 +20,6 @@ public class CategoriaProducto implements Serializable {
     private boolean estado;
 
     //Relacion
+
+
 }

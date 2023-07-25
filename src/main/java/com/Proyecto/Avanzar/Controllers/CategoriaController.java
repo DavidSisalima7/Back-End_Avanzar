@@ -19,9 +19,6 @@ import java.util.List;
 public class CategoriaController {
     @Autowired
     CategoriaService categoriaService;
-<<<<<<< Updated upstream
-    //
-=======
 
     @PostMapping("/registrar")
     public ResponseEntity<Categoria> crear(@RequestBody Categoria r) {
@@ -53,7 +50,7 @@ public class CategoriaController {
             try {
                 categoria.setNombreCategoria(p.getNombreCategoria());
                 categoria.setDescripcion(p.getDescripcion());
-                categoria.setEstado(p.getEstado());
+                categoria.setEstado(p.isEstado());
 
                 return new ResponseEntity<>(categoriaService.save(categoria), HttpStatus.CREATED);
             } catch (Exception e) {
@@ -63,5 +60,5 @@ public class CategoriaController {
         }
     }
 
->>>>>>> Stashed changes
+
 }
