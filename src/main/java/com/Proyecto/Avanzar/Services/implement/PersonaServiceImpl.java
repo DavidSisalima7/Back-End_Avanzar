@@ -1,16 +1,16 @@
 package com.Proyecto.Avanzar.Services.implement;
 
 import com.Proyecto.Avanzar.Models.Persona;
-import com.Proyecto.Avanzar.Repository.Persona_repository;
-import com.Proyecto.Avanzar.Services.service.Persona_Service;
+import com.Proyecto.Avanzar.Repository.PersonaRepository;
+import com.Proyecto.Avanzar.Services.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Persona_ServiceImpl extends GenericServiceImpl<Persona, Long> implements Persona_Service {
+public class PersonaServiceImpl extends GenericServiceImpl<Persona, Long> implements PersonaService {
     @Autowired
-    private Persona_repository repository;
+    private PersonaRepository repository;
     @Override
     public CrudRepository<Persona, Long > getDao() {
 

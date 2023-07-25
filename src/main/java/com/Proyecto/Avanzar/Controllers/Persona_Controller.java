@@ -1,7 +1,7 @@
 package com.Proyecto.Avanzar.Controllers;
 
 import com.Proyecto.Avanzar.Models.Persona;
-import com.Proyecto.Avanzar.Services.service.Persona_Service;
+import com.Proyecto.Avanzar.Services.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/persona")
 public class Persona_Controller {
     @Autowired
-    Persona_Service Service;
+    PersonaService Service;
 
     @PostMapping("/registrar")
     public ResponseEntity<Persona> crear(@RequestBody Persona r) {
