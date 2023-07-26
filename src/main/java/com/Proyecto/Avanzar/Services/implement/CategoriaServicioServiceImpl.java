@@ -5,7 +5,9 @@ import com.Proyecto.Avanzar.Repository.CategoriaServicioRepository;
 import com.Proyecto.Avanzar.Services.service.CategoriaServicioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CategoriaServicioServiceImpl extends GenericServiceImpl<CategoriaServicio, Long> implements CategoriaServicioService {
     @Autowired
     private CategoriaServicioRepository categoriaServicioDao;
