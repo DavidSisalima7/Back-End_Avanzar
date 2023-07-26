@@ -19,7 +19,13 @@ public class Comentarios implements Serializable {
     private Long idComentario;
     private String texto;
     private Date fecha;
+
     //Relaciones
     //Relacion Usuario
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Usuario usuario;
+
     //Relacion Publicacion
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Publicaciones publicaciones;
 }

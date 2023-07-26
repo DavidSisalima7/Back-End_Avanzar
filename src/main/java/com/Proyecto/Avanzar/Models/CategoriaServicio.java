@@ -21,6 +21,7 @@ public class CategoriaServicio implements Serializable {
     private String descripcion;
     private boolean estado;
 
-    //Relacion
-
+    //Relacion con Servicios
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Servicios servicios;
 }

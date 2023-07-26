@@ -19,7 +19,7 @@ public class CategoriaProducto implements Serializable {
     private String descripcion;
     private boolean estado;
 
-    //Relacion
-
-
+    //Relacion con Productos
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Productos productos;
 }

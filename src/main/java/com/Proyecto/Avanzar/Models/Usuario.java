@@ -29,14 +29,28 @@ public class Usuario implements UserDetails {
     private String username;
     private String password;
     private boolean enabled = true;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Persona persona;
+
     // Columna para el eliminado logico no borrar
     private boolean visible;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuarios")
     @JsonIgnore
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuarios")
+    @JsonIgnore
+    private Set<Likes> listaLikes = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuarios")
+    @JsonIgnore
+    private Set<Vendedor> listavendedor = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuarios")
+    @JsonIgnore
+    private Set<Comentarios> listacomentarios = new HashSet<>();
 
     @Override
     public boolean isAccountNonExpired() {

@@ -17,8 +17,16 @@ public class Likes implements Serializable {
     private Long idLike;
     private String fecha;
     //Relaciones
-
     //Relacion Publicacion
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Publicaciones publicaciones;
+
     //Relacion Usuario
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Usuario usuario;
+
     //Relacion Tipo Like
+    @ManyToOne(fetch = FetchType.EAGER)
+    private TipoLike tipoLikes;
+
 }
