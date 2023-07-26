@@ -52,8 +52,10 @@ public class VendedorController {
         } else {
             try {
                 subscripcion.setNombreEmprendimiento(p.getNombreEmprendimiento());
-               
-
+                subscripcion.setListapublicaciones(p.getListapublicaciones());
+                subscripcion.setUsuario(p.getUsuario());
+                subscripcion.setSubscripcion(p.getSubscripcion());
+                
                 return new ResponseEntity<>(vendedorService.save(subscripcion), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

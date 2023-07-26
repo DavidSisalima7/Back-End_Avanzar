@@ -54,7 +54,7 @@ public class TipoLikeController {
             try {
                 tipoLike.setMeGusta(p.getMeGusta());
                 tipoLike.setNoMeGusta(p.getNoMeGusta());
-               
+                tipoLike.setListalikes(p.getListalikes());
                
 
                 return new ResponseEntity<>(tipoLikeService.save(tipoLike), HttpStatus.CREATED);

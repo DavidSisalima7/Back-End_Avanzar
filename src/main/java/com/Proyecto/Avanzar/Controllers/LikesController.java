@@ -45,7 +45,9 @@ public class LikesController {
         } else {
             try {
                 likes.setFecha(p.getFecha());
-
+                likes.setPublicaciones(p.getPublicaciones());
+                likes.setTipoLikes(p.getTipoLikes());
+                likes.setUsuario(p.getUsuario());
 
                 return new ResponseEntity<>(likesService.save(likes), HttpStatus.CREATED);
             } catch (Exception e) {

@@ -55,7 +55,8 @@ public class ServiciosController {
                 productos.setDescripcionServicio(p.getDescripcionServicio());
                 productos.setPrecioServicio(p.getPrecioServicio());
                 productos.setEstado(p.isEstado());
-
+                productos.setListacategoriaServ(p.getListacategoriaServ());
+                productos.setListapublicaciones(p.getListapublicaciones());
                 return new ResponseEntity<>(serviciosService.save(productos), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

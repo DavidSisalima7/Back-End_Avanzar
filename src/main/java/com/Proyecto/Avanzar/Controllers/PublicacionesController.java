@@ -56,7 +56,13 @@ public class PublicacionesController {
                 publicaciones.setFecha(p.getFecha());
                 publicaciones.setHora(p.getHora());
                 publicaciones.setEstado(p.isEstado());
-
+                publicaciones.setListalikes(p.getListalikes());
+                publicaciones.setListacomentarios(p.getListacomentarios());
+                publicaciones.setVendedor(p.getVendedor());
+                publicaciones.setCategoria(p.getCategoria());
+                publicaciones.setProductos(p.getProductos());
+                publicaciones.setServicios(p.getServicios());
+                
                 return new ResponseEntity<>(publicacionesService.save(publicaciones), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

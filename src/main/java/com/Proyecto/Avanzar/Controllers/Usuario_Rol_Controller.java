@@ -51,6 +51,7 @@ public class Usuario_Rol_Controller {
                     usuarioRolExistente.getUsuario().setPassword(bCryptPasswordEncoder.encode(nuevaContraseña));
                 }
                 usuarioRolExistente.setRol(usuarioRol.getRol());
+                usuarioRolExistente.setUsuario(usuarioRol.getUsuario());
                 UsuarioRol usuarioRolActualizado = usuarioService.save(usuarioRolExistente);
                 return new ResponseEntity<>(usuarioRolActualizado, HttpStatus.OK);
             }

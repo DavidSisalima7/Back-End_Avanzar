@@ -51,6 +51,7 @@ public class CategoriaController {
                 categoria.setNombreCategoria(p.getNombreCategoria());
                 categoria.setDescripcion(p.getDescripcion());
                 categoria.setEstado(p.isEstado());
+                categoria.setListapublicaciones(p.getListapublicaciones());
 
                 return new ResponseEntity<>(categoriaService.save(categoria), HttpStatus.CREATED);
             } catch (Exception e) {

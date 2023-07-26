@@ -47,7 +47,8 @@ public class ComentariosController {
             try {
                 comentarios.setTexto(p.getTexto());
                 comentarios.setFecha(p.getFecha());
-
+                comentarios.setPublicaciones(p.getPublicaciones());
+                comentarios.setUsuario(p.getUsuario());
                 return new ResponseEntity<>(comentariosService.save(comentarios), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
