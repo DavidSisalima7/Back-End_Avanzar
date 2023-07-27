@@ -18,6 +18,7 @@ import java.security.Principal;
 
 @RestController
 @CrossOrigin("*")
+@RequestMapping("/api/login")
 public class AuthenticationController {
 
     @Autowired
@@ -29,7 +30,7 @@ public class AuthenticationController {
     @Autowired
     private JwtUtils jwtUtils;
 
-    @PostMapping("/generate-token")
+    @PostMapping("/generartoken")
     public ResponseEntity<?> generarToken(@RequestBody JwtRequest jwtRequest) throws Exception {
         try{
             autenticar(jwtRequest.getUsername(),jwtRequest.getPassword());
