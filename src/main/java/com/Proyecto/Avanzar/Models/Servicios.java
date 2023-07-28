@@ -26,9 +26,8 @@ public class Servicios implements Serializable {
 
     //Relaciones
     //Relacion Categoria Servicio
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "servicios")
-    @JsonIgnore
-    private Set<CategoriaServicio> listacategoriaServ = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    private CategoriaServicio categoriaServicio;
 
     //Relacion con publicaciones
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "servicios")

@@ -24,11 +24,9 @@ public class Productos implements Serializable {
     private int cantidadDisponible;
     private boolean estado;
 
-    //Relaciones
-    //Relacion CategoriaProducto
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "productos")
-    private Set<CategoriaProducto> listaCategoriaprod = new HashSet<>();
+    //Relacion con CategoriaProductos
+    @ManyToOne(fetch = FetchType.EAGER)
+    private CategoriaProducto categoriaProducto;
 
     //Relacion con publicaciones
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "productos")

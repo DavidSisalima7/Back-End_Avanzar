@@ -1,10 +1,14 @@
 package com.Proyecto.Avanzar.Models;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -19,7 +23,11 @@ public class CategoriaProducto implements Serializable {
     private String descripcion;
     private boolean estado;
 
-    //Relacion con Productos
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Productos productos;
+    //Relaciones
+    //Relacion CategoriaProducto
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "categoriaProducto")
+    private Set<Productos> listaProductos = new HashSet<>();
+
+
 }
