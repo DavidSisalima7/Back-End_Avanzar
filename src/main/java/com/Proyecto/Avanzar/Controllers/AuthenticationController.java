@@ -54,7 +54,7 @@ public class AuthenticationController {
         }
     }
 
-    @GetMapping("/actual-usuario")
+    @GetMapping("/usuarioActual")
     public Usuario obtenerUsuarioActual(Principal principal){
         return (Usuario) this.userDetailsService.loadUserByUsername(principal.getName());
     }

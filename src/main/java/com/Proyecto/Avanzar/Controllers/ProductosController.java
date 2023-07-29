@@ -50,7 +50,6 @@ public class ProductosController {
                 productos.setPrecioProducto(p.getPrecioProducto());
                 productos.setCantidadDisponible(p.getCantidadDisponible());
                 productos.setEstado(p.isEstado());
-                productos.setListaCategoriaprod(p.getListaCategoriaprod());
                 productos.setListapublicaciones(p.getListapublicaciones());
                 return new ResponseEntity<>(productosService.save(productos), HttpStatus.CREATED);
             } catch (Exception e) {

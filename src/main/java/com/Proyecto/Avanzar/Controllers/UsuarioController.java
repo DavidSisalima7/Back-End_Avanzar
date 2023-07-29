@@ -39,7 +39,7 @@ public class UsuarioController {
     @PostConstruct
     public void init() {
         Rol usuario1 = new Rol(1L, "ADMIN");
-        Rol usuario2 = new Rol(2L, "SUPERADMIN");
+        Rol usuario2 = new Rol(2L, "RESPONSABLE_VENTAS");
         Rol usuario3 = new Rol(3L, "VENDEDOR");
         Rol usuario4 = new Rol(4L, "CLIENTE");
 

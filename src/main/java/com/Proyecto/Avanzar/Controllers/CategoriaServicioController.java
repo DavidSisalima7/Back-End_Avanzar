@@ -48,7 +48,7 @@ public class CategoriaServicioController {
                 categoriaServicio.setNombreCategoria(p.getNombreCategoria());
                 categoriaServicio.setDescripcion(p.getDescripcion());
                 categoriaServicio.setEstado(p.isEstado());
-                categoriaServicio.setServicios(p.getServicios());
+
                 return new ResponseEntity<>(categoriaServicioService.save(categoriaServicio), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
