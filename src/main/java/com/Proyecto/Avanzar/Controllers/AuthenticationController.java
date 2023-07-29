@@ -4,8 +4,11 @@ import com.Proyecto.Avanzar.Models.Usuario;
 import com.Proyecto.Avanzar.Security.JwtRequest;
 import com.Proyecto.Avanzar.Security.JwtResponse;
 import com.Proyecto.Avanzar.Security.JwtUtils;
+import com.Proyecto.Avanzar.Security.MessageResponse;
 import com.Proyecto.Avanzar.Services.implement.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -38,12 +41,10 @@ public class AuthenticationController {
             exception.printStackTrace();
             throw new Exception("Usuario no encontrado");
         }
-
         UserDetails userDetails =  this.userDetailsService.loadUserByUsername(jwtRequest.getUsername());
         String token = this.jwtUtils.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
     }
-
     private void autenticar(String username,String password) throws Exception {
         try{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username,password));
@@ -58,4 +59,11 @@ public class AuthenticationController {
     public Usuario obtenerUsuarioActual(Principal principal){
         return (Usuario) this.userDetailsService.loadUserByUsername(principal.getName());
     }
+
+//    @PostMapping("/signout")
+//    public ResponseEntity<?> logoutUser() {
+//        ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
+//        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+//                .body(new MessageResponse("Se cerro la sesion!"));
+//    }
 }

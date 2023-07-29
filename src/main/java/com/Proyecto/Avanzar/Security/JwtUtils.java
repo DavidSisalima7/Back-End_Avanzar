@@ -3,6 +3,10 @@ package com.Proyecto.Avanzar.Security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +18,9 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtils {
+//    private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
+//    @Value("${jwtCookieName}")
+//    private String jwtCookie;
 
     private String SECRET_KEY = "avanzarkey";
 
@@ -53,5 +60,8 @@ public class JwtUtils {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
-
+//    public ResponseCookie getCleanJwtCookie() {
+//        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
+//        return cookie;
+//    }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
         @Query(value = "SELECT *\n" +
-                        "\tFROM usuarios WHERE username = :username AND visible=true", nativeQuery = true)
+                        "\tFROM usuarios WHERE username = :username", nativeQuery = true)
         public Usuario findByUsername(String username);
 
         @Query(value = "SELECT *\n" +

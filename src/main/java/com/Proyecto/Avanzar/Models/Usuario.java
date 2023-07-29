@@ -13,6 +13,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Setter
@@ -69,20 +70,17 @@ public class Usuario implements UserDetails {
 
 
     @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        Set<Authority> autoridades = new HashSet<>();
+//        this.usuarioRoles.forEach(usuarioRol -> {
+//            autoridades.add(new Authority(usuarioRol.getRol().getRolNombre()));
+//        });
+//        return autoridades;
+//    }
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<Authority> autoridades = new HashSet<>();
-        this.usuarioRoles.forEach(usuarioRol -> {
-            autoridades.add(new Authority(usuarioRol.getRol().getRolNombre()));
-        });
-        return autoridades;
-    }
-
-    public Set<UsuarioRol> getUsuarioRoles() {
-        return usuarioRoles;
-    }
-
-    public void setUsuarioRoles(Set<UsuarioRol> usuarioRoles) {
-        this.usuarioRoles = usuarioRoles;
+        return this.usuarioRoles.stream()
+                .map(usuarioRol -> new Authority(usuarioRol.getRol().getRolNombre()))
+                .collect(Collectors.toSet());
     }
 
 

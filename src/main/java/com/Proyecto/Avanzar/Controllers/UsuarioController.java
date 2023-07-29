@@ -60,10 +60,8 @@ public class UsuarioController {
                 UsuarioRol usuarioRol = new UsuarioRol();
                 usuarioRol.setUsuario(r);
                 usuarioRol.setRol(rol);
-
                 // Agregar el UsuarioRol a la lista de roles del usuario
                 r.getUsuarioRoles().add(usuarioRol);
-
                 // Guardar el usuario en la base de datos
                 // Usuario nuevoUsuario = usuarioService.save(r);
                 return new ResponseEntity<>(usuarioService.save(r), HttpStatus.CREATED);
