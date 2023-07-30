@@ -55,10 +55,27 @@ public class AuthenticationController {
         }
     }
 
+    /*
     @GetMapping("/usuarioActual")
     public Usuario obtenerUsuarioActual(Principal principal){
         return (Usuario) this.userDetailsService.loadUserByUsername(principal.getName());
+    }*/
+
+    @GetMapping("/usuarioActual")
+    public Usuario obtenerUsuarioActual(@RequestHeader("Authorization") String token) {
+        // Extraer el token del encabezado (se debe encontrar en el formato "Bearer <token>")
+        String extractedToken = token.replace("Bearer ", "");
+
+        // Utilizar el token para obtener el nombre de usuario
+        String username = this.jwtUtils.extractUsername(extractedToken);
+
+        // Utilizar el nombre de usuario para cargar los detalles del usuario
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+
+        // Devolver los detalles del usuario
+        return (Usuario) userDetails;
     }
+
 
 //    @PostMapping("/signout")
 //    public ResponseEntity<?> logoutUser() {
