@@ -5,23 +5,37 @@ import com.Proyecto.Avanzar.Models.Usuario;
 import com.Proyecto.Avanzar.Models.UsuarioRol;
 import com.Proyecto.Avanzar.Repository.UsuarioRepository;
 import com.Proyecto.Avanzar.Services.service.RolService;
+import com.Proyecto.Avanzar.Services.service.StorageService;
 import com.Proyecto.Avanzar.Services.service.UsuarioRolService;
 import com.Proyecto.Avanzar.Services.service.UsuarioService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usuarios")
 @CrossOrigin("*")
+@AllArgsConstructor
 public class UsuarioController {
 
+    private final StorageService storageService;
+
+    private final HttpServletRequest request;
     @Autowired
     private UsuarioService usuarioService;
 
@@ -35,6 +49,32 @@ public class UsuarioController {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    //Metodo para que admita un archivo
+    @PostMapping("upload")
+    public Map<String,String> uploadFile(@RequestParam("file") MultipartFile multipartFile){
+        String path=storageService.store(multipartFile);
+        String host=request.getRequestURL().toString().replace(request.getRequestURI(),"");
+        String url= ServletUriComponentsBuilder
+                .fromHttpUrl(host)
+                .path("/media/")
+                .path(path)
+                .toUriString();
+        return Map.of("url",url);
+    }
+
+
+    //Metodo para recuperar la imagen desde el sistema de archivos
+    @GetMapping("{filename:.+}")
+    public ResponseEntity<Resource> getFile(@PathVariable String filename) throws IOException, IOException {
+        Resource file=storageService.loadAsResource(filename);
+        String contentType= Files.probeContentType(file.getFile().toPath());
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_TYPE,contentType)
+                .body(file);
+
+    }
 
     @PostConstruct
     public void init() {
