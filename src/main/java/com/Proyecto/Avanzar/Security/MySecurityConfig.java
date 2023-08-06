@@ -53,7 +53,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/login/generartoken","/api/login/usuarioActual/**",
+                .antMatchers("/api/login/generartoken","/api/login/usuarioActual/**","/api/login/signInWithToken",
                         "/api/persona/registrar/**","/api/persona/listar/**",
                         "/api/usuarios/listar/**","/api/usuarios/registrar/{rolId}/**",
                         "/api/usuarios/buscaruser/{username}/**","/api/usuarios/buscar/{username}/**","/api/usuariorol/listarol/**",

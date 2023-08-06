@@ -30,12 +30,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/usuarios")
 @CrossOrigin("*")
-@AllArgsConstructor
 public class UsuarioController {
-
-    private final StorageService storageService;
-
-    private final HttpServletRequest request;
+    @Autowired
+    private  StorageService storageService;
+    @Autowired
+    private  HttpServletRequest request;
     @Autowired
     private UsuarioService usuarioService;
 
@@ -49,6 +48,7 @@ public class UsuarioController {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     //Metodo para que admita un archivo
     @PostMapping("upload")
@@ -66,7 +66,7 @@ public class UsuarioController {
 
     //Metodo para recuperar la imagen desde el sistema de archivos
     @GetMapping("{filename:.+}")
-    public ResponseEntity<Resource> getFile(@PathVariable String filename) throws IOException, IOException {
+    public ResponseEntity<Resource> getFile(@PathVariable String filename) throws  IOException {
         Resource file=storageService.loadAsResource(filename);
         String contentType= Files.probeContentType(file.getFile().toPath());
         return ResponseEntity

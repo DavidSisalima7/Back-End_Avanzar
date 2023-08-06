@@ -8,6 +8,7 @@ import com.Proyecto.Avanzar.Security.MessageResponse;
 import com.Proyecto.Avanzar.Services.implement.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,9 +16,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -34,17 +37,20 @@ public class AuthenticationController {
     private JwtUtils jwtUtils;
 
     @PostMapping("/generartoken")
-    public ResponseEntity<?> generarToken(@RequestBody JwtRequest jwtRequest) throws Exception {
-        try{
-            autenticar(jwtRequest.getUsername(),jwtRequest.getPassword());
-        }catch (Exception exception){
-            exception.printStackTrace();
-            throw new Exception("Usuario no encontrado");
+    public ResponseEntity<?> generarToken(@RequestBody JwtRequest jwtRequest) {
+        try {
+            autenticar(jwtRequest.getUsername(), jwtRequest.getPassword());
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(jwtRequest.getUsername());
+            String token = this.jwtUtils.generateToken(userDetails);
+            JwtResponse response = new JwtResponse(token, (Usuario) userDetails);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
         }
-        UserDetails userDetails =  this.userDetailsService.loadUserByUsername(jwtRequest.getUsername());
-        String token = this.jwtUtils.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token));
     }
+
+
     private void autenticar(String username,String password) throws Exception {
         try{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username,password));
@@ -61,6 +67,7 @@ public class AuthenticationController {
         return (Usuario) this.userDetailsService.loadUserByUsername(principal.getName());
     }*/
 
+    //Nuevo metodo para saber que usuario esta logeado
     @GetMapping("/usuarioActual")
     public Usuario obtenerUsuarioActual(@RequestHeader("Authorization") String token) {
         // Extraer el token del encabezado (se debe encontrar en el formato "Bearer <token>")
@@ -76,6 +83,28 @@ public class AuthenticationController {
         return (Usuario) userDetails;
     }
 
+
+    @PostMapping("/signInWithToken")
+    public ResponseEntity<?> signInUsingToken(@RequestBody JwtRequest jwtRequest) {
+        String accessToken = jwtRequest.getAccessToken();
+        String username = jwtUtils.extractUsername(accessToken);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+        // Verificar si el token de acceso es válido y corresponde al usuario correcto
+        if (jwtUtils.validateToken(accessToken, userDetails)) {
+            Usuario usuario = (Usuario) userDetails;
+
+            // Crear un objeto JwtResponse con el token y el usuario
+            JwtResponse response = new JwtResponse(accessToken, usuario);
+
+            // Devolver el objeto JwtResponse en la respuesta
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid access token");
+        }
+    }
+
+    
 
 //    @PostMapping("/signout")
 //    public ResponseEntity<?> logoutUser() {
