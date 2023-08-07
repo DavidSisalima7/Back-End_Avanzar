@@ -3,6 +3,8 @@ package com.Proyecto.Avanzar.Controllers;
 import com.Proyecto.Avanzar.Models.Persona;
 import com.Proyecto.Avanzar.Models.Rol;
 import com.Proyecto.Avanzar.Models.UsuarioRol;
+import com.Proyecto.Avanzar.Repository.RolRepository;
+import com.Proyecto.Avanzar.Services.implement.RolServiceImpl;
 import com.Proyecto.Avanzar.Services.service.RolService;
 import com.Proyecto.Avanzar.Services.service.UsuarioRolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usuariorol")
@@ -20,6 +24,11 @@ public class Usuario_Rol_Controller {
     @Autowired
     private UsuarioRolService usuarioService;
     private RolService roleservice;
+
+    @Autowired
+    private RolServiceImpl rolRepository;
+
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @GetMapping("/listarol")
@@ -58,6 +67,23 @@ public class Usuario_Rol_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    //Query para obtener el nombre del rol del usuario para el inicio de sesion
+    @GetMapping("/nombreRol/{usuarioId}")
+    public ResponseEntity<?> obtenerRolDeUsuario(@PathVariable Long usuarioId) {
+        String rolNombre = rolRepository.obtenerRolNombreDeUsuario(usuarioId);
+
+        if (rolNombre != null) {
+            // Construye un objeto Map con el nombre del rol
+            Map<String, String> jsonResponse = new HashMap<>();
+            jsonResponse.put("nombre", rolNombre);
+            return ResponseEntity.ok(jsonResponse);
+        } else {
+
+            return ResponseEntity.notFound().build();
         }
     }
 

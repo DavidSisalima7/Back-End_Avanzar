@@ -56,7 +56,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/login/generartoken","/api/login/usuarioActual/**","/api/login/signInWithToken",
                         "/api/persona/registrar/**","/api/persona/listar/**",
                         "/api/usuarios/listar/**","/api/usuarios/registrar/{rolId}/**",
-                        "/api/usuarios/buscaruser/{username}/**","/api/usuarios/buscar/{username}/**","/api/usuariorol/listarol/**",
+                        "/api/usuarios/buscaruser/{username}/**","/api/usuarios/buscar/{username}/**","/api/usuariorol/listarol/**","/api/usuariorol/nombreRol/{usuarioId}/**",
                         "/swagger-ui/**",
                         "/api/categoria/registrar/**", "/api/categoriaProducto/registrar/**", "/api/categoriaServicio/registrar/**",
                         "/api/comentarios/registrar/**", "/api/likes/registrar/**", "/api/productos/registrar/**","/api/publicaciones/registrar/**",
