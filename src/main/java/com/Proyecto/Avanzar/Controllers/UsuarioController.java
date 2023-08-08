@@ -80,7 +80,7 @@ public class UsuarioController {
     public void init() {
         Rol usuario1 = new Rol(1L, "ADMIN");
         Rol usuario2 = new Rol(2L, "RESPONSABLE_VENTAS");
-        Rol usuario3 = new Rol(3L, "VENDEDOR");
+        Rol usuario3 = new Rol(3L, "EMPRENDEDORA");
         Rol usuario4 = new Rol(4L, "CLIENTE");
 
         rolService.save(usuario1);
