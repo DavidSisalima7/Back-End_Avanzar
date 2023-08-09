@@ -8,9 +8,11 @@ import com.Proyecto.Avanzar.Services.service.RolService;
 import com.Proyecto.Avanzar.Services.service.StorageService;
 import com.Proyecto.Avanzar.Services.service.UsuarioRolService;
 import com.Proyecto.Avanzar.Services.service.UsuarioService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/usuarios")
 @CrossOrigin("*")
+//@AllArgsConstructor
 public class UsuarioController {
     @Autowired
     private  StorageService storageService;
@@ -49,15 +52,20 @@ public class UsuarioController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Value("${media.location}")
+    private String mediaLocation;
+
 
     //Metodo para que admita un archivo
-    @PostMapping("upload")
+    @PostMapping("/upload")
     public Map<String,String> uploadFile(@RequestParam("file") MultipartFile multipartFile){
         String path=storageService.store(multipartFile);
+        System.out.println("Ruta de almacenamiento: "+mediaLocation);
+        System.out.println("Ruta de almacenamiento: "+path);
         String host=request.getRequestURL().toString().replace(request.getRequestURI(),"");
         String url= ServletUriComponentsBuilder
                 .fromHttpUrl(host)
-                .path("/media/")
+                .path("/api/usuarios/")
                 .path(path)
                 .toUriString();
         return Map.of("url",url);
@@ -76,6 +84,57 @@ public class UsuarioController {
 
     }
 
+    @PostMapping("/registrar/{rolId}")
+    public ResponseEntity<Usuario> crear(
+            @RequestPart("usuario") String usuarioJson,
+            @RequestPart("file") MultipartFile multipartFile,
+            @PathVariable Long rolId,
+            HttpServletRequest request
+    ) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Usuario r = objectMapper.readValue(usuarioJson, Usuario.class);
+            System.out.println("Usuario convertido: " + r.toString());
+            if (usuarioService.obtenerUsuario(r.getUsername()) == null) {
+                // Buscar el rol por ID
+                Rol rol = rolService.findById(rolId);
+                r.setPassword(this.bCryptPasswordEncoder.encode(r.getPassword()));
+                r.setVisible(true);
+
+                if (multipartFile != null && !multipartFile.isEmpty()) {
+                    String path = storageService.store(multipartFile);
+                    String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
+                    String url = ServletUriComponentsBuilder
+                            .fromHttpUrl(host)
+                            .path("/api/usuarios/")
+                            .path(path)
+                            .toUriString();
+                    r.setAvatar(url);
+                } else {
+                    // Establecer el avatar a nulo (o a una ruta predeterminada de avatar nulo)
+                    r.setAvatar(null);
+                }
+
+                // Crear un nuevo UsuarioRol y establecer las referencias correspondientes
+                UsuarioRol usuarioRol = new UsuarioRol();
+                usuarioRol.setUsuario(r);
+                usuarioRol.setRol(rol);
+                // Agregar el UsuarioRol a la lista de roles del usuario
+                r.getUsuarioRoles().add(usuarioRol);
+
+                // Guardar el usuario en la base de datos
+                return new ResponseEntity<>(usuarioService.save(r), HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+
+        } catch (Exception e) {
+            System.out.println("Error al convertir el JSON del usuario.");
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @PostConstruct
     public void init() {
         Rol usuario1 = new Rol(1L, "ADMIN");
@@ -88,30 +147,8 @@ public class UsuarioController {
         rolService.save(usuario3);
         rolService.save(usuario4);
     }
-    @PostMapping("/registrar/{rolId}")
-    public ResponseEntity<Usuario> crear(@RequestBody Usuario r, @PathVariable Long rolId) {
-        try {
-            if (usuarioService.obtenerUsuario(r.getUsername()) == null) {
-                // Buscar el rol por ID
-                Rol rol = rolService.findById(rolId);
-                r.setPassword(this.bCryptPasswordEncoder.encode(r.getPassword()));
-                r.setVisible(true);
-                // Crear un nuevo UsuarioRol y establecer las referencias correspondientes
-                UsuarioRol usuarioRol = new UsuarioRol();
-                usuarioRol.setUsuario(r);
-                usuarioRol.setRol(rol);
-                // Agregar el UsuarioRol a la lista de roles del usuario
-                r.getUsuarioRoles().add(usuarioRol);
-                // Guardar el usuario en la base de datos
-                // Usuario nuevoUsuario = usuarioService.save(r);
-                return new ResponseEntity<>(usuarioService.save(r), HttpStatus.CREATED);
-            }
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
 
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+
 
     @GetMapping("/listar")
     public ResponseEntity<List<Usuario>> obtenerLista() {
