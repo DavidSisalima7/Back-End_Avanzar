@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PersonaServiceImpl extends GenericServiceImpl<Persona, Long> implements PersonaService {
     @Autowired
@@ -29,6 +31,12 @@ public class PersonaServiceImpl extends GenericServiceImpl<Persona, Long> implem
     @Override
     public Persona findByCedula(String cedula) {
         return repository.findByCedula(cedula);
+    }
+
+    @Override
+    public List<Persona> listarResponsable() {
+        return repository.listarResponsable();
+
     }
 
 }
