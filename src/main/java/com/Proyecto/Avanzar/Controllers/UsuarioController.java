@@ -87,7 +87,7 @@ public class UsuarioController {
     @PostMapping("/registrar/{rolId}")
     public ResponseEntity<Usuario> crear(
             @RequestPart("usuario") String usuarioJson,
-            @RequestPart("file") MultipartFile multipartFile,
+            @RequestPart(value = "file", required = false) MultipartFile multipartFile,
             @PathVariable Long rolId,
             HttpServletRequest request
     ) {
