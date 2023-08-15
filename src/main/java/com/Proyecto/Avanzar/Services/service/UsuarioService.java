@@ -11,4 +11,5 @@ public interface UsuarioService extends GenericService<Usuario, Long> {
 
     public Usuario findAllByUsername(String username);
 
+    List<Usuario> obtenerUsuariosConPersonaYRol();
 }

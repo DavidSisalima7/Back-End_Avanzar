@@ -176,5 +176,10 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/listarResponsables")
+    public ResponseEntity<List<Usuario>> obtenerUsuariosConPersonaYRol() {
+        List<Usuario> usuarios = usuarioService.obtenerUsuariosConPersonaYRol();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
 
 }

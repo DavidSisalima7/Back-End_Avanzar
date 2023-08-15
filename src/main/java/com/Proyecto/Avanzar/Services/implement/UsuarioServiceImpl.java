@@ -35,4 +35,8 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long> implem
         return usuarioRepository.buscarId(username);
     }
 
+    public List<Usuario> obtenerUsuariosConPersonaYRol() {
+        return usuarioRepository.findAllUsuariosWithPersonaAndRol();
+    }
+
 }

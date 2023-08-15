@@ -16,11 +16,4 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
 
     public Persona findByCedula(String cedula);
 
-    @Query(value = "SELECT * FROM persona p JOIN usuarios u ON p.id_persona = u.persona_id_persona JOIN usuario_rol usr ON usr.rol_rol_id = 2 and usr.usuario_id = u.id", nativeQuery = true)
-    List<Persona> listarResponsable();
-//
-//    select DISTINCT p.cedula, p.primer_nombre, p.primer_apellido
-//    from persona p join usuarios ON usuarios.persona_id_persona = p.id_persona
-//    join usuario_rol usr ON usr.rol_rol_id =3 and usr.usuario_id = usuarios.id
-
 }

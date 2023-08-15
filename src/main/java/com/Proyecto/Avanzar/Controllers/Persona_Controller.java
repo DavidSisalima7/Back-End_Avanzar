@@ -94,17 +94,4 @@ public class Persona_Controller {
         }
     }
 
-    @GetMapping("/listarResponsable")
-    public ResponseEntity<List<Persona>> obtenerListaResponsable() {
-        try {
-            List<Persona> responsables = Service.listarResponsable();
-            if (responsables.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
-            return ResponseEntity.ok(responsables);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 }

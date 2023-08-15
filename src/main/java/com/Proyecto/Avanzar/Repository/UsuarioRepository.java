@@ -24,4 +24,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
         public Usuario buscarId(String user);
 
 
+        @Query("SELECT u FROM Usuario u " +
+                "JOIN Persona per ON u.persona.id_persona = per.id_persona " +
+                "JOIN UsuarioRol us ON us.usuario.id = u.id " +
+                "WHERE us.rol.rolId = 2")
+        List<Usuario> findAllUsuariosWithPersonaAndRol();
+
 }

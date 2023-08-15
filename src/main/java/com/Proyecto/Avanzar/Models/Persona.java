@@ -28,6 +28,10 @@ public class Persona implements Serializable {
     private String segundo_nombre;
     private String primer_apellido;
     private String segundo_apellido;
+    private String genero;
+    private String fecha_nacimiento;
+    private String nacionalidad;
+    private String descripcion;
     private String correo;
     private String direccion;
     private String celular;

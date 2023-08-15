@@ -33,10 +33,5 @@ public class PersonaServiceImpl extends GenericServiceImpl<Persona, Long> implem
         return repository.findByCedula(cedula);
     }
 
-    @Override
-    public List<Persona> listarResponsable() {
-        return repository.listarResponsable();
-
-    }
 
 }
