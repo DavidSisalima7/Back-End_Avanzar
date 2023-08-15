@@ -84,5 +84,21 @@ public class Usuario implements UserDetails {
                 .collect(Collectors.toSet());
     }
 
-
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", persona=" + persona +
+                ", visible=" + visible +
+                ", usuarioRoles=" + usuarioRoles +
+                ", listaLikes=" + listaLikes +
+                ", listavendedor=" + listavendedor +
+                ", listacomentarios=" + listacomentarios +
+                '}';
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -22,6 +23,9 @@ public class FileSystemStorageService implements StorageService {
     private String mediaLocation;
 
     private Path rootLocation;
+
+    private final static String UPLOADS_FOLDER = "almacenamientoArchivos";
+
     @Override
     @PostConstruct
     public void init() throws IOException {
@@ -61,4 +65,21 @@ public class FileSystemStorageService implements StorageService {
             throw new RuntimeException("Could not read file: "+filename);
         }
     }
+
+    @Override
+    public boolean delete(String filename) {
+        Path rootPath = getPath(filename);
+        File file = rootPath.toFile();
+        if(file.exists() && file.canRead()) {
+            if (file.delete()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Path getPath(String filename) {
+        return Paths.get(UPLOADS_FOLDER).resolve(filename).toAbsolutePath();
+    }
+
 }
