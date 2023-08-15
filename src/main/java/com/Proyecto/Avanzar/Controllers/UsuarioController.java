@@ -1,5 +1,6 @@
 package com.Proyecto.Avanzar.Controllers;
 
+import com.Proyecto.Avanzar.Models.Persona;
 import com.Proyecto.Avanzar.Models.Rol;
 import com.Proyecto.Avanzar.Models.Usuario;
 import com.Proyecto.Avanzar.Models.UsuarioRol;
@@ -152,6 +153,78 @@ public class UsuarioController {
                 return new ResponseEntity<>(usuarioService.save(r), HttpStatus.CREATED);
             }
             return new ResponseEntity<>(HttpStatus.CONFLICT);
+
+        } catch (Exception e) {
+            System.out.println("Error al convertir el JSON del usuario.");
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/actualizarUsuarioConFoto/{usuarioId}")
+    public ResponseEntity<Usuario> actualizar(
+            @PathVariable Long usuarioId,
+            @RequestPart("usuario") String usuarioJson,
+            @RequestPart(value = "file", required = false) MultipartFile multipartFile,
+            HttpServletRequest request
+    ) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Usuario usuarioExistente = usuarioService.findById(usuarioId); // Obtener el usuario existente por ID
+
+            if (usuarioExistente != null) {
+                Usuario usuarioActualizado = objectMapper.readValue(usuarioJson, Usuario.class);
+
+                // Actualizar los campos del usuario existente con los datos del usuario actualizado
+                usuarioExistente.setUsername(usuarioActualizado.getUsername());
+                // Actualizar otros campos según sea necesario
+
+                // Obtener la persona asociada al usuario existente
+                Persona personaExistente = usuarioExistente.getPersona();
+                Persona personaActualizada = usuarioActualizado.getPersona();
+
+                // Actualizar los campos de la persona existente con los datos de la persona actualizada
+                personaExistente.setPrimer_nombre(personaActualizada.getPrimer_nombre());
+                personaExistente.setSegundo_nombre(personaActualizada.getSegundo_nombre());
+                personaExistente.setPrimer_apellido(personaActualizada.getPrimer_apellido());
+                personaExistente.setSegundo_apellido(personaActualizada.getSegundo_apellido());
+                personaExistente.setCorreo(personaActualizada.getCorreo());
+                personaExistente.setDireccion(personaActualizada.getDireccion());
+                personaExistente.setCelular(personaActualizada.getCelular());
+
+                if (multipartFile != null && !multipartFile.isEmpty()) {
+                    String path = storageService.store(multipartFile);
+                    String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
+                    String url = ServletUriComponentsBuilder
+                            .fromHttpUrl(host)
+                            .path("/api/usuarios/")
+                            .path(path)
+                            .toUriString();
+
+                    // Eliminar el avatar anterior si existe
+                    if (usuarioExistente.getAvatar() != null) {
+                        String[] avatarParts = usuarioExistente.getAvatar().split("/");
+                        String avatarFilename = avatarParts[avatarParts.length - 1];
+                        storageService.delete(avatarFilename); // Elimina el archivo del almacenamiento
+                    }
+
+                    usuarioExistente.setAvatar(url); // Actualiza el nuevo avatar
+                } else {
+                    // Eliminar el avatar anterior si existe
+                    if (usuarioExistente.getAvatar() != null) {
+                        String[] avatarParts = usuarioExistente.getAvatar().split("/");
+                        String avatarFilename = avatarParts[avatarParts.length - 1];
+                        storageService.delete(avatarFilename); // Elimina el archivo del almacenamiento
+                    }
+
+                    usuarioExistente.setAvatar(null); // Actualiza el avatar a null
+                }
+                // Guardar los cambios en la base de datos
+                Usuario usuarioActualizadoDB = usuarioService.save(usuarioExistente);
+                return new ResponseEntity<>(usuarioActualizadoDB, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Usuario no encontrado
+            }
 
         } catch (Exception e) {
             System.out.println("Error al convertir el JSON del usuario.");
