@@ -84,7 +84,33 @@ public class UsuarioController {
 
     }
 
+
     @PostMapping("/registrar/{rolId}")
+    public ResponseEntity<Usuario> crear(@RequestBody Usuario r, @PathVariable Long rolId) {
+        try {
+            if (usuarioService.obtenerUsuario(r.getUsername()) == null) {
+                // Buscar el rol por ID
+                Rol rol = rolService.findById(rolId);
+                r.setPassword(this.bCryptPasswordEncoder.encode(r.getPassword()));
+                r.setVisible(true);
+                // Crear un nuevo UsuarioRol y establecer las referencias correspondientes
+                UsuarioRol usuarioRol = new UsuarioRol();
+                usuarioRol.setUsuario(r);
+                usuarioRol.setRol(rol);
+                // Agregar el UsuarioRol a la lista de roles del usuario
+                r.getUsuarioRoles().add(usuarioRol);
+                // Guardar el usuario en la base de datos
+                // Usuario nuevoUsuario = usuarioService.save(r);
+                return new ResponseEntity<>(usuarioService.save(r), HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/registrarConFoto/{rolId}")
     public ResponseEntity<Usuario> crear(
             @RequestPart("usuario") String usuarioJson,
             @RequestPart(value = "file", required = false) MultipartFile multipartFile,
