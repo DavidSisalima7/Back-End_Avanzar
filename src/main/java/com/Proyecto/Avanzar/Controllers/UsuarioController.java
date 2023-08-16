@@ -191,6 +191,10 @@ public class UsuarioController {
                 personaExistente.setCorreo(personaActualizada.getCorreo());
                 personaExistente.setDireccion(personaActualizada.getDireccion());
                 personaExistente.setCelular(personaActualizada.getCelular());
+                personaExistente.setDescripcion(personaActualizada.getDescripcion());
+                personaExistente.setNacionalidad(personaActualizada.getNacionalidad());
+                personaExistente.setFecha_nacimiento(personaActualizada.getFecha_nacimiento());
+                personaExistente.setGenero(personaActualizada.getGenero());
 
                 if (multipartFile != null && !multipartFile.isEmpty()) {
                     String path = storageService.store(multipartFile);
