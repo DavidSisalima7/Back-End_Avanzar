@@ -213,13 +213,9 @@ public class UsuarioController {
                     }
 
                     usuarioExistente.setAvatar(url); // Actualiza el nuevo avatar
-                } else {
-                    // Eliminar el avatar anterior si existe
-                    if (usuarioExistente.getAvatar() != null) {
-                        String[] avatarParts = usuarioExistente.getAvatar().split("/");
-                        String avatarFilename = avatarParts[avatarParts.length - 1];
-                        storageService.delete(avatarFilename); // Elimina el archivo del almacenamiento
-                    }
+                } else if (usuarioExistente.getAvatar() != null) {
+                        usuarioExistente.setAvatar(usuarioActualizado.getAvatar());
+                    }else{
 
                     usuarioExistente.setAvatar(null); // Actualiza el avatar a null
                 }
