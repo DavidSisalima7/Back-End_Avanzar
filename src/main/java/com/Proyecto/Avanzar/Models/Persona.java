@@ -36,6 +36,7 @@ public class Persona implements Serializable {
     private String direccion;
     private String celular;
     private boolean estado;
+
     //relacion
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "persona")
     @JsonIgnore
