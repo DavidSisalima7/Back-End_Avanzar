@@ -1,9 +1,6 @@
 package com.Proyecto.Avanzar.Controllers;
 
-import com.Proyecto.Avanzar.Models.Persona;
-import com.Proyecto.Avanzar.Models.Rol;
-import com.Proyecto.Avanzar.Models.Usuario;
-import com.Proyecto.Avanzar.Models.UsuarioRol;
+import com.Proyecto.Avanzar.Models.*;
 import com.Proyecto.Avanzar.Repository.UsuarioRepository;
 import com.Proyecto.Avanzar.Services.service.RolService;
 import com.Proyecto.Avanzar.Services.service.StorageService;
@@ -18,6 +15,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -322,4 +321,27 @@ public class UsuarioController {
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
+    @PutMapping("/actualizar-password")
+    public ResponseEntity<?> actualizarContrasena(@RequestBody CambioContrasenaDTO cambioContrasenaDTO, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        String contrasenaActual = cambioContrasenaDTO.getContrasenaActual();
+        String contrasenaNueva = cambioContrasenaDTO.getContrasenaNueva();
+
+        try {
+            // Verificar si la contraseña actual coincide con la almacenada en la base de datos
+            if (!usuarioService.verificarContrasena(username, contrasenaActual)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+
+            // Actualizar la contraseña en la base de datos
+            usuarioService.actualizarContrasena(username, contrasenaNueva);
+
+            return ResponseEntity.ok().build(); // Respuesta exitosa (HTTP 200 OK)
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build(); // Respuesta de error (HTTP 400 Bad Request)
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Respuesta de error (HTTP 500 Internal Server Error)
+        }
+    }
 }

@@ -12,4 +12,8 @@ public interface UsuarioService extends GenericService<Usuario, Long> {
     public Usuario findAllByUsername(String username);
 
     List<Usuario> obtenerUsuariosConPersonaYRol();
+
+    boolean verificarContrasena(String username, String contrasenaActual);
+
+    void actualizarContrasena(String username, String contrasenaNueva);
 }
