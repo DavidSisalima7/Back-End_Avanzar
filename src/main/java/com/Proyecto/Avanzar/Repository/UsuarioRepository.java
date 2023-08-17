@@ -30,4 +30,15 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
                 "WHERE us.rol.rolId = 2")
         List<Usuario> findAllUsuariosWithPersonaAndRol();
 
+        @Query("SELECT u FROM Usuario u " +
+                "JOIN Persona per ON u.persona.id_persona = per.id_persona " +
+                "JOIN UsuarioRol us ON us.usuario.id = u.id " +
+                "WHERE us.rol.rolId = 3")
+        List<Usuario> findAllUsuariosWithPersonaAndEmprendedor();
+
+        @Query("SELECT u FROM Usuario u " +
+                "JOIN Persona per ON u.persona.id_persona = per.id_persona " +
+                "JOIN UsuarioRol us ON us.usuario.id = u.id " +
+                "WHERE us.rol.rolId = 4")
+        List<Usuario> findAllUsuariosWithPersonaAndCliente();
 }

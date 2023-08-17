@@ -317,6 +317,18 @@ public class UsuarioController {
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
+    @GetMapping("/listarEmprendedores")
+    public ResponseEntity<List<Usuario>> obtenerUsuariosConPersonaYEmprendedor() {
+        List<Usuario> usuarios = usuarioService.obtenerUsuariosConPersonaYEmprendedor();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
+
+    @GetMapping("/listarClientes")
+    public ResponseEntity<List<Usuario>> obtenerUsuariosConPersonaYClientes() {
+        List<Usuario> usuarios = usuarioService.obtenerUsuariosConPersonaYCliente();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
+
     @PutMapping("/actualizar-password")
     public ResponseEntity<?> actualizarContrasena(@RequestBody CambioContrasenaDTO cambioContrasenaDTO, Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
