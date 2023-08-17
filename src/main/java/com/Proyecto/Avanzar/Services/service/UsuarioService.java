@@ -13,6 +13,10 @@ public interface UsuarioService extends GenericService<Usuario, Long> {
 
     List<Usuario> obtenerUsuariosConPersonaYRol();
 
+    List<Usuario> obtenerUsuariosConPersonaYEmprendedor();
+
+    List<Usuario> obtenerUsuariosConPersonaYCliente();
+
     boolean verificarContrasena(String username, String contrasenaActual);
 
     void actualizarContrasena(String username, String contrasenaNueva);

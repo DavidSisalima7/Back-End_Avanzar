@@ -40,6 +40,14 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long> implem
         return usuarioRepository.findAllUsuariosWithPersonaAndRol();
     }
 
+    public List<Usuario> obtenerUsuariosConPersonaYEmprendedor(){
+        return usuarioRepository.findAllUsuariosWithPersonaAndEmprendedor();
+    }
+
+    public List<Usuario> obtenerUsuariosConPersonaYCliente(){
+        return usuarioRepository.findAllUsuariosWithPersonaAndCliente();
+    }
+
     public boolean verificarContrasena(String username, String contrasena) {
         Usuario usuario = usuarioRepository.findByUsername(username);
         return BCrypt.checkpw(contrasena, usuario.getPassword()); // Verificar la contraseña usando BCrypt
