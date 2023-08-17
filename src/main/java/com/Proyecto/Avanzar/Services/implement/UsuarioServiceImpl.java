@@ -38,5 +38,11 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long> implem
     public List<Usuario> obtenerUsuariosConPersonaYRol() {
         return usuarioRepository.findAllUsuariosWithPersonaAndRol();
     }
+    public List<Usuario> FiltradoUserxEstadoActivo() {
+        return usuarioRepository.FiltradoUserxEstadoActivo();
+    }
+    public List<Usuario> FiltradoUserxEstadoInactivo() {
+        return usuarioRepository.FiltradoUserxEstadoInactivo();
+    }
 
 }
