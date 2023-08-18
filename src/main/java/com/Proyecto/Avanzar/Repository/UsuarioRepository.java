@@ -29,6 +29,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
                 "JOIN UsuarioRol us ON us.usuario.id = u.id " +
                 "WHERE us.rol.rolId = 2")
         List<Usuario> findAllUsuariosWithPersonaAndRol();
+
+        ///// Querys para los filtrados de listas//////
+//Estado
         @Query("SELECT u FROM Usuario u " +
                 "JOIN Persona per ON u.persona.id_persona = per.id_persona " +
                 "JOIN UsuarioRol us ON us.usuario.id = u.id " +
@@ -39,5 +42,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
                 "JOIN UsuarioRol us ON us.usuario.id = u.id " +
                 "WHERE us.rol.rolId = 2 ORDER By u.visible desc")
         List<Usuario> FiltradoUserxEstadoInactivo();
-
 }
