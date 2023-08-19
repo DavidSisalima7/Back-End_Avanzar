@@ -316,6 +316,16 @@ public class UsuarioController {
         List<Usuario> usuarios = usuarioService.obtenerUsuariosConPersonaYRol();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
+    @GetMapping("/listarResponsablesEstadoActivo")
+    public ResponseEntity<List<Usuario>> FiltradoUserxEstadoActivo() {
+        List<Usuario> usuarios = usuarioService.FiltradoUserxEstadoActivo();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
+    @GetMapping("/listarResponsablesEstadoInactivo")
+    public ResponseEntity<List<Usuario>> FiltradoUserxEstadoInactivo() {
+        List<Usuario> usuarios = usuarioService.FiltradoUserxEstadoInactivo();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
 
     @GetMapping("/listarEmprendedores")
     public ResponseEntity<List<Usuario>> obtenerUsuariosConPersonaYEmprendedor() {
