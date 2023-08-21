@@ -326,6 +326,26 @@ public class UsuarioController {
         List<Usuario> usuarios = usuarioService.FiltradoUserxEstadoInactivo();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
+    @GetMapping("/listarClienteEstadoActivo")
+    public ResponseEntity<List<Usuario>> FiltradoClientexEstadoActivo() {
+        List<Usuario> usuarios = usuarioService.FiltradoClientexEstadoActivo();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
+    @GetMapping("/listarClienteEstadoInactivo")
+    public ResponseEntity<List<Usuario>> FiltradoClientexEstadoInactivo() {
+        List<Usuario> usuarios = usuarioService.FiltradoClientexEstadoInactivo();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
+    @GetMapping("/listarEmprendedorEstadoActivo")
+    public ResponseEntity<List<Usuario>> FiltradoEmpxEstadoActivo() {
+        List<Usuario> usuarios = usuarioService.FiltradoEmpxEstadoActivo();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
+    @GetMapping("/listarEmprendedorEstadoInactivo")
+    public ResponseEntity<List<Usuario>> FiltradoEmpxEstadoInactivo() {
+        List<Usuario> usuarios = usuarioService.FiltradoEmpxEstadoInactivo();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
 
     @GetMapping("/listarEmprendedores")
     public ResponseEntity<List<Usuario>> obtenerUsuariosConPersonaYEmprendedor() {
