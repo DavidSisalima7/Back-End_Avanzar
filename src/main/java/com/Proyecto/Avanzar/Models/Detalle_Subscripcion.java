@@ -19,9 +19,10 @@ public class Detalle_Subscripcion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDetalle_subscripcion;
-    private String descripcion;
     private Date fechaInicio;
     private Date fechaFin;
+    private boolean estado;
+
 
     //Relacion Subscripcion
     @ManyToOne(fetch = FetchType.EAGER)

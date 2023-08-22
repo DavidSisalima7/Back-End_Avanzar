@@ -22,7 +22,13 @@ public class Subscripcion implements Serializable {
     private String nombreSubscripcion;
     private double precio;
     private int NumPublicaciones;
-    private boolean estado;
+
+    public Subscripcion(Long idSubscripcion, String nombreSubscripcion, double precio, int numPublicaciones) {
+        this.idSubscripcion = idSubscripcion;
+        this.nombreSubscripcion = nombreSubscripcion;
+        this.precio = precio;
+        NumPublicaciones = numPublicaciones;
+    }
 
     //Relacion
     @JsonIgnore

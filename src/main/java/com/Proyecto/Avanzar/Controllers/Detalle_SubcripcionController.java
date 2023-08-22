@@ -47,7 +47,6 @@ public class Detalle_SubcripcionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                subscripcion.setDescripcion(p.getDescripcion());
                 subscripcion.setFechaInicio(p.getFechaInicio());
                 subscripcion.setFechaFin(p.getFechaFin());
                 subscripcion.setSubscripcion(p.getSubscripcion());
