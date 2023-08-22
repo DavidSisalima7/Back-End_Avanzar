@@ -39,6 +39,21 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long> implem
     public List<Usuario> obtenerUsuariosConPersonaYRol() {
         return usuarioRepository.findAllUsuariosWithPersonaAndRol();
     }
+    ///// querys para los filtrados de listas//////
+    public List<Usuario> FiltradoUserxEstadoActivo() {
+        return usuarioRepository.FiltradoUserxEstadoActivo();
+    }
+    public List<Usuario> FiltradoUserxEstadoInactivo() {
+        return usuarioRepository.FiltradoUserxEstadoInactivo();
+    }
+
+    public List<Usuario> obtenerUsuariosConPersonaYEmprendedor(){
+        return usuarioRepository.findAllUsuariosWithPersonaAndEmprendedor();
+    }
+
+    public List<Usuario> obtenerUsuariosConPersonaYCliente(){
+        return usuarioRepository.findAllUsuariosWithPersonaAndCliente();
+    }
 
     public boolean verificarContrasena(String username, String contrasena) {
         Usuario usuario = usuarioRepository.findByUsername(username);
