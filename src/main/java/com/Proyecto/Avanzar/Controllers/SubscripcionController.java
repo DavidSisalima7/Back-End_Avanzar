@@ -54,11 +54,8 @@ public class SubscripcionController {
                 subscripcion.setNombreSubscripcion(p.getNombreSubscripcion());
                 subscripcion.setPrecio(p.getPrecio());
                 subscripcion.setNumPublicaciones(p.getNumPublicaciones());
-                subscripcion.setDescripcion(p.getDescripcion());
-                subscripcion.setFechaInicio(p.getFechaInicio());
-                subscripcion.setFechaFin(p.getFechaFin());
                 subscripcion.setEstado(p.isEstado());
-                subscripcion.setListavendedor(p.getListavendedor());
+                subscripcion.setListaDetalleSubscripcion(p.getListaDetalleSubscripcion());
                 return new ResponseEntity<>(subscripcionService.save(subscripcion), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
