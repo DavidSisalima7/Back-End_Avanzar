@@ -110,6 +110,7 @@ public class UsuarioController {
         }
     }
 
+    //Metodo para registro de usuario con foto incluida
     @PostMapping("/registrarConFoto/{rolId}")
     public ResponseEntity<Usuario> crear(
             @RequestPart("usuario") String usuarioJson,
