@@ -27,12 +27,11 @@ public class Vendedor implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
 
-    //Relacion Subscripcion
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Subscripcion subscripcion;
-
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER ,mappedBy = "vendedor")
     @JsonIgnore
     private Set<Publicaciones> listapublicaciones = new HashSet<>();
+
+    @OneToOne(mappedBy = "vendedor", cascade = CascadeType.ALL)
+    private Detalle_Subscripcion detalleSubscripcion;
+
 }

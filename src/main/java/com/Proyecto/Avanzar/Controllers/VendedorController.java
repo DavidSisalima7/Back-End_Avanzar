@@ -1,7 +1,16 @@
 package com.Proyecto.Avanzar.Controllers;
 
-import com.Proyecto.Avanzar.Models.Vendedor;
+import com.Proyecto.Avanzar.Models.*;
+import com.Proyecto.Avanzar.Repository.Detalle_SubscripcionRepository;
+import com.Proyecto.Avanzar.Repository.SubscripcionRepository;
+import com.Proyecto.Avanzar.Repository.VendedorRepository;
+import com.Proyecto.Avanzar.Services.service.RolService;
+import com.Proyecto.Avanzar.Services.service.SubscripcionService;
+import com.Proyecto.Avanzar.Services.service.UsuarioService;
 import com.Proyecto.Avanzar.Services.service.VendedorService;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +31,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class VendedorController {
     @Autowired
     VendedorService vendedorService;
+    @Autowired
+    private SubscripcionService subscripcionService;
+    @Autowired
+    private VendedorRepository vendedorRepository;
+    @Autowired
+    private Detalle_SubscripcionRepository detalleSubscripcionRepository;
+
 @PostMapping("/registrar")
     public ResponseEntity<Vendedor> crear(@RequestBody Vendedor r) {
         try {
@@ -30,6 +46,39 @@ public class VendedorController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/registrar/{idSubscripcion}")
+    public ResponseEntity<Vendedor> registrarVendedor(@RequestBody Vendedor vendedor, @PathVariable Long idSubscripcion) {
+        try {
+            Detalle_Subscripcion detalleSubscripcion = new Detalle_Subscripcion();
+
+            // Configurar la fecha de inicio como la fecha actual
+            detalleSubscripcion.setFechaInicio(new Date());
+
+            // Configurar la fecha de fin sumando 30 días a la fecha actual
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(detalleSubscripcion.getFechaInicio());
+            calendar.add(Calendar.DAY_OF_MONTH, 30);
+            detalleSubscripcion.setFechaFin(calendar.getTime());
+
+            Subscripcion subscripcion = subscripcionService.findById(idSubscripcion);
+            detalleSubscripcion.setSubscripcion(subscripcion);
+            detalleSubscripcion.setEstado(true);
+
+            detalleSubscripcionRepository.save(detalleSubscripcion);
+
+            vendedor.setDetalleSubscripcion(detalleSubscripcion);
+
+            vendedorRepository.save(vendedor);
+
+            return new ResponseEntity<>(vendedor, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
 
     @GetMapping("/listar")
     public ResponseEntity<List<Vendedor>> obtenerLista() {
@@ -54,7 +103,7 @@ public class VendedorController {
                 subscripcion.setNombreEmprendimiento(p.getNombreEmprendimiento());
                 subscripcion.setListapublicaciones(p.getListapublicaciones());
                 subscripcion.setUsuario(p.getUsuario());
-                subscripcion.setSubscripcion(p.getSubscripcion());
+                subscripcion.setDetalleSubscripcion(p.getDetalleSubscripcion());
                 
                 return new ResponseEntity<>(vendedorService.save(subscripcion), HttpStatus.CREATED);
             } catch (Exception e) {

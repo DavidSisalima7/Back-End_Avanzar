@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,13 +22,16 @@ public class Subscripcion implements Serializable {
     private String nombreSubscripcion;
     private double precio;
     private int NumPublicaciones;
-    private String descripcion;
-    private Date fechaInicio;
-    private Date fechaFin;
-    private boolean estado;
+
+    public Subscripcion(Long idSubscripcion, String nombreSubscripcion, double precio, int numPublicaciones) {
+        this.idSubscripcion = idSubscripcion;
+        this.nombreSubscripcion = nombreSubscripcion;
+        this.precio = precio;
+        NumPublicaciones = numPublicaciones;
+    }
 
     //Relacion
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "subscripcion")
-    private Set<Vendedor> listavendedor = new HashSet<>();
+    private Set<Detalle_Subscripcion> listaDetalleSubscripcion = new HashSet<>();
 }
