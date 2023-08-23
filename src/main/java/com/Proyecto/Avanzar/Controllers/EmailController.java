@@ -4,8 +4,9 @@
  */
 package com.Proyecto.Avanzar.Controllers;
 
-
 import com.Proyecto.Avanzar.Models.dto.EmailDto;
+import java.security.SecureRandom;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,24 +26,40 @@ public class EmailController {
 
     @Autowired
     private JavaMailSender mail;
-            
-    @PostMapping("/sentCodeVerification")
-    public ResponseEntity<Boolean> enviarCorreo(@RequestBody EmailDto e) {
 
-        String mensaje="Su código de Verificación es:";
+    @PostMapping("/sentCodeVerification")
+    public ResponseEntity<EmailDto> enviarCorreo(@RequestBody EmailDto e) {
+
         SimpleMailMessage email = new SimpleMailMessage();
+        email.setSubject(e.getSubject());
         email.setTo(e.getTo());
         email.setFrom("reservcompany5b@gmail.com");
-        email.setSubject(e.getSubject());
-        email.setText(mensaje +" código generado"+e.getText());
+        email.setText(ramdomCode(9,7));
         
-        
-        try{
+        try {
             mail.send(email);
-            return new ResponseEntity<>(true,HttpStatus.OK);
-        }catch(MailException exc) {
-             return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
+            e.setText(email.getText());
+            return new ResponseEntity<>(e, HttpStatus.OK);
+        } catch (MailException exc) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    private String ramdomCode(int max, int min) {
+        Random ran = new Random();
+
+        int let = ran.nextInt((max - min) + 1) + min;
+        //updateFechaPasByEmail(email.getTo(),new Date)
+        //generar un numero aleatorio de 7 a 13 cifras
+        String carac = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+";
+        SecureRandom sec = new SecureRandom();
+        StringBuilder ramBui = new StringBuilder();
+
+        for (int i = 0; i < let; i++) {
+            int randomIndex = sec.nextInt(carac.length());
+            char randomChar = carac.charAt(randomIndex);
+            ramBui.append(randomChar);
+        }
+        return ramBui.toString();
+    }
 }
