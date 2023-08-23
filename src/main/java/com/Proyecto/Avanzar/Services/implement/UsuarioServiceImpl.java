@@ -84,4 +84,8 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long> implem
         usuario.setPassword(contrasenaHash);
         usuarioRepository.save(usuario);
     }
+
+    public List<Usuario> findUsuariosByPersonaId(Long idPersona) {
+        return usuarioRepository.findUsuariosByPersonaId(idPersona);
+    }
 }

@@ -3,6 +3,7 @@ package com.Proyecto.Avanzar.Repository;
 import com.Proyecto.Avanzar.Models.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -76,4 +77,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
                 "WHERE us.rol.rolId = 4 ORDER By u.visible desc")
         List<Usuario> FiltradoClientexEstadoInactivo();
 
+
+        @Query("SELECT u FROM Usuario u JOIN FETCH u.persona p WHERE p.id_persona = :idPersona")
+        List<Usuario> findUsuariosByPersonaId(@Param("idPersona") Long idPersona);
 }

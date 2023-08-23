@@ -383,4 +383,12 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Respuesta de error (HTTP 500 Internal Server Error)
         }
     }
+
+    @GetMapping("/usuariosPorPersonaCreada/{idPersona}")
+    public ResponseEntity<List<Usuario>> obtenerUsuariosPorPersona(@PathVariable Long idPersona) {
+        List<Usuario> usuarios = usuarioService.findUsuariosByPersonaId(idPersona);
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
+
+
 }
