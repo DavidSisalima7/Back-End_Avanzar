@@ -1,5 +1,6 @@
 package com.Proyecto.Avanzar.Controllers;
 
+import com.Proyecto.Avanzar.Models.Productos;
 import com.Proyecto.Avanzar.Models.Servicios;
 import com.Proyecto.Avanzar.Services.service.ServiciosService;
 import java.util.List;
@@ -62,5 +63,35 @@ public class ServiciosController {
             }
 
         }
+    }
+    @GetMapping("/buscarServicioActivo/{idServicio}")
+    public Servicios BuscarServicioActivoxId(@PathVariable("idServicio") Long idServicio) {
+        return serviciosService.BuscarServicioActivoxId(idServicio);
+    }
+
+    @PutMapping("/eliminadoLogico/{id}")
+    public ResponseEntity<?> eliminarlogicoServicio(@PathVariable Long id) {
+        Servicios a = serviciosService.findById(id);
+        if (a == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                a.setEstado(false);
+                return new ResponseEntity<>(serviciosService.save(a), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
+    }
+    @GetMapping("/listarServicioEstadoActivo")
+    public ResponseEntity<List<Servicios>> FiltradoServxEstadoInactivo() {
+        List<Servicios> serv = serviciosService.FiltradoServxEstadoInactivo();
+        return new ResponseEntity<>(serv, HttpStatus.OK);
+    }
+    @GetMapping("/listarServicioEstadoInactivo")
+    public ResponseEntity<List<Servicios>> FiltradoServxEstadoActivo() {
+        List<Servicios> serv = serviciosService.FiltradoServxEstadoActivo();
+        return new ResponseEntity<>(serv, HttpStatus.OK);
     }
 }
