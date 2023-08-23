@@ -20,6 +20,14 @@ public interface UsuarioService extends GenericService<Usuario, Long> {
     boolean verificarContrasena(String username, String contrasenaActual);
 
     void actualizarContrasena(String username, String contrasenaNueva);
+    //filtrado
+    //responsable
     List<Usuario> FiltradoUserxEstadoActivo();
     List<Usuario> FiltradoUserxEstadoInactivo();
+    //emprendedor
+    List<Usuario> FiltradoEmpxEstadoActivo();
+    List<Usuario> FiltradoEmpxEstadoInactivo();
+    //cliente
+    List<Usuario> FiltradoClientexEstadoActivo();
+    List<Usuario> FiltradoClientexEstadoInactivo();
 }

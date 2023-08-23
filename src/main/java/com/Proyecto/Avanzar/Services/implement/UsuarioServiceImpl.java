@@ -40,12 +40,30 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long> implem
         return usuarioRepository.findAllUsuariosWithPersonaAndRol();
     }
     ///// querys para los filtrados de listas//////
+    //responsable
     public List<Usuario> FiltradoUserxEstadoActivo() {
         return usuarioRepository.FiltradoUserxEstadoActivo();
     }
     public List<Usuario> FiltradoUserxEstadoInactivo() {
         return usuarioRepository.FiltradoUserxEstadoInactivo();
     }
+    //responsable
+    public List<Usuario> FiltradoEmpxEstadoActivo() {
+        return usuarioRepository.FiltradoEmpxEstadoActivo();
+    }
+    public List<Usuario> FiltradoEmpxEstadoInactivo() {
+        return usuarioRepository.FiltradoEmpxEstadoInactivo();
+    }
+    //cliente
+    public List<Usuario> FiltradoClientexEstadoActivo() {
+        return usuarioRepository.FiltradoClientexEstadoActivo();
+    }
+    public List<Usuario> FiltradoClientexEstadoInactivo() {
+        return usuarioRepository.FiltradoClientexEstadoInactivo();
+    }
+
+
+    ///////////////////////////////////////
 
     public List<Usuario> obtenerUsuariosConPersonaYEmprendedor(){
         return usuarioRepository.findAllUsuariosWithPersonaAndEmprendedor();
