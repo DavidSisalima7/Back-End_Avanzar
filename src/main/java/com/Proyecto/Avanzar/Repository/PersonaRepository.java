@@ -16,4 +16,5 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
 
     public Persona findByCedula(String cedula);
 
+    public Persona findByCorreo(String correo);
 }

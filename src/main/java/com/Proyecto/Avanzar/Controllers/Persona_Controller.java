@@ -58,6 +58,20 @@ public class Persona_Controller {
         }
     }
 
+    @GetMapping("/findByCorreo/{correo}")
+    public ResponseEntity<Boolean> checkCorreo(@PathVariable("correo") String correo) {
+        try {
+            Persona persona = Service.findByCorreo(correo);
+            if (persona != null) {
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(false, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Persona> getById(@PathVariable("id") Long id) {
         try {
