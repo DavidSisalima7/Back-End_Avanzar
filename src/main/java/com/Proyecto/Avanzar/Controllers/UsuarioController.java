@@ -375,7 +375,7 @@ public class UsuarioController {
              
             // Actualizar la contraseña en la base de datos
             usuarioService.actualizarContrasena(username, contrasenaNueva);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
              // Respuesta exitosa (HTTP 200 OK)
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build(); // Respuesta de error (HTTP 400 Bad Request)
