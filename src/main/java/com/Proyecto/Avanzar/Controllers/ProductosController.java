@@ -50,7 +50,7 @@ public class ProductosController {
                 productos.setNombreProducto(p.getNombreProducto());
                 productos.setPrecioProducto(p.getPrecioProducto());
                 productos.setCantidadDisponible(p.getCantidadDisponible());
-                productos.setEstado(p.isEstado());
+                productos.setEstadoProducto(p.isEstadoProducto());
                 productos.setListapublicaciones(p.getListapublicaciones());
                 return new ResponseEntity<>(productosService.save(productos), HttpStatus.CREATED);
             } catch (Exception e) {
@@ -72,7 +72,7 @@ public class ProductosController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                a.setEstado(false);
+                a.setEstadoProducto(false);
                 return new ResponseEntity<>(productosService.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

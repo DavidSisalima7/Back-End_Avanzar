@@ -47,7 +47,6 @@ public class CategoriaProductoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                categoriaProducto.setNombreCategoria(p.getNombreCategoria());
                 categoriaProducto.setDescripcion(p.getDescripcion());
                 categoriaProducto.setEstado(p.isEstado());
                 return new ResponseEntity<>(categoriaProductoService.save(categoriaProducto), HttpStatus.CREATED);

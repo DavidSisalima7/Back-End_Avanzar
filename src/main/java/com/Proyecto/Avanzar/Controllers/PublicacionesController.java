@@ -51,10 +51,9 @@ public class PublicacionesController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                publicaciones.setTitulo(p.getTitulo());
-                publicaciones.setDescripcion(p.getDescripcion());
-                publicaciones.setFecha(p.getFecha());
-                publicaciones.setHora(p.getHora());
+                publicaciones.setTituloPublicacion(p.getTituloPublicacion());
+                publicaciones.setDescripcionPublicacion(p.getDescripcionPublicacion());
+                publicaciones.setFechaPublicacion(p.getFechaPublicacion());
                 publicaciones.setEstado(p.isEstado());
                 publicaciones.setListalikes(p.getListalikes());
                 publicaciones.setListacomentarios(p.getListacomentarios());

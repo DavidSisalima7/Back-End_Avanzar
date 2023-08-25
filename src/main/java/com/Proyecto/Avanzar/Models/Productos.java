@@ -22,7 +22,10 @@ public class Productos implements Serializable {
     private String nombreProducto;
     private double precioProducto;
     private int cantidadDisponible;
-    private boolean estado;
+    private String descripcionProducto;
+    private boolean estadoProducto;
+    private String miniaturaProducto;
+
 
     //Relacion con CategoriaProductos
     @ManyToOne(fetch = FetchType.EAGER)
