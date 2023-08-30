@@ -54,13 +54,13 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/api/login/generartoken","/api/login/usuarioActual/**","/api/login/signInWithToken",
-                        "/api/persona/registrar/**","/api/persona/listar/**", "/api/persona/listarResponsable/**","/api/detalleSubscripcion/**",
+                        "/api/persona/registrar/**","/api/persona/listar/**", "/api/persona/findByCedula/{cedula}/**", "/api/persona/findByCorreo/{correo}/**","/api/persona/listarResponsable/**","/api/detalleSubscripcion/**",
                         "/api/usuarios/**","/api/usuarios/registrar/{rolId}/**","/api/usuarios/registrarConFoto/{rolId}/**",
                         "/api/usuarios/buscaruser/**","/api/usuarios/buscar/**","/api/usuariorol/listarol/**","/api/usuariorol/nombreRol/{usuarioId}/**",
                         "/swagger-ui/**","api/usuarios/actualizarUsuarioConFoto/{usuarioId}/**",
-                        "/api/categoria/registrar/**", "/api/categoriaProducto/registrar/**", "/api/categoriaServicio/registrar/**",
+                        "/api/categoria/registrar/**", "/api/categoriaProducto/**", "/api/categoriaServicio/registrar/**",
                         "/api/comentarios/registrar/**", "/api/likes/registrar/**", "/api/productos/registrar/**","/api/publicaciones/registrar/**",
-                        "/api/servicios/registrar/**", "/api/subscripcion/registrar/**", "/api/tipoLike/registrar/**", "/api/vendedor/registrar/**","/api/usuarios/upload/**","/api/usuarios/**").permitAll()
+                        "/api/servicios/registrar/**", "/api/subscripcion/registrar/**", "/api/tipoLike/registrar/**", "/api/vendedor/registrar/**","/api/usuarios/upload/**","/api/usuarios/**","/api/email/sentCodeVerification/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
                 .and()

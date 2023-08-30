@@ -1,6 +1,10 @@
 package com.Proyecto.Avanzar.Controllers;
 
+import com.Proyecto.Avanzar.Models.Categoria;
+import com.Proyecto.Avanzar.Models.Productos;
 import com.Proyecto.Avanzar.Models.Publicaciones;
+import com.Proyecto.Avanzar.Services.service.CategoriaService;
+import com.Proyecto.Avanzar.Services.service.ProductosService;
 import com.Proyecto.Avanzar.Services.service.PublicacionesService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +26,31 @@ import org.springframework.web.bind.annotation.RestController;
 public class PublicacionesController {
     @Autowired
     PublicacionesService publicacionesService;
+    @Autowired
+    ProductosService productosService;
+    @Autowired
+    CategoriaService categoriaService;
     @PostMapping("/registrar")
-    public ResponseEntity<Publicaciones> crear(@RequestBody Publicaciones r) {
+    public ResponseEntity<Publicaciones> crear(@RequestBody Publicaciones request) {
         try {
-            return new ResponseEntity<>(publicacionesService.save(r), HttpStatus.CREATED);
+            // Crear una nueva instancia de Publicaciones a partir de la solicitud
+            Publicaciones nuevaPublicacion = new Publicaciones();
+            nuevaPublicacion.setEstado(true);
+            // Obtener el producto desde el servicio de productos (supongamos que tienes un servicio llamado productosService)
+            Productos producto = new Productos();
+            producto.setEstadoProducto(true);
+
+            Productos nuevoProducto = productosService.save(producto);
+
+            Categoria categoria = categoriaService.findById(1L);
+            nuevaPublicacion.setCategoria(categoria);
+            // Asignar el producto a la nueva publicación
+            nuevaPublicacion.setProductos(nuevoProducto);
+
+            // Guardar la nueva publicación
+            Publicaciones nuevaPublicacionGuardada = publicacionesService.save(nuevaPublicacion);
+
+            return new ResponseEntity<>(nuevaPublicacionGuardada, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -51,10 +76,9 @@ public class PublicacionesController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                publicaciones.setTitulo(p.getTitulo());
-                publicaciones.setDescripcion(p.getDescripcion());
-                publicaciones.setFecha(p.getFecha());
-                publicaciones.setHora(p.getHora());
+                publicaciones.setTituloPublicacion(p.getTituloPublicacion());
+                publicaciones.setDescripcionPublicacion(p.getDescripcionPublicacion());
+                publicaciones.setFechaPublicacion(p.getFechaPublicacion());
                 publicaciones.setEstado(p.isEstado());
                 publicaciones.setListalikes(p.getListalikes());
                 publicaciones.setListacomentarios(p.getListacomentarios());

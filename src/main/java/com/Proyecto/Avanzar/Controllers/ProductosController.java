@@ -2,6 +2,7 @@ package com.Proyecto.Avanzar.Controllers;
 
 
 import com.Proyecto.Avanzar.Models.Productos;
+import com.Proyecto.Avanzar.Models.Usuario;
 import com.Proyecto.Avanzar.Services.service.ProductosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +50,7 @@ public class ProductosController {
                 productos.setNombreProducto(p.getNombreProducto());
                 productos.setPrecioProducto(p.getPrecioProducto());
                 productos.setCantidadDisponible(p.getCantidadDisponible());
-                productos.setEstado(p.isEstado());
+                productos.setEstadoProducto(p.isEstadoProducto());
                 productos.setListapublicaciones(p.getListapublicaciones());
                 return new ResponseEntity<>(productosService.save(productos), HttpStatus.CREATED);
             } catch (Exception e) {
@@ -57,5 +58,36 @@ public class ProductosController {
             }
 
         }
+    }
+
+    @GetMapping("/buscarProductoActivo/{idProducto}")
+    public Productos BuscarProductoActivoxId(@PathVariable("idProducto") Long idProducto) {
+        return productosService.BuscarProductoActivoxId(idProducto);
+    }
+
+    @PutMapping("/eliminadoLogico/{id}")
+    public ResponseEntity<?> eliminarlogicProducto(@PathVariable Long id) {
+        Productos a = productosService.findById(id);
+        if (a == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                a.setEstadoProducto(false);
+                return new ResponseEntity<>(productosService.save(a), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
+    }
+    @GetMapping("/listarProductosEstadoActivo")
+    public ResponseEntity<List<Productos>> FiltradoProdxEstadoActivo() {
+        List<Productos> prod = productosService.FiltradoProdxEstadoActivo();
+        return new ResponseEntity<>(prod, HttpStatus.OK);
+    }
+    @GetMapping("/listarProductosEstadoInactivo")
+    public ResponseEntity<List<Productos>> FiltradoProdxEstadoInactivo() {
+        List<Productos> prod = productosService.FiltradoProdxEstadoInactivo();
+        return new ResponseEntity<>(prod, HttpStatus.OK);
     }
 }

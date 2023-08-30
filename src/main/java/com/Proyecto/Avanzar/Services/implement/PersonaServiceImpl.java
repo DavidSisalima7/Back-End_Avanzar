@@ -33,5 +33,8 @@ public class PersonaServiceImpl extends GenericServiceImpl<Persona, Long> implem
         return repository.findByCedula(cedula);
     }
 
-
+    @Override
+    public Persona findByCorreo(String correo) {
+        return repository.findByCorreo(correo);
+    }
 }
