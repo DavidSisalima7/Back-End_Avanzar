@@ -326,6 +326,26 @@ public class UsuarioController {
         List<Usuario> usuarios = usuarioService.FiltradoUserxEstadoInactivo();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
+    @GetMapping("/listarClienteEstadoActivo")
+    public ResponseEntity<List<Usuario>> FiltradoClientexEstadoActivo() {
+        List<Usuario> usuarios = usuarioService.FiltradoClientexEstadoActivo();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
+    @GetMapping("/listarClienteEstadoInactivo")
+    public ResponseEntity<List<Usuario>> FiltradoClientexEstadoInactivo() {
+        List<Usuario> usuarios = usuarioService.FiltradoClientexEstadoInactivo();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
+    @GetMapping("/listarEmprendedorEstadoActivo")
+    public ResponseEntity<List<Usuario>> FiltradoEmpxEstadoActivo() {
+        List<Usuario> usuarios = usuarioService.FiltradoEmpxEstadoActivo();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
+    @GetMapping("/listarEmprendedorEstadoInactivo")
+    public ResponseEntity<List<Usuario>> FiltradoEmpxEstadoInactivo() {
+        List<Usuario> usuarios = usuarioService.FiltradoEmpxEstadoInactivo();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
 
     @GetMapping("/listarEmprendedores")
     public ResponseEntity<List<Usuario>> obtenerUsuariosConPersonaYEmprendedor() {
@@ -349,17 +369,26 @@ public class UsuarioController {
         try {
             // Verificar si la contraseña actual coincide con la almacenada en la base de datos
             if (!usuarioService.verificarContrasena(username, contrasenaActual)) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                 return ResponseEntity.ok().build();
             }
-
+             
             // Actualizar la contraseña en la base de datos
             usuarioService.actualizarContrasena(username, contrasenaNueva);
-
-            return ResponseEntity.ok().build(); // Respuesta exitosa (HTTP 200 OK)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+             // Respuesta exitosa (HTTP 200 OK)
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build(); // Respuesta de error (HTTP 400 Bad Request)
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Respuesta de error (HTTP 500 Internal Server Error)
         }
     }
+
+    @GetMapping("/usuariosPorPersonaCreada/{idPersona}")
+    public ResponseEntity<List<Usuario>> obtenerUsuariosPorPersona(@PathVariable Long idPersona) {
+        List<Usuario> usuarios = usuarioService.findUsuariosByPersonaId(idPersona);
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
+
+
 }

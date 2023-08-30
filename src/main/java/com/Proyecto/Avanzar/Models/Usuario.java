@@ -78,6 +78,8 @@ public class Usuario implements UserDetails {
 //        });
 //        return autoridades;
 //    }
+
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.usuarioRoles.stream()
                 .map(usuarioRol -> new Authority(usuarioRol.getRol().getRolNombre()))
