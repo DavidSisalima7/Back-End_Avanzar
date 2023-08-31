@@ -2,6 +2,7 @@ package com.Proyecto.Avanzar.Controllers;
 
 import com.Proyecto.Avanzar.Models.Productos;
 import com.Proyecto.Avanzar.Models.Servicios;
+import com.Proyecto.Avanzar.Models.Vendedor;
 import com.Proyecto.Avanzar.Services.service.ServiciosService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,5 +94,14 @@ public class ServiciosController {
     public ResponseEntity<List<Servicios>> FiltradoServxEstadoActivo() {
         List<Servicios> serv = serviciosService.FiltradoServxEstadoActivo();
         return new ResponseEntity<>(serv, HttpStatus.OK);
+    }
+
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<Servicios> getById(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<Servicios>(serviciosService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

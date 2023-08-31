@@ -3,6 +3,7 @@ package com.Proyecto.Avanzar.Controllers;
 
 import com.Proyecto.Avanzar.Models.Productos;
 import com.Proyecto.Avanzar.Models.Usuario;
+import com.Proyecto.Avanzar.Models.Vendedor;
 import com.Proyecto.Avanzar.Services.service.ProductosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -89,5 +90,15 @@ public class ProductosController {
     public ResponseEntity<List<Productos>> FiltradoProdxEstadoInactivo() {
         List<Productos> prod = productosService.FiltradoProdxEstadoInactivo();
         return new ResponseEntity<>(prod, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<Productos> getById(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<Productos>(productosService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

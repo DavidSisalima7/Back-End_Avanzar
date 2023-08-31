@@ -112,4 +112,13 @@ public class VendedorController {
 
         }
     }
+
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<Vendedor> getById(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<Vendedor>(vendedorService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
