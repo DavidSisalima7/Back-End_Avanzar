@@ -1,11 +1,10 @@
 package com.Proyecto.Avanzar.Controllers;
 
-import com.Proyecto.Avanzar.Models.Categoria;
-import com.Proyecto.Avanzar.Models.Productos;
-import com.Proyecto.Avanzar.Models.Publicaciones;
-import com.Proyecto.Avanzar.Services.service.CategoriaService;
-import com.Proyecto.Avanzar.Services.service.ProductosService;
-import com.Proyecto.Avanzar.Services.service.PublicacionesService;
+import com.Proyecto.Avanzar.Models.*;
+import com.Proyecto.Avanzar.Services.service.*;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.ElementCollection;
+
 @CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/api/publicaciones")
@@ -30,22 +31,39 @@ public class PublicacionesController {
     ProductosService productosService;
     @Autowired
     CategoriaService categoriaService;
+    @Autowired
+    CategoriaProductoService categoriaProductoService;
+    @Autowired
+    VendedorService vendedorService;
+
     @PostMapping("/registrar")
     public ResponseEntity<Publicaciones> crear(@RequestBody Publicaciones request) {
         try {
             // Crear una nueva instancia de Publicaciones a partir de la solicitud
             Publicaciones nuevaPublicacion = new Publicaciones();
+
             nuevaPublicacion.setEstado(true);
+            nuevaPublicacion.setTituloPublicacion("Nueva Publicacion");
             // Obtener el producto desde el servicio de productos (supongamos que tienes un servicio llamado productosService)
             Productos producto = new Productos();
+            producto.setNombreProducto("Nuevo Producto");
             producto.setEstadoProducto(true);
 
             Productos nuevoProducto = productosService.save(producto);
 
             Categoria categoria = categoriaService.findById(1L);
+
             nuevaPublicacion.setCategoria(categoria);
             // Asignar el producto a la nueva publicación
             nuevaPublicacion.setProductos(nuevoProducto);
+
+            Date fecha = new Date();
+            fecha = new Date(fecha.getTime());
+            nuevaPublicacion.setFechaPublicacion(fecha);
+
+            List<String> imagenesPredefinidas = new ArrayList<>();
+            nuevaPublicacion.setImagenes(imagenesPredefinidas);
+
 
             // Guardar la nueva publicación
             Publicaciones nuevaPublicacionGuardada = publicacionesService.save(nuevaPublicacion);
