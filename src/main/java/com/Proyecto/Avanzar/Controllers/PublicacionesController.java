@@ -1,10 +1,7 @@
 package com.Proyecto.Avanzar.Controllers;
 
 import com.Proyecto.Avanzar.Models.*;
-import com.Proyecto.Avanzar.Services.service.CategoriaProductoService;
-import com.Proyecto.Avanzar.Services.service.CategoriaService;
-import com.Proyecto.Avanzar.Services.service.ProductosService;
-import com.Proyecto.Avanzar.Services.service.PublicacionesService;
+import com.Proyecto.Avanzar.Services.service.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.ElementCollection;
+
 @CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/api/publicaciones")
@@ -33,26 +32,22 @@ public class PublicacionesController {
     ProductosService productosService;
     @Autowired
     CategoriaService categoriaService;
-
     @Autowired
     CategoriaProductoService categoriaProductoService;
+    @Autowired
+    VendedorService vendedorService;
 
     @PostMapping("/registrar")
     public ResponseEntity<Publicaciones> crear(@RequestBody Publicaciones request) {
         try {
             // Crear una nueva instancia de Publicaciones a partir de la solicitud
             Publicaciones nuevaPublicacion = new Publicaciones();
+
             nuevaPublicacion.setEstado(true);
             nuevaPublicacion.setTituloPublicacion("Nueva Publicacion");
-            List<String> imagenesVacias = new ArrayList<>();
-            nuevaPublicacion.setImagenes(imagenesVacias);
-
             // Obtener el producto desde el servicio de productos (supongamos que tienes un servicio llamado productosService)
             Productos producto = new Productos();
             producto.setNombreProducto("Nuevo Producto");
-            CategoriaProducto categoriaProducto = categoriaProductoService.findById(1L);
-
-            producto.setCategoriaProducto(categoriaProducto);
             producto.setEstadoProducto(true);
 
             Productos nuevoProducto = productosService.save(producto);
@@ -66,6 +61,10 @@ public class PublicacionesController {
             Date fecha = new Date();
             fecha = new Date(fecha.getTime());
             nuevaPublicacion.setFechaPublicacion(fecha);
+
+            List<String> imagenesPredefinidas = new ArrayList<>();
+            nuevaPublicacion.setImagenes(imagenesPredefinidas);
+
 
             // Guardar la nueva publicación
             Publicaciones nuevaPublicacionGuardada = publicacionesService.save(nuevaPublicacion);
