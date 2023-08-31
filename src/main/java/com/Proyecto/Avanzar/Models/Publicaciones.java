@@ -26,7 +26,7 @@ public class Publicaciones implements Serializable {
     private boolean estado;
     private Date fechaPublicacion;
 
-    //private boolean visible;
+    private boolean visible;
 
     @ElementCollection
     private List<String> imagenes;

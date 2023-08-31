@@ -1,6 +1,7 @@
 package com.Proyecto.Avanzar.Controllers;
 
 import com.Proyecto.Avanzar.Models.*;
+import com.Proyecto.Avanzar.Repository.PublicacionesRepository;
 import com.Proyecto.Avanzar.Services.service.*;
 
 import java.util.ArrayList;
@@ -36,6 +37,9 @@ public class PublicacionesController {
     CategoriaProductoService categoriaProductoService;
     @Autowired
     VendedorService vendedorService;
+
+    @Autowired
+    PublicacionesRepository publicacionesRepository;
 
     @PostMapping("/registrar")
     public ResponseEntity<Publicaciones> crear(@RequestBody Publicaciones request) {
@@ -85,8 +89,12 @@ public class PublicacionesController {
     }
 
 
+    @GetMapping("/visibles")
+    public List<Publicaciones> getPublicacionesVisibles() {
+        return publicacionesRepository.listar();
+    }
 
-    /*
+
     @PutMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
         Publicaciones a = publicacionesService.findById(id);
@@ -100,7 +108,7 @@ public class PublicacionesController {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-    }*/
+    }
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Publicaciones> actualizar(@PathVariable Long id,@RequestBody Publicaciones p) {
@@ -127,7 +135,8 @@ public class PublicacionesController {
 
         }
     }
-    
+
+    /*
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
 
@@ -139,7 +148,7 @@ public class PublicacionesController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Publicaciones> getById(@PathVariable("id") Long id) {
