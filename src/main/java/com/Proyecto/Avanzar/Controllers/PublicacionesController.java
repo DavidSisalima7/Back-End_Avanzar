@@ -53,6 +53,7 @@ public class PublicacionesController {
             // Obtener el producto desde el servicio de productos (supongamos que tienes un servicio llamado productosService)
             Productos producto = new Productos();
             producto.setNombreProducto("Nuevo Producto");
+            producto.setDescripcionProducto("Descripción del producto");
             producto.setEstadoProducto(true);
             producto.setMiniaturaProducto("");
             Productos nuevoProducto = productosService.save(producto);
@@ -121,10 +122,7 @@ public class PublicacionesController {
                 publicaciones.setTituloPublicacion(p.getTituloPublicacion());
                 publicaciones.setDescripcionPublicacion(p.getDescripcionPublicacion());
                 publicaciones.setEstado(p.isEstado());
-                publicaciones.setListalikes(p.getListalikes());
-                publicaciones.setListacomentarios(p.getListacomentarios());
                 publicaciones.setVendedor(p.getVendedor());
-                publicaciones.setProductos(p.getProductos());
 
                 return new ResponseEntity<>(publicacionesService.save(publicaciones), HttpStatus.CREATED);
             } catch (Exception e) {
