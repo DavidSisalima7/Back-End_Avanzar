@@ -1,6 +1,7 @@
 package com.Proyecto.Avanzar.Controllers;
 
 import com.Proyecto.Avanzar.Models.*;
+import com.Proyecto.Avanzar.Repository.PublicacionesRepository;
 import com.Proyecto.Avanzar.Services.service.*;
 
 import java.util.ArrayList;
@@ -37,6 +38,9 @@ public class PublicacionesController {
     @Autowired
     VendedorService vendedorService;
 
+    @Autowired
+    PublicacionesRepository publicacionesRepository;
+
     @PostMapping("/registrar")
     public ResponseEntity<Publicaciones> crear(@RequestBody Publicaciones request) {
         try {
@@ -45,11 +49,12 @@ public class PublicacionesController {
 
             nuevaPublicacion.setEstado(true);
             nuevaPublicacion.setTituloPublicacion("Nueva Publicacion");
+            nuevaPublicacion.setVisible(true);
             // Obtener el producto desde el servicio de productos (supongamos que tienes un servicio llamado productosService)
             Productos producto = new Productos();
             producto.setNombreProducto("Nuevo Producto");
             producto.setEstadoProducto(true);
-
+            producto.setMiniaturaProducto("");
             Productos nuevoProducto = productosService.save(producto);
 
             Categoria categoria = categoriaService.findById(1L);
@@ -85,8 +90,12 @@ public class PublicacionesController {
     }
 
 
+    @GetMapping("/visibles")
+    public List<Publicaciones> getPublicacionesVisibles() {
+        return publicacionesRepository.listar();
+    }
 
-    /*
+
     @PutMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
         Publicaciones a = publicacionesService.findById(id);
@@ -100,7 +109,7 @@ public class PublicacionesController {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-    }*/
+    }
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Publicaciones> actualizar(@PathVariable Long id,@RequestBody Publicaciones p) {
@@ -111,15 +120,12 @@ public class PublicacionesController {
             try {
                 publicaciones.setTituloPublicacion(p.getTituloPublicacion());
                 publicaciones.setDescripcionPublicacion(p.getDescripcionPublicacion());
-                publicaciones.setFechaPublicacion(p.getFechaPublicacion());
                 publicaciones.setEstado(p.isEstado());
                 publicaciones.setListalikes(p.getListalikes());
                 publicaciones.setListacomentarios(p.getListacomentarios());
                 publicaciones.setVendedor(p.getVendedor());
-                publicaciones.setCategoria(p.getCategoria());
                 publicaciones.setProductos(p.getProductos());
-                publicaciones.setServicios(p.getServicios());
-                
+
                 return new ResponseEntity<>(publicacionesService.save(publicaciones), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -127,7 +133,8 @@ public class PublicacionesController {
 
         }
     }
-    
+
+    /*
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
 
@@ -139,7 +146,7 @@ public class PublicacionesController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Publicaciones> getById(@PathVariable("id") Long id) {
