@@ -49,11 +49,12 @@ public class PublicacionesController {
 
             nuevaPublicacion.setEstado(true);
             nuevaPublicacion.setTituloPublicacion("Nueva Publicacion");
+            nuevaPublicacion.setVisible(true);
             // Obtener el producto desde el servicio de productos (supongamos que tienes un servicio llamado productosService)
             Productos producto = new Productos();
             producto.setNombreProducto("Nuevo Producto");
             producto.setEstadoProducto(true);
-
+            producto.setMiniaturaProducto("");
             Productos nuevoProducto = productosService.save(producto);
 
             Categoria categoria = categoriaService.findById(1L);
@@ -119,15 +120,12 @@ public class PublicacionesController {
             try {
                 publicaciones.setTituloPublicacion(p.getTituloPublicacion());
                 publicaciones.setDescripcionPublicacion(p.getDescripcionPublicacion());
-                publicaciones.setFechaPublicacion(p.getFechaPublicacion());
                 publicaciones.setEstado(p.isEstado());
                 publicaciones.setListalikes(p.getListalikes());
                 publicaciones.setListacomentarios(p.getListacomentarios());
                 publicaciones.setVendedor(p.getVendedor());
-                publicaciones.setCategoria(p.getCategoria());
                 publicaciones.setProductos(p.getProductos());
-                publicaciones.setServicios(p.getServicios());
-                
+
                 return new ResponseEntity<>(publicacionesService.save(publicaciones), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
