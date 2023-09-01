@@ -42,7 +42,7 @@ public class EmailController {
             contEmail.setSubject(e.getSubject());
             contEmail.setFrom("reservcompany5b@gmail.com");
             contEmail.setTo(e.getTo());
-            code=ramdomCode(9,7);
+            code=ramdomCode(5,5);
             if(!e.cargarHtml(code)){
                 return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
             }
@@ -61,7 +61,7 @@ public class EmailController {
         int let = ran.nextInt((max - min) + 1) + min;
         //updateFechaPasByEmail(email.getTo(),new Date)
         //generar un numero aleatorio de 7 a 13 cifras
-        String carac = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+";
+        String carac = "0123456789";
         SecureRandom sec = new SecureRandom();
         StringBuilder ramBui = new StringBuilder();
 
