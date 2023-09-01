@@ -5,14 +5,18 @@
 package com.Proyecto.Avanzar.Controllers;
 
 import com.Proyecto.Avanzar.Models.dto.EmailDto;
+
 import java.security.SecureRandom;
 import java.util.Random;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,20 +31,26 @@ public class EmailController {
     @Autowired
     private JavaMailSender mail;
 
-    @PostMapping("/sentCodeVerification")
+    @PostMapping("/sendCodeVerification")
     public ResponseEntity<EmailDto> enviarCorreo(@RequestBody EmailDto e) {
-
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setSubject(e.getSubject());
-        email.setTo(e.getTo());
-        email.setFrom("reservcompany5b@gmail.com");
-        email.setText(ramdomCode(9,7));
-        
+      
+        MimeMessage basEmail = mail.createMimeMessage();
+        String code="";
         try {
-            mail.send(email);
-            e.setText(email.getText());
+
+            MimeMessageHelper contEmail = new MimeMessageHelper(basEmail, true, "utf-8");
+            contEmail.setSubject(e.getSubject());
+            contEmail.setFrom("reservcompany5b@gmail.com");
+            contEmail.setTo(e.getTo());
+            code=ramdomCode(9,7);
+            if(!e.cargarHtml(code)){
+                return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            contEmail.setText(e.getText(), true);
+            mail.send(basEmail);
+            e.setText(code);
             return new ResponseEntity<>(e, HttpStatus.OK);
-        } catch (MailException exc) {
+        } catch (MessagingException ex) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
