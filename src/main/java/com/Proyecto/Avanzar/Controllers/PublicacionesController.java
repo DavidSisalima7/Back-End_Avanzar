@@ -31,6 +31,9 @@ public class PublicacionesController {
     PublicacionesService publicacionesService;
     @Autowired
     ProductosService productosService;
+
+    @Autowired
+    ServiciosService serviciosService;
     @Autowired
     CategoriaService categoriaService;
     @Autowired
@@ -81,6 +84,46 @@ public class PublicacionesController {
         }
     }
 
+    @PostMapping("/registrarServicios")
+    public ResponseEntity<Publicaciones> crearServicios(@RequestBody Publicaciones request) {
+        try {
+            // Crear una nueva instancia de Publicaciones a partir de la solicitud
+            Publicaciones nuevaPublicacion = new Publicaciones();
+
+            nuevaPublicacion.setEstado(true);
+            nuevaPublicacion.setTituloPublicacion("Nueva Publicacion");
+            nuevaPublicacion.setVisible(true);
+            // Obtener el producto desde el servicio de productos (supongamos que tienes un servicio llamado productosService)
+            Servicios servicios = new Servicios();
+            servicios.setNombreServicio("Nuevo Servicio");
+            servicios.setDescripcionServicio("Descripción del servicio");
+            servicios.setEstado(true);
+            servicios.setMiniaturaServicio("");
+            Servicios nuevoServicio = serviciosService.save(servicios);
+
+            Categoria categoria = categoriaService.findById(1L);
+
+            nuevaPublicacion.setCategoria(categoria);
+            // Asignar el producto a la nueva publicación
+            nuevaPublicacion.setServicios(nuevoServicio);
+
+            Date fecha = new Date();
+            fecha = new Date(fecha.getTime());
+            nuevaPublicacion.setFechaPublicacion(fecha);
+
+            List<String> imagenesPredefinidas = new ArrayList<>();
+            nuevaPublicacion.setImagenes(imagenesPredefinidas);
+
+
+            // Guardar la nueva publicación
+            Publicaciones nuevaPublicacionGuardada = publicacionesService.save(nuevaPublicacion);
+
+            return new ResponseEntity<>(nuevaPublicacionGuardada, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/listar")
     public ResponseEntity<List<Publicaciones>> obtenerLista() {
         try {
@@ -94,6 +137,16 @@ public class PublicacionesController {
     @GetMapping("/visibles")
     public List<Publicaciones> getPublicacionesVisibles() {
         return publicacionesRepository.listar();
+    }
+
+    @GetMapping("/listaPublicacionesXProductos")
+    public List<Publicaciones> getPublicacionesProductos() {
+        return publicacionesRepository.listarPublicacionesConProductos();
+    }
+
+    @GetMapping("/listaPublicacionesXServicios")
+    public List<Publicaciones> getPublicacionesServicios() {
+        return publicacionesRepository.listarPublicacionesConServicios();
     }
 
 

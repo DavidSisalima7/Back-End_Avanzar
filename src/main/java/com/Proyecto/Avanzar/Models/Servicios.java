@@ -24,6 +24,10 @@ public class Servicios implements Serializable {
     private double precioServicio;
     private boolean estado;
 
+    private int cantidadDisponible;
+    private int tiempoServicio;
+    private String miniaturaServicio;
+
     //Relaciones
     //Relacion Categoria Servicio
     @ManyToOne(fetch = FetchType.EAGER)

@@ -12,4 +12,11 @@ public interface PublicacionesRepository extends JpaRepository<Publicaciones, Lo
     @Query(value = "SELECT *\n" +
             "\tFROM publicaciones WHERE visible=true", nativeQuery = true)
     public List<Publicaciones> listar();
+
+    @Query(value = "SELECT * FROM publicaciones WHERE servicios_id_servicio IS NOT NULL AND visible=true", nativeQuery = true)
+    public List<Publicaciones> listarPublicacionesConServicios();
+
+    @Query(value = "SELECT * FROM publicaciones WHERE productos_id_producto IS NOT NULL AND visible=true", nativeQuery = true)
+    public List<Publicaciones> listarPublicacionesConProductos();
+
 }
