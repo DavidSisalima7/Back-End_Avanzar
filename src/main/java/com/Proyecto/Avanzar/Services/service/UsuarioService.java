@@ -32,4 +32,6 @@ public interface UsuarioService extends GenericService<Usuario, Long> {
     List<Usuario> FiltradoClientexEstadoInactivo();
 
     List<Usuario> findUsuariosByPersonaId(Long idPersona);
+    
+    int resetPass(String email, String newPass);
 }

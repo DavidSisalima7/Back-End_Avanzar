@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.annotation.Resource;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableScheduling
 @SpringBootApplication
