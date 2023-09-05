@@ -93,15 +93,21 @@ public class Persona_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-               persona.setDireccion(p.getDireccion());
+                persona.setDireccion(p.getDireccion());
                 persona.setCorreo(p.getCorreo());
                 persona.setCelular(p.getCelular());
                 persona.setPrimer_nombre(p.getPrimer_nombre());
+                persona.setSegundo_nombre(p.getSegundo_nombre());
+                persona.setPrimer_apellido(p.getPrimer_apellido());
+                persona.setSegundo_apellido(p.getSegundo_apellido());
+                persona.setGenero(p.getGenero());
+                persona.setNacionalidad(p.getNacionalidad());
+                persona.setFecha_nacimiento(p.getFecha_nacimiento());
                 persona.setDescripcion(p.getDescripcion());
                 persona.setEstado(p.isEstado());
+                persona.setListausuarios(p.getListausuarios());
                 
-                
-                
+              
                 return new ResponseEntity<>(Service.save(persona), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
