@@ -1,6 +1,7 @@
 package com.Proyecto.Avanzar.Controllers;
 
 
+import com.Proyecto.Avanzar.Models.CategoriaProducto;
 import com.Proyecto.Avanzar.Models.CategoriaServicio;
 import com.Proyecto.Avanzar.Services.service.CategoriaServicioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,15 @@ public class CategoriaServicioController {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
+        }
+    }
+
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<CategoriaServicio> getById(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<CategoriaServicio>(categoriaServicioService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

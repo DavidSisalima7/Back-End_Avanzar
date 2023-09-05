@@ -9,11 +9,11 @@ import java.util.List;
 
 public interface ProductosRepository extends JpaRepository<Productos, Long> {
     @Query("SELECT p FROM Productos p " +
-            "WHERE p.idProducto = :idProducto and p.estado = true")
+            "WHERE p.idProducto = :idProducto and p.estadoProducto = true")
     public Productos BuscarProductoActivoxId(Long idProducto);
 
-    @Query("SELECT p FROM Productos p ORDER BY p.estado desc")
+    @Query("SELECT p FROM Productos p ORDER BY p.estadoProducto desc")
     List<Productos> FiltradoProdxEstadoInactivo();
-    @Query("SELECT p FROM Productos p ORDER BY p.estado asc")
+    @Query("SELECT p FROM Productos p ORDER BY p.estadoProducto asc")
     List<Productos> FiltradoProdxEstadoActivo();
 }

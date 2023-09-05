@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,11 +21,15 @@ public class Publicaciones implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPublicacion;
-    private String Titulo;
-    private String descripcion;
+    private String tituloPublicacion;
+    private String descripcionPublicacion;
     private boolean estado;
-    private Date fecha;
-    private Date Hora;
+    private Date fechaPublicacion;
+
+    private boolean visible;
+
+    @ElementCollection
+    private List<String> imagenes;
     //Relaciones
     //Relacion Vendedor
     @ManyToOne(fetch = FetchType.EAGER)

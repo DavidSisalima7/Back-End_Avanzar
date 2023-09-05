@@ -3,6 +3,7 @@ package com.Proyecto.Avanzar.Controllers;
 
 import com.Proyecto.Avanzar.Models.CategoriaProducto;
 
+import com.Proyecto.Avanzar.Models.Publicaciones;
 import com.Proyecto.Avanzar.Services.service.CategoriaProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,6 @@ public class CategoriaProductoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                categoriaProducto.setNombreCategoria(p.getNombreCategoria());
                 categoriaProducto.setDescripcion(p.getDescripcion());
                 categoriaProducto.setEstado(p.isEstado());
                 return new ResponseEntity<>(categoriaProductoService.save(categoriaProducto), HttpStatus.CREATED);
@@ -55,6 +55,15 @@ public class CategoriaProductoController {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
+        }
+    }
+
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<CategoriaProducto> getById(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<CategoriaProducto>(categoriaProductoService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
