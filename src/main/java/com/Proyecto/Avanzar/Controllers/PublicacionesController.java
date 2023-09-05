@@ -45,82 +45,11 @@ public class PublicacionesController {
     PublicacionesRepository publicacionesRepository;
 
     @PostMapping("/registrar")
-    public ResponseEntity<Publicaciones> crear(@RequestBody Publicaciones request) {
+    public ResponseEntity<Publicaciones> registrarPublicacion(@RequestBody Publicaciones publicacion) {
         try {
-            // Crear una nueva instancia de Publicaciones a partir de la solicitud
-            Publicaciones nuevaPublicacion = new Publicaciones();
-
-            nuevaPublicacion.setEstado(true);
-            nuevaPublicacion.setTituloPublicacion("Nueva Publicacion");
-            nuevaPublicacion.setVisible(true);
-            // Obtener el producto desde el servicio de productos (supongamos que tienes un servicio llamado productosService)
-            Productos producto = new Productos();
-            producto.setNombreProducto("Nuevo Producto");
-            producto.setDescripcionProducto("Descripción del producto");
-            producto.setEstadoProducto(true);
-            producto.setMiniaturaProducto("");
-            Productos nuevoProducto = productosService.save(producto);
-
-            Categoria categoria = categoriaService.findById(1L);
-
-            nuevaPublicacion.setCategoria(categoria);
-            // Asignar el producto a la nueva publicación
-            nuevaPublicacion.setProductos(nuevoProducto);
-
-            Date fecha = new Date();
-            fecha = new Date(fecha.getTime());
-            nuevaPublicacion.setFechaPublicacion(fecha);
-
-            List<String> imagenesPredefinidas = new ArrayList<>();
-            nuevaPublicacion.setImagenes(imagenesPredefinidas);
-
-
-            // Guardar la nueva publicación
-            Publicaciones nuevaPublicacionGuardada = publicacionesService.save(nuevaPublicacion);
-
-            return new ResponseEntity<>(nuevaPublicacionGuardada, HttpStatus.CREATED);
+            return new ResponseEntity<>(publicacionesService.save(publicacion), HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PostMapping("/registrarServicios")
-    public ResponseEntity<Publicaciones> crearServicios(@RequestBody Publicaciones request) {
-        try {
-            // Crear una nueva instancia de Publicaciones a partir de la solicitud
-            Publicaciones nuevaPublicacion = new Publicaciones();
-
-            nuevaPublicacion.setEstado(true);
-            nuevaPublicacion.setTituloPublicacion("Nueva Publicacion");
-            nuevaPublicacion.setVisible(true);
-            // Obtener el producto desde el servicio de productos (supongamos que tienes un servicio llamado productosService)
-            Servicios servicios = new Servicios();
-            servicios.setNombreServicio("Nuevo Servicio");
-            servicios.setDescripcionServicio("Descripción del servicio");
-            servicios.setEstado(true);
-            servicios.setMiniaturaServicio("");
-            Servicios nuevoServicio = serviciosService.save(servicios);
-
-            Categoria categoria = categoriaService.findById(1L);
-
-            nuevaPublicacion.setCategoria(categoria);
-            // Asignar el producto a la nueva publicación
-            nuevaPublicacion.setServicios(nuevoServicio);
-
-            Date fecha = new Date();
-            fecha = new Date(fecha.getTime());
-            nuevaPublicacion.setFechaPublicacion(fecha);
-
-            List<String> imagenesPredefinidas = new ArrayList<>();
-            nuevaPublicacion.setImagenes(imagenesPredefinidas);
-
-
-            // Guardar la nueva publicación
-            Publicaciones nuevaPublicacionGuardada = publicacionesService.save(nuevaPublicacion);
-
-            return new ResponseEntity<>(nuevaPublicacionGuardada, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
