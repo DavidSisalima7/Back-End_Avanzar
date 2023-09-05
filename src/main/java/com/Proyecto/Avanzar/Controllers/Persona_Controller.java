@@ -84,7 +84,29 @@ public class Persona_Controller {
 
         }
     }
-    
+    ///////////////actualizar 2.0
+    @PutMapping("/actualizar1/{cedula}")
+    public ResponseEntity<Persona> actualizar1(@PathVariable String cedula,@RequestBody Persona p) {
+        System.out.println("entrar ");
+        Persona persona = Service.findByCedula(cedula);
+        if (persona == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                persona.setDireccion(p.getDireccion());
+                persona.setCorreo(p.getCorreo());
+                persona.setCelular(p.getCelular());
+                persona.setPrimer_nombre(p.getPrimer_nombre());
+                persona.setSegundo_nombre(p.getSegundo_nombre());
+                persona.setPrimer_apellido(p.getPrimer_apellido());
+                persona.setEstado(p.isEstado());
+                return new ResponseEntity<>(Service.save(persona), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
+    }
     @GetMapping("/buscarpersonaId/{id}")
     public ResponseEntity<Persona> obtenerPersonaUsuarioId(@PathVariable("id") Long id) {
         try {
