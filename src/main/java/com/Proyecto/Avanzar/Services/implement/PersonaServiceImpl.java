@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PersonaServiceImpl extends GenericServiceImpl<Persona, Long> implements PersonaService {
@@ -25,7 +26,7 @@ public class PersonaServiceImpl extends GenericServiceImpl<Persona, Long> implem
 
     @Override
     public Persona obtenerPersonaPorIdUsuario(Long id) {
-        return repository.obtenerPersonaUsuario(id);    
+        return repository.obtenerPersonaUsuario(id);
     }
 
     @Override
@@ -36,5 +37,10 @@ public class PersonaServiceImpl extends GenericServiceImpl<Persona, Long> implem
     @Override
     public Persona findByCorreo(String correo) {
         return repository.findByCorreo(correo);
+    }
+
+    @Override
+    public Map<String, Object> contarRegistrosEnTablas() {
+        return repository.contarRegistrosEnTablas();
     }
 }
