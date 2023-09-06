@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -29,7 +26,7 @@ public class Publicaciones implements Serializable {
     private boolean visible;
 
     @ElementCollection
-    private List<String> imagenes;
+    private List<String> imagenes = new ArrayList<>();
     //Relaciones
     //Relacion Vendedor
     @ManyToOne(fetch = FetchType.EAGER)
