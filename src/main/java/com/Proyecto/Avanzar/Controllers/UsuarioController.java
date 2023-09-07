@@ -285,7 +285,6 @@ public class UsuarioController {
                 usu.setPassword(this.bCryptPasswordEncoder.encode(p.getPassword()));
                 usu.setListacomentarios(p.getListacomentarios());
                 usu.setPersona(p.getPersona());
-                usu.setListavendedor(p.getListavendedor());
                 usu.setListaLikes(p.getListaLikes());
                 usu.setUsuarioRoles(p.getUsuarioRoles());
                 return new ResponseEntity<>(usuarioService.save(usu), HttpStatus.CREATED);

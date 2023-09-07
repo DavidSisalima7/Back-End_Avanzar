@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VendedorServiceImpl extends GenericServiceImpl<Vendedor, Long> implements VendedorService {
     @Autowired
@@ -15,5 +17,9 @@ public class VendedorServiceImpl extends GenericServiceImpl<Vendedor, Long> impl
     @Override
     public CrudRepository<Vendedor, Long> getDao() {
         return vendedorDao;
+    }
+
+    public List<Vendedor> getVendedoresByUsuarioId(Long userId) {
+        return vendedorDao.findByUsuarioId(userId);
     }
 }

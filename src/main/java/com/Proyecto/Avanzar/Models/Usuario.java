@@ -1,6 +1,7 @@
 package com.Proyecto.Avanzar.Models;
 
 import com.Proyecto.Avanzar.Security.Authority;
+import com.Proyecto.Avanzar.Services.implement.UsuarioServiceImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -50,7 +51,7 @@ public class Usuario implements UserDetails {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
     @JsonIgnore
-    private Set<Vendedor> listavendedor = new HashSet<>();
+    private Set<Vendedor> listaVendedor = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
     @JsonIgnore
@@ -102,7 +103,6 @@ public class Usuario implements UserDetails {
                 ", visible=" + visible +
                 ", usuarioRoles=" + usuarioRoles +
                 ", listaLikes=" + listaLikes +
-                ", listavendedor=" + listavendedor +
                 ", listacomentarios=" + listacomentarios +
                 '}';
     }
