@@ -102,7 +102,6 @@ public class VendedorController {
             try {
                 subscripcion.setNombreEmprendimiento(p.getNombreEmprendimiento());
                 subscripcion.setListapublicaciones(p.getListapublicaciones());
-                subscripcion.setUsuario(p.getUsuario());
                 subscripcion.setDetalleSubscripcion(p.getDetalleSubscripcion());
                 
                 return new ResponseEntity<>(vendedorService.save(subscripcion), HttpStatus.CREATED);
@@ -120,5 +119,11 @@ public class VendedorController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    @GetMapping("/usuario/{userId}")
+    public List<Vendedor> getVendedoresByUserId(@PathVariable Long userId) {
+        return vendedorService.getVendedoresByUsuarioId(userId);
     }
 }
