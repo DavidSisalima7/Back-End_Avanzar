@@ -104,6 +104,7 @@ public class Usuario implements UserDetails {
                 ", visible=" + visible +
                 ", usuarioRoles=" + usuarioRoles +
                 ", listaLikes=" + listaLikes +
+                ", listavendedor=" + listaVendedor +
                 ", listacomentarios=" + listacomentarios +
                 '}';
     }

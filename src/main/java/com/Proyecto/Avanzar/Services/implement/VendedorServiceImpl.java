@@ -1,5 +1,6 @@
 package com.Proyecto.Avanzar.Services.implement;
 
+import com.Proyecto.Avanzar.Models.Persona;
 import com.Proyecto.Avanzar.Models.Vendedor;
 import com.Proyecto.Avanzar.Repository.VendedorRepository;
 import com.Proyecto.Avanzar.Services.service.VendedorService;
@@ -19,7 +20,12 @@ public class VendedorServiceImpl extends GenericServiceImpl<Vendedor, Long> impl
         return vendedorDao;
     }
 
-    public List<Vendedor> getVendedoresByUsuarioId(Long userId) {
-        return vendedorDao.findByUsuarioId(userId);
+
+    @Override
+    public Vendedor getVendedoresByUsuarioId(Long userId) {
+        return vendedorDao.getVendedoresByUsuarioId(userId);
     }
+
+
+
 }

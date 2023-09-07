@@ -12,4 +12,6 @@ public interface VendedorRepository extends JpaRepository<Vendedor, Long> {
 
     @Query(value = "SELECT * FROM vendedor WHERE usuario_id = :userId", nativeQuery = true)
     List<Vendedor> findByUsuarioId(@Param("userId") Long userId);
+
+    Vendedor getVendedoresByUsuarioId(Long userId);
 }
