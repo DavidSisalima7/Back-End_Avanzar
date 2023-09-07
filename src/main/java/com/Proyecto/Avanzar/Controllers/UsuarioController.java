@@ -282,12 +282,13 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                usu.setId(p.getId());
+                usu.setEnabled(p.isEnabled());
+                usu.setName(p.getName());
+                usu.setVisible(p.isVisible());
+                usu.setUsername(p.getUsername());
                 usu.setPassword(this.bCryptPasswordEncoder.encode(p.getPassword()));
-                usu.setListacomentarios(p.getListacomentarios());
-                usu.setPersona(p.getPersona());
-                usu.setListavendedor(p.getListavendedor());
-                usu.setListaLikes(p.getListaLikes());
-                usu.setUsuarioRoles(p.getUsuarioRoles());
+
                 return new ResponseEntity<>(usuarioService.save(usu), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -391,5 +392,14 @@ public class UsuarioController {
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
+
+    @GetMapping("/buscarUser/{id}")
+    public ResponseEntity<Usuario> obtenerUsuarioPorId(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(usuarioService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

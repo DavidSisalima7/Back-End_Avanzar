@@ -51,6 +51,7 @@ public class Usuario implements UserDetails {
     private Set<Vendedor> listavendedor = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
+
     @JsonIgnore
     private Set<Comentarios> listacomentarios = new HashSet<>();
 
@@ -103,4 +104,5 @@ public class Usuario implements UserDetails {
                 ", listacomentarios=" + listacomentarios +
                 '}';
     }
+
 }
