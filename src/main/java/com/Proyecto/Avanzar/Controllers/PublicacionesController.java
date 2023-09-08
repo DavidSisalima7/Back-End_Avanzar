@@ -127,20 +127,14 @@ public class PublicacionesController {
         }
     }
 
-
-    @GetMapping("/visibles")
-    public List<Publicaciones> getPublicacionesVisibles() {
-        return publicacionesRepository.listar();
+    @GetMapping("/listaPublicacionesXProductos/{vendedorId}")
+    public List<Publicaciones> getPublicacionesProductos(@PathVariable Long vendedorId) {
+        return publicacionesRepository.listarPublicacionesConProductos(vendedorId);
     }
 
-    @GetMapping("/listaPublicacionesXProductos")
-    public List<Publicaciones> getPublicacionesProductos() {
-        return publicacionesRepository.listarPublicacionesConProductos();
-    }
-
-    @GetMapping("/listaPublicacionesXServicios")
-    public List<Publicaciones> getPublicacionesServicios() {
-        return publicacionesRepository.listarPublicacionesConServicios();
+    @GetMapping("/listaPublicacionesXServicios/{vendedorId}")
+    public List<Publicaciones> getPublicacionesServicios(@PathVariable Long vendedorId) {
+        return publicacionesRepository.listarPublicacionesConServicios(vendedorId);
     }
 
 
