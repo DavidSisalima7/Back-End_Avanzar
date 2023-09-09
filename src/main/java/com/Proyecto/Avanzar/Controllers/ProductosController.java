@@ -99,4 +99,10 @@ public class ProductosController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/ProductoxEmprendedora/{id}")
+    public ResponseEntity<List<Productos>> ProductosxEmprendedora(@PathVariable("id") Long id) {
+        List<Productos> prod = productosService.ProductosxEmprendedora(id);
+        return new ResponseEntity<>(prod, HttpStatus.OK);
+    }
 }

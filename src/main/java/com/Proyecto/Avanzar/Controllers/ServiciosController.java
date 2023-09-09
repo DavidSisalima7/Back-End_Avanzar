@@ -102,4 +102,9 @@ public class ServiciosController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/ServicioxEmprendedora/{id}")
+    public ResponseEntity<List<Servicios>> ServicioxEmprendedora(@PathVariable("id") Long id) {
+        List<Servicios> serv = serviciosService.ServicioxEmprendedora(id);
+        return new ResponseEntity<>(serv, HttpStatus.OK);
+    }
 }

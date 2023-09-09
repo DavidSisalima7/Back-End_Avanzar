@@ -31,4 +31,5 @@ public interface UsuarioService extends GenericService<Usuario, Long> {
     //cliente
     List<Usuario> FiltradoClientexEstadoActivo();
     List<Usuario> FiltradoClientexEstadoInactivo();
+
 }
