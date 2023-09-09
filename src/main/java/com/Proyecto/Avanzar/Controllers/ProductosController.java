@@ -1,6 +1,7 @@
 package com.Proyecto.Avanzar.Controllers;
 
 
+import com.Proyecto.Avanzar.Models.Persona;
 import com.Proyecto.Avanzar.Models.Productos;
 import com.Proyecto.Avanzar.Models.Usuario;
 import com.Proyecto.Avanzar.Services.service.ProductosService;
@@ -89,5 +90,13 @@ public class ProductosController {
     public ResponseEntity<List<Productos>> FiltradoProdxEstadoInactivo() {
         List<Productos> prod = productosService.FiltradoProdxEstadoInactivo();
         return new ResponseEntity<>(prod, HttpStatus.OK);
+    }
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<Productos> getById(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(productosService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

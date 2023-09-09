@@ -59,7 +59,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/usuarios/buscaruser/{username}/**","/api/usuarios/buscar/{username}/**","/api/usuariorol/listarol/**","/api/usuariorol/nombreRol/{usuarioId}/**",
                         "/swagger-ui/**","api/usuarios/actualizarUsuarioConFoto/{usuarioId}/**",
                         "/api/categoria/registrar/**", "/api/categoriaProducto/registrar/**", "/api/categoriaServicio/registrar/**",
-                        "/api/comentarios/registrar/**", "/api/likes/registrar/**", "/api/productos/registrar/**","/api/publicaciones/registrar/**",
+                        "/api/comentarios/registrar/**", "/api/likes/registrar/**", "/api/productos/**","/api/publicaciones/registrar/**",
                         "/api/servicios/registrar/**", "/api/subscripcion/registrar/**", "/api/tipoLike/registrar/**", "/api/vendedor/registrar/**","/api/usuarios/upload/**","/api/usuarios/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
