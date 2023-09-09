@@ -54,8 +54,8 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/api/login/generartoken","/api/login/usuarioActual/**","/api/login/signInWithToken",
-                        "/api/persona/registrar/**","/api/persona/listar/**", "/api/persona/listarResponsable/**",
-                        "/api/usuarios/**","/api/usuarios/registrar/{rolId}/**","/api/usuarios/registrarConFoto/{rolId}/**",
+                        "/api/persona/registrar/**","/api/persona/listar/**", "/api/persona/actualizar/{id}/**" , "/api/persona/actualizarP/{id}/**" , "/api/persona/listarResponsable/**",
+                        "/api/usuarios/**","/api/usuarios/registrar/{rolId}/**","/api/usuarios/actualizar/{id}/**","/api/usuarios/registrarConFoto/{rolId}/**",
                         "/api/usuarios/buscaruser/{username}/**","/api/usuarios/buscar/{username}/**","/api/usuariorol/listarol/**","/api/usuariorol/nombreRol/{usuarioId}/**",
                         "/swagger-ui/**","api/usuarios/actualizarUsuarioConFoto/{usuarioId}/**",
                         "/api/categoria/registrar/**", "/api/categoriaProducto/registrar/**", "/api/categoriaServicio/registrar/**",

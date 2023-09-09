@@ -1,5 +1,6 @@
 package com.Proyecto.Avanzar.Services.service;
 
+import com.Proyecto.Avanzar.Models.Persona;
 import com.Proyecto.Avanzar.Models.Usuario;
 
 import java.util.List;
