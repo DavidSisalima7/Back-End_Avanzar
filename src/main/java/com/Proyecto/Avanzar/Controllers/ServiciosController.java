@@ -94,4 +94,12 @@ public class ServiciosController {
         List<Servicios> serv = serviciosService.FiltradoServxEstadoActivo();
         return new ResponseEntity<>(serv, HttpStatus.OK);
     }
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<Servicios> getById(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(serviciosService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

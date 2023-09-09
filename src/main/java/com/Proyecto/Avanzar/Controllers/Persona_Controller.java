@@ -86,34 +86,6 @@ public class Persona_Controller {
 
         }
     }
-    ///////////////actualizar 2.0
-    @PutMapping("/actualizar1/{cedula}")
-    public ResponseEntity<Persona> actualizar1(@PathVariable String cedula,@RequestBody Persona p) {
-        System.out.println("entrar ");
-        Persona persona = Service.findByCedula(cedula);
-//User
-//    @PutMapping("/actualizar/{id}")
-//    public ResponseEntity<Persona> actualizar(@PathVariable Long id,@RequestBody Persona p) {
-//        Persona persona = Service.findById(id);
-//        if (persona == null) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        } else {
-//            try {
-//                persona.setDireccion(p.getDireccion());
-//                persona.setCorreo(p.getCorreo());
-//                persona.setCelular(p.getCelular());
-//                persona.setPrimer_nombre(p.getPrimer_nombre());
-//                persona.setPrimer_apellido(p.getPrimer_apellido());
-//                persona.setSegundo_apellido(p.getSegundo_apellido());
-//                persona.setListausuarios(p.getListausuarios());
-//                return new ResponseEntity<>(Service.save(persona), HttpStatus.CREATED);
-//            } catch (Exception e) {
-//                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//            }
-//
-//        }
-//    }
-
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Persona> actualizar(@PathVariable Long id, @RequestBody Persona p) {
         Persona persona = Service.findById(id);
@@ -172,8 +144,6 @@ public class Persona_Controller {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
-        }
-    }
         }
     }
 
