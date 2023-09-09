@@ -1,6 +1,8 @@
 package com.Proyecto.Avanzar.Services.implement;
 
+import com.Proyecto.Avanzar.Models.Persona;
 import com.Proyecto.Avanzar.Models.Usuario;
+import com.Proyecto.Avanzar.Repository.PersonaRepository;
 import com.Proyecto.Avanzar.Repository.UsuarioRepository;
 import com.Proyecto.Avanzar.Services.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long> implem
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private PersonaRepository personaRepository;
+
     @Override
     public CrudRepository<Usuario, Long> getDao() {
         return usuarioRepository;
@@ -25,6 +30,9 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long> implem
     public Usuario obtenerUsuario(String username) {
         return usuarioRepository.findByUsername(username);
     }
+
+
+
     @Override
     public Usuario findAllByUsername(String username) {
         return usuarioRepository.findAllByUsername(username);
