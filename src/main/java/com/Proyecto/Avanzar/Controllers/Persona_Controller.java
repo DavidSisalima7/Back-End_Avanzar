@@ -1,7 +1,9 @@
 package com.Proyecto.Avanzar.Controllers;
 
 import com.Proyecto.Avanzar.Models.Persona;
+import com.Proyecto.Avanzar.Models.Usuario;
 import com.Proyecto.Avanzar.Services.service.PersonaService;
+import com.Proyecto.Avanzar.Services.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import java.util.Map;
 public class Persona_Controller {
     @Autowired
     PersonaService Service;
+    @Autowired
+    UsuarioService usuarioS;
 
     @PostMapping("/registrar")
     public ResponseEntity<Persona> crear(@RequestBody Persona r) {
@@ -85,9 +89,27 @@ public class Persona_Controller {
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Persona persona) {
         return Service.delete(id);
     }
+//Persona
+    @PutMapping("/actualizarP/{id}")
+    public ResponseEntity<Usuario> actualizarUser(@PathVariable Long id, @RequestBody Usuario p) {
+        Usuario usuario = usuarioS.findById(id);
+        if (usuario == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                if(p.getName() != null){
+                    usuario.setName(p.getName());
 
+                }
+                return new ResponseEntity<>(usuarioS.save(usuario), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
+    }
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Persona> actualizar(@PathVariable Long id,@RequestBody Persona p) {
+    public ResponseEntity<Persona> actualizar(@PathVariable Long id, @RequestBody Persona p) {
         Persona persona = Service.findById(id);
         if (persona == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -114,7 +136,8 @@ public class Persona_Controller {
 
         }
     }
-    
+
+
     @GetMapping("/buscarpersonaId/{id}")
     public ResponseEntity<Persona> obtenerPersonaUsuarioId(@PathVariable("id") Long id) {
         try {

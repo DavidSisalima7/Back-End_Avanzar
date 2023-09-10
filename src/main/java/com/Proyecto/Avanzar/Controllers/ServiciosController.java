@@ -95,13 +95,17 @@ public class ServiciosController {
         List<Servicios> serv = serviciosService.FiltradoServxEstadoActivo();
         return new ResponseEntity<>(serv, HttpStatus.OK);
     }
-
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Servicios> getById(@PathVariable("id") Long id) {
         try {
-            return new ResponseEntity<Servicios>(serviciosService.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(serviciosService.findById(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @GetMapping("/ServicioxEmprendedora/{id}")
+    public ResponseEntity<List<Servicios>> ServicioxEmprendedora(@PathVariable("id") Long id) {
+        List<Servicios> serv = serviciosService.ServicioxEmprendedora(id);
+        return new ResponseEntity<>(serv, HttpStatus.OK);
     }
 }
