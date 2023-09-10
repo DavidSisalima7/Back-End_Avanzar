@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = { "*" })
 @RestController
@@ -92,12 +93,20 @@ public class Persona_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                persona.setDireccion(p.getDireccion());
-                persona.setCorreo(p.getCorreo());
+                persona.setCedula(p.getCedula());
                 persona.setCelular(p.getCelular());
-                persona.setPrimer_nombre(p.getPrimer_nombre());
+                persona.setCorreo(p.getCorreo());
+                persona.setDescripcion(p.getDescripcion());
+                persona.setDireccion(p.getDireccion());
+                persona.setFecha_nacimiento(p.getFecha_nacimiento());
+                persona.setGenero(p.getGenero());
+                persona.setNacionalidad(p.getNacionalidad());
                 persona.setPrimer_apellido(p.getPrimer_apellido());
-                persona.setListausuarios(p.getListausuarios());
+                persona.setPrimer_nombre(p.getPrimer_nombre());
+                persona.setSegundo_apellido(p.getSegundo_apellido());
+                persona.setSegundo_nombre(p.getSegundo_nombre());
+
+
                 return new ResponseEntity<>(Service.save(persona), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -113,6 +122,17 @@ public class Persona_Controller {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/data1")
+    public ResponseEntity<Map<String, Object>> obtenerResumen() {
+        try {
+            Map<String, Object> resumen = Service.contarRegistrosEnTablas();
+            return new ResponseEntity<>(resumen, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 }

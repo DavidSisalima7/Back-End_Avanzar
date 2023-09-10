@@ -1,7 +1,9 @@
 package com.Proyecto.Avanzar.Models;
 
 import com.Proyecto.Avanzar.Security.Authority;
+import com.Proyecto.Avanzar.Services.implement.UsuarioServiceImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "usuarios")
+
 public class Usuario implements UserDetails {
 
     @Id
@@ -48,22 +51,24 @@ public class Usuario implements UserDetails {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
     @JsonIgnore
-    private Set<Vendedor> listavendedor = new HashSet<>();
+    private Set<Vendedor> listaVendedor = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
+
     @JsonIgnore
     private Set<Comentarios> listacomentarios = new HashSet<>();
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
@@ -99,8 +104,9 @@ public class Usuario implements UserDetails {
                 ", visible=" + visible +
                 ", usuarioRoles=" + usuarioRoles +
                 ", listaLikes=" + listaLikes +
-                ", listavendedor=" + listavendedor +
+                ", listavendedor=" + listaVendedor +
                 ", listacomentarios=" + listacomentarios +
                 '}';
     }
+
 }

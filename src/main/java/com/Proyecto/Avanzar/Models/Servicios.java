@@ -25,7 +25,7 @@ public class Servicios implements Serializable {
     private boolean estado;
 
     private int cantidadDisponible;
-    private int tiempoServicio;
+    private String tiempoServicio;
     private String miniaturaServicio;
 
     //Relaciones

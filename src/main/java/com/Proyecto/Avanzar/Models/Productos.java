@@ -25,7 +25,7 @@ public class Productos implements Serializable {
     private String descripcionProducto;
     private boolean estadoProducto;
 
-    private double pesoProducto;
+    private String pesoProducto;
     private String miniaturaProducto;
 
 

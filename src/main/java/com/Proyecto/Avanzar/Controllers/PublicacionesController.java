@@ -4,31 +4,39 @@ import com.Proyecto.Avanzar.Models.*;
 import com.Proyecto.Avanzar.Repository.PublicacionesRepository;
 import com.Proyecto.Avanzar.Services.service.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.persistence.ElementCollection;
+import javax.servlet.http.HttpServletRequest;
 
 @CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/api/publicaciones")
 public class PublicacionesController {
+
+    @Autowired
+    private  StorageService storageService;
     @Autowired
     PublicacionesService publicacionesService;
+
     @Autowired
     ProductosService productosService;
 
@@ -44,83 +52,69 @@ public class PublicacionesController {
     @Autowired
     PublicacionesRepository publicacionesRepository;
 
-    @PostMapping("/registrar")
-    public ResponseEntity<Publicaciones> crear(@RequestBody Publicaciones request) {
+    //Metodo para registrar una publicacion con sus respectivas fotos
+    @PostMapping("/registrarConFoto")
+    public ResponseEntity<Publicaciones> crear(
+            @RequestPart("publicacion") String publicacionJson,
+            @RequestPart(value = "files", required = false) List<MultipartFile> multipartFiles,
+            HttpServletRequest request
+    ) {
         try {
-            // Crear una nueva instancia de Publicaciones a partir de la solicitud
-            Publicaciones nuevaPublicacion = new Publicaciones();
-
-            nuevaPublicacion.setEstado(true);
-            nuevaPublicacion.setTituloPublicacion("Nueva Publicacion");
-            nuevaPublicacion.setVisible(true);
-            // Obtener el producto desde el servicio de productos (supongamos que tienes un servicio llamado productosService)
-            Productos producto = new Productos();
-            producto.setNombreProducto("Nuevo Producto");
-            producto.setDescripcionProducto("Descripción del producto");
-            producto.setEstadoProducto(true);
-            producto.setMiniaturaProducto("");
-            Productos nuevoProducto = productosService.save(producto);
-
-            Categoria categoria = categoriaService.findById(1L);
-
-            nuevaPublicacion.setCategoria(categoria);
-            // Asignar el producto a la nueva publicación
-            nuevaPublicacion.setProductos(nuevoProducto);
-
-            Date fecha = new Date();
-            fecha = new Date(fecha.getTime());
-            nuevaPublicacion.setFechaPublicacion(fecha);
-
-            List<String> imagenesPredefinidas = new ArrayList<>();
-            nuevaPublicacion.setImagenes(imagenesPredefinidas);
+            ObjectMapper objectMapper = new ObjectMapper();
+            Publicaciones r = objectMapper.readValue(publicacionJson, Publicaciones.class);
+            System.out.println("Publicacion convertida JSON: " + r.toString());
 
 
-            // Guardar la nueva publicación
-            Publicaciones nuevaPublicacionGuardada = publicacionesService.save(nuevaPublicacion);
+                if (multipartFiles != null && !multipartFiles.isEmpty()) {
+                    List<String> urls = new ArrayList<>();
 
-            return new ResponseEntity<>(nuevaPublicacionGuardada, HttpStatus.CREATED);
+                    for (MultipartFile multipartFile : multipartFiles) {
+                        String path = storageService.store(multipartFile);
+                        String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
+                        String url = ServletUriComponentsBuilder
+                                .fromHttpUrl(host)
+                                .path("/api/publicaciones/")
+                                .path(path)
+                                .toUriString();
+                        urls.add(url);
+                    }
+
+                    r.setImagenes(urls);
+                } else {
+                    List<String> imagenesPredefinidas = new ArrayList<>();
+                    r.setImagenes(imagenesPredefinidas);
+                }
+                return new ResponseEntity<>(publicacionesService.save(r), HttpStatus.CREATED);
+
+
         } catch (Exception e) {
+            System.out.println("Error al convertir el JSON de la publicación.");
+            System.out.println(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PostMapping("/registrarServicios")
-    public ResponseEntity<Publicaciones> crearServicios(@RequestBody Publicaciones request) {
+    //Metodo para recuperar la imagen desde el sistema de archivos
+    @GetMapping("{filename:.+}")
+    public ResponseEntity<Resource> getFile(@PathVariable String filename) throws IOException {
+        Resource file=storageService.loadAsResource(filename);
+        String contentType= Files.probeContentType(file.getFile().toPath());
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_TYPE,contentType)
+                .body(file);
+
+    }
+
+   
+
+
+    @PostMapping("/registrar")
+    public ResponseEntity<Publicaciones> registrarPublicacion(@RequestBody Publicaciones publicacion) {
         try {
-            // Crear una nueva instancia de Publicaciones a partir de la solicitud
-            Publicaciones nuevaPublicacion = new Publicaciones();
-
-            nuevaPublicacion.setEstado(true);
-            nuevaPublicacion.setTituloPublicacion("Nueva Publicacion");
-            nuevaPublicacion.setVisible(true);
-            // Obtener el producto desde el servicio de productos (supongamos que tienes un servicio llamado productosService)
-            Servicios servicios = new Servicios();
-            servicios.setNombreServicio("Nuevo Servicio");
-            servicios.setDescripcionServicio("Descripción del servicio");
-            servicios.setEstado(true);
-            servicios.setMiniaturaServicio("");
-            Servicios nuevoServicio = serviciosService.save(servicios);
-
-            Categoria categoria = categoriaService.findById(1L);
-
-            nuevaPublicacion.setCategoria(categoria);
-            // Asignar el producto a la nueva publicación
-            nuevaPublicacion.setServicios(nuevoServicio);
-
-            Date fecha = new Date();
-            fecha = new Date(fecha.getTime());
-            nuevaPublicacion.setFechaPublicacion(fecha);
-
-            List<String> imagenesPredefinidas = new ArrayList<>();
-            nuevaPublicacion.setImagenes(imagenesPredefinidas);
-
-
-            // Guardar la nueva publicación
-            Publicaciones nuevaPublicacionGuardada = publicacionesService.save(nuevaPublicacion);
-
-            return new ResponseEntity<>(nuevaPublicacionGuardada, HttpStatus.CREATED);
+            return new ResponseEntity<>(publicacionesService.save(publicacion), HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -65,11 +65,10 @@ public class VendedorController {
             detalleSubscripcion.setSubscripcion(subscripcion);
             detalleSubscripcion.setEstado(true);
 
-            detalleSubscripcionRepository.save(detalleSubscripcion);
-
-            vendedor.setDetalleSubscripcion(detalleSubscripcion);
-
             vendedorRepository.save(vendedor);
+
+            detalleSubscripcion.setVendedor(vendedor);
+            detalleSubscripcionRepository.save(detalleSubscripcion);
 
             return new ResponseEntity<>(vendedor, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -102,7 +101,6 @@ public class VendedorController {
             try {
                 subscripcion.setNombreEmprendimiento(p.getNombreEmprendimiento());
                 subscripcion.setListapublicaciones(p.getListapublicaciones());
-                subscripcion.setUsuario(p.getUsuario());
                 subscripcion.setDetalleSubscripcion(p.getDetalleSubscripcion());
                 
                 return new ResponseEntity<>(vendedorService.save(subscripcion), HttpStatus.CREATED);
@@ -121,4 +119,21 @@ public class VendedorController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @GetMapping("/usuario/{userId}")
+    public ResponseEntity<Vendedor> getVendedoresByUserId(@PathVariable Long userId) {
+        try {
+            Vendedor vendedor = vendedorService.getVendedoresByUsuarioId(userId);
+            if (vendedor != null) {
+                return new ResponseEntity<>(vendedor, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Cambiar el código de respuesta si no se encuentra el vendedor
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }

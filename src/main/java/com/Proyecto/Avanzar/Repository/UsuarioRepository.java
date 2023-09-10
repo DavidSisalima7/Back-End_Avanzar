@@ -87,6 +87,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("SELECT u FROM Usuario u JOIN FETCH u.persona p WHERE p.id_persona = :idPersona")
     List<Usuario> findUsuariosByPersonaId(@Param("idPersona") Long idPersona);
 
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE usuarios u SET password = :newPassword "
