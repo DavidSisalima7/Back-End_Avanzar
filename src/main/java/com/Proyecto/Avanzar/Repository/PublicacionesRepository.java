@@ -1,6 +1,7 @@
 package com.Proyecto.Avanzar.Repository;
 
 import com.Proyecto.Avanzar.Models.Publicaciones;
+import java.util.Date;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -18,5 +19,8 @@ public interface PublicacionesRepository extends JpaRepository<Publicaciones, Lo
 
     @Query(value = "SELECT * FROM publicaciones WHERE productos_id_producto IS NOT NULL AND visible=true order by fecha_publicacion desc", nativeQuery = true)
     public List<Publicaciones> listarPublicacionesConProductos();
+  Long countByFechaPublicacionBetweenAndVendedor_idVendedor(Date fechaInicio, Date fechaFin, Long vendedorId);
+  //otra forma 
+  //Long countByFechaPublicacionBetweenAndVendedor_Id(Date fechaInicio, Date fechaFin, Long vendedorId);
 
 }

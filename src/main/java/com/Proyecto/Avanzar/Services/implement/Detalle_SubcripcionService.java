@@ -16,4 +16,10 @@ public class Detalle_SubcripcionService extends GenericServiceImpl<Detalle_Subsc
     public CrudRepository<Detalle_Subscripcion, Long> getDao() {
         return repository;
     }
+
+    @Override
+    public Detalle_Subscripcion dataSuscripUser(String username) {
+        return repository.dataSuscripUser(username);
+    
+    }
 }
