@@ -20,5 +20,4 @@ public interface PublicacionesRepository extends JpaRepository<Publicaciones, Lo
     @Query(value = "SELECT * FROM publicaciones WHERE servicios_id_servicio IS NOT NULL AND visible=true AND vendedor_id_vendedor = :vendedorId ORDER BY fecha_publicacion DESC", nativeQuery = true)
     public List<Publicaciones> listarPublicacionesConServicios(@Param("vendedorId") Long vendedorId);
 
-
 }

@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PublicacionesController {
 
     @Autowired
-    private  StorageService storageService;
+    private StorageService storageService;
     @Autowired
     PublicacionesService publicacionesService;
 
@@ -65,26 +65,26 @@ public class PublicacionesController {
             System.out.println("Publicacion convertida JSON: " + r.toString());
 
 
-                if (multipartFiles != null && !multipartFiles.isEmpty()) {
-                    List<String> urls = new ArrayList<>();
+            if (multipartFiles != null && !multipartFiles.isEmpty()) {
+                List<String> urls = new ArrayList<>();
 
-                    for (MultipartFile multipartFile : multipartFiles) {
-                        String path = storageService.store(multipartFile);
-                        String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
-                        String url = ServletUriComponentsBuilder
-                                .fromHttpUrl(host)
-                                .path("/api/publicaciones/")
-                                .path(path)
-                                .toUriString();
-                        urls.add(url);
-                    }
-
-                    r.setImagenes(urls);
-                } else {
-                    List<String> imagenesPredefinidas = new ArrayList<>();
-                    r.setImagenes(imagenesPredefinidas);
+                for (MultipartFile multipartFile : multipartFiles) {
+                    String path = storageService.store(multipartFile);
+                    String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
+                    String url = ServletUriComponentsBuilder
+                            .fromHttpUrl(host)
+                            .path("/api/publicaciones/")
+                            .path(path)
+                            .toUriString();
+                    urls.add(url);
                 }
-                return new ResponseEntity<>(publicacionesService.save(r), HttpStatus.CREATED);
+
+                r.setImagenes(urls);
+            } else {
+                List<String> imagenesPredefinidas = new ArrayList<>();
+                r.setImagenes(imagenesPredefinidas);
+            }
+            return new ResponseEntity<>(publicacionesService.save(r), HttpStatus.CREATED);
 
 
         } catch (Exception e) {
@@ -97,16 +97,14 @@ public class PublicacionesController {
     //Metodo para recuperar la imagen desde el sistema de archivos
     @GetMapping("{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) throws IOException {
-        Resource file=storageService.loadAsResource(filename);
-        String contentType= Files.probeContentType(file.getFile().toPath());
+        Resource file = storageService.loadAsResource(filename);
+        String contentType = Files.probeContentType(file.getFile().toPath());
         return ResponseEntity
                 .ok()
-                .header(HttpHeaders.CONTENT_TYPE,contentType)
+                .header(HttpHeaders.CONTENT_TYPE, contentType)
                 .body(file);
 
     }
-
-   
 
 
     @PostMapping("/registrar")
@@ -118,14 +116,24 @@ public class PublicacionesController {
         }
     }
 
+    //Lista que devuelve el tiempo transcurrido de cada publicacion despues de ser publicada
     @GetMapping("/listar")
-    public ResponseEntity<List<Publicaciones>> obtenerLista() {
+    public ResponseEntity<List<Publicaciones>> obtenerListas() {
         try {
-            return new ResponseEntity<>(publicacionesService.findByAll(), HttpStatus.OK);
+            List<Publicaciones> publicaciones = publicacionesService.findByAll();
+
+            // Itera sobre la lista de publicaciones y calcula el tiempo transcurrido para cada una
+            for (Publicaciones publicacion : publicaciones) {
+                String tiempoTranscurrido = TiempoTranscurridoUtil.calcularTiempoTranscurridoFormateado(publicacion.getFechaPublicacion());
+                publicacion.setTiempoTranscurrido(tiempoTranscurrido);
+            }
+
+            return new ResponseEntity<>(publicaciones, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @GetMapping("/listaPublicacionesXProductos/{vendedorId}")
     public List<Publicaciones> getPublicacionesProductos(@PathVariable Long vendedorId) {
@@ -195,4 +203,5 @@ public class PublicacionesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

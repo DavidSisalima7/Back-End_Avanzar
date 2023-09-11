@@ -22,7 +22,7 @@ public class Publicaciones implements Serializable {
     private String descripcionPublicacion;
     private boolean estado;
     private Date fechaPublicacion;
-
+    private String tiempoTranscurrido;
     private boolean visible;
 
     @ElementCollection
