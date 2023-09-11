@@ -11,12 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface Detalle_SubscripcionRepository extends JpaRepository<Detalle_Subscripcion, Long> {
 
 
-
-
-
-
-
-
     //no borrar puede ser util en el futuro 
 
     @Query("SELECT NEW Detalle_Subscripcion( d.fechaInicio,d.fechaFin, v.idVendedor ,d.subscripcion.NumPublicaciones) FROM Detalle_Subscripcion d"

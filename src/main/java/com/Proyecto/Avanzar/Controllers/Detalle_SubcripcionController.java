@@ -66,21 +66,22 @@ public class Detalle_SubcripcionController {
     //obtener fechas de suscripción para verificar si excede el limite 
     //segun el paquete que tenga free gold premiun
     @GetMapping("/comprobarLimite")
-    public ResponseEntity<?> limitPost(Authentication aut) {
+    public ResponseEntity<Boolean> limitPost(Authentication aut) {
         UserDetails uDet = (UserDetails) aut.getPrincipal();
         Detalle_Subscripcion subscripcion = subscripcionService.dataSuscripUser(uDet.getUsername());
         if (subscripcion == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            System.out.println();
+       
+            
             if(servPub.countPubli(subscripcion.getFechaInicio(), subscripcion.getFechaFin(), subscripcion.getVendedor().getIdVendedor())<subscripcion.getSubscripcion().getNumPublicaciones()){
-                System.out.println("publicaciones disponibles");
+                return new ResponseEntity<>(true, HttpStatus.OK);
             }else{
-                System.out.println("publicaciones acabadas");
+                return new ResponseEntity<>(false, HttpStatus.OK);
             }
             
 
-            return new ResponseEntity<>(HttpStatus.OK);
+  
         }
     }
 }
