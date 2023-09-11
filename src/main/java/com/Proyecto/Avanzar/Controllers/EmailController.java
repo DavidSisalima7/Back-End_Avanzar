@@ -50,7 +50,7 @@ public class EmailController {
 
             MimeMessageHelper contEmail = new MimeMessageHelper(basEmail, true, "utf-8");
             contEmail.setSubject(e.getSubject());
-            contEmail.setFrom("reservcompany5b@gmail.com");
+            contEmail.setFrom("FundacionAvanzarW@gmail.com");
             contEmail.setTo(e.getTo());
             code = ramdomCode(5, 5, "0123456789");
             if (!e.sendCodeVeri(code)) {
@@ -80,7 +80,7 @@ public class EmailController {
                     MimeMessage basEmail = mail.createMimeMessage();
                     MimeMessageHelper contEmail = new MimeMessageHelper(basEmail, true, "utf-8");
                     contEmail.setSubject("Cambio de contraseña");
-                    contEmail.setFrom("reservcompany5b@gmail.com");
+                    contEmail.setFrom("FundacionAvanzarW@gmail.com");
                     contEmail.setTo(e.getTo());
                     if (!e.sendResetPass(code)) {
                         return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
