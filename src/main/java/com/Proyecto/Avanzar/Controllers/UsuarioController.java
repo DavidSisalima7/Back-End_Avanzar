@@ -249,6 +249,8 @@ public class UsuarioController {
 
 
 
+
+
     @GetMapping("/listar")
     public ResponseEntity<List<Usuario>> obtenerLista() {
         try {
@@ -263,6 +265,60 @@ public class UsuarioController {
     public Usuario obtenerUsuario(@PathVariable("username") String username) {
         return usuarioService.obtenerUsuario(username);
     }
+
+//    @PutMapping("actualizar/{username}")
+//    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable String username, @RequestBody Usuario c){
+//        Usuario user= usuarioService.obtenerUsuario(username);
+//        if(user==null){
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        Persona personaExistente = user.getPersona();
+//
+//        if (user.getPersona() != null) {
+//            Persona personaActualizada = user.getPersona();
+//            if (personaActualizada.getPrimer_nombre() != null) {
+//                personaExistente.setPrimer_nombre(personaActualizada.getPrimer_nombre());
+//            }
+//
+//        }
+//        guardarPersona(personaExistente);
+//
+//        return new ResponseEntity<>(usuarioExistente, HttpStatus.OK);
+//    }
+
+//    @PutMapping("/actualizar/{username}")
+//    public ResponseEntity<Usuario> actualizarPersonaDesdeUsuario(@PathVariable("username") String username, @RequestBody Usuario usuarioActualizado) {
+//        Usuario usuarioExistente = usuarioService.obtenerUsuarioPorUsername(username);
+//
+//        // Verifica si el Usuario existe
+//        if (usuarioExistente == null) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Retorna 404 si el Usuario no se encuentra
+//        }
+//
+//        // Actualiza la información de la Persona asociada al Usuario
+//        Persona personaExistente = usuarioExistente.getPersona(); // Supongo que la Persona está asociada al Usuario
+//
+//        // Actualiza los campos de la Persona con los datos proporcionados en el cuerpo de la solicitud
+//        if (usuarioActualizado.getPersona() != null) {
+//            Persona personaActualizada = usuarioActualizado.getPersona();
+//            if (personaActualizada.getNombre() != null) {
+//                personaExistente.setNombre(personaActualizada.getNombre());
+//            }
+//            if (personaActualizada.getApellido() != null) {
+//                personaExistente.setApellido(personaActualizada.getApellido());
+//            }
+//            // Continúa actualizando otros campos de la Persona según sea necesario
+//        }
+//
+//        // Guarda los cambios en la Persona
+//        guardarPersona(personaExistente); // Implementa este método para guardar la Persona en la fuente de datos
+//
+//        // Puedes retornar el Usuario actualizado si lo deseas
+//        return new ResponseEntity<>(usuarioExistente, HttpStatus.OK);
+//    }
+
+// Implementa los métodos obtenerUsuarioPorUsername y guardarPersona según tu lógica de negocio
+
 
     @GetMapping("/buscaruser/{username}")
     public Usuario obtenerIdUsuario(@PathVariable("username") String username) {
@@ -287,7 +343,6 @@ public class UsuarioController {
                 usu.setName(p.getName());
                 usu.setVisible(p.isVisible());
                 usu.setUsername(p.getUsername());
-                usu.setPassword(this.bCryptPasswordEncoder.encode(p.getPassword()));
                 return new ResponseEntity<>(usuarioService.save(usu), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -295,6 +350,8 @@ public class UsuarioController {
 
         }
     }
+
+
 
     @PutMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {

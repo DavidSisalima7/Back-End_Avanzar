@@ -9,4 +9,5 @@ public interface ServiciosService extends GenericService<Servicios, Long>{
     public Servicios BuscarServicioActivoxId(Long idServicio);
     List<Servicios> FiltradoServxEstadoInactivo();
     List<Servicios> FiltradoServxEstadoActivo();
+    List<Servicios> ServicioxEmprendedora(Long id);
 }
