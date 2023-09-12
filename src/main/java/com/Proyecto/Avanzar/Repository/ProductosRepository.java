@@ -17,6 +17,6 @@ public interface ProductosRepository extends JpaRepository<Productos, Long> {
     @Query("SELECT p FROM Productos p ORDER BY p.estadoProducto asc")
     List<Productos> FiltradoProdxEstadoActivo();
     //listar producto x emprendedora
-    @Query("SELECT p FROM Productos p LEFT JOIN p.listapublicaciones pb LEFT JOIN pb.vendedor v LEFT JOIN v.usuario us where p.estado = true and us.id = :id")
+    @Query("SELECT p FROM Productos p LEFT JOIN p.listapublicaciones pb LEFT JOIN pb.vendedor v LEFT JOIN v.usuario us where p.estadoProducto = true and us.id = :id")
     List<Productos> ProductosxEmprendedora(@Param("id") Long id);
 }

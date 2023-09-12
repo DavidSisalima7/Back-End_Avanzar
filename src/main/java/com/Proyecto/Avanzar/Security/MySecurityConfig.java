@@ -54,13 +54,13 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/api/login/generartoken","/api/login/usuarioActual/**","/api/login/signInWithToken",
-                        "/api/persona/registrar/**","/api/persona/listar/**", "/api/persona/actualizar/{id}/**" , "/api/persona/actualizarP/{id}/**" , "/api/persona/listarResponsable/**",
+                        "/api/persona/**","/api/persona/listar/**", "/api/persona/actualizar/{id}/**" , "/api/persona/actualizarP/{id}/**" , "/api/persona/listarResponsable/**",
                         "/api/usuarios/**","/api/usuarios/registrar/{rolId}/**","/api/usuarios/actualizar/{id}/**","/api/usuarios/registrarConFoto/{rolId}/**",
                         "/api/usuarios/buscaruser/{username}/**","/api/usuarios/buscar/{username}/**","/api/usuariorol/listarol/**","/api/usuariorol/nombreRol/{usuarioId}/**",
                         "/swagger-ui/**","api/usuarios/actualizarUsuarioConFoto/{usuarioId}/**",
                         "/api/categoria/**", "/api/categoriaProducto/**", "/api/categoriaServicio/registrar/**",
                         "/api/comentarios/registrar/**", "/api/likes/registrar/**", "/api/productos/**","/api/publicaciones/**",
-                        "/api/servicios/**", "/api/subscripcion/registrar/**", "/api/tipoLike/registrar/**", "/api/vendedor/**","/api/usuarios/upload/**","/api/usuarios/**","/api/email/sentCodeVerification",
+                        "/api/servicios/**", "/api/subscripcion/registrar/**", "/api/tipoLike/registrar/**", "/api/vendedor/**","/api/usuarios/upload/**","/api/usuarios/**","/api/email/**",
                         "/api/categoria/registrar/**", "/api/categoriaProducto/registrar/**", "/api/categoriaServicio/registrar/**",
                         "/api/comentarios/registrar/**", "/api/likes/registrar/**", "/api/productos/**","/api/publicaciones/registrar/**",
                         "/api/servicios/**", "/api/subscripcion/registrar/**", "/api/tipoLike/registrar/**", "/api/vendedor/registrar/**","/api/usuarios/upload/**","/api/usuarios/**").permitAll()
