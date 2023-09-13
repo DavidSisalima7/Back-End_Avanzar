@@ -29,4 +29,8 @@ public class ServiciosServiceImpl extends GenericServiceImpl<Servicios, Long> im
     public List<Servicios> FiltradoServxEstadoActivo() {
         return serviciosDao.FiltradoServxEstadoActivo();
     }
+    public List<Servicios> ServicioxEmprendedora(Long id) {
+        return serviciosDao.ServicioxEmprendedora(id);
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.Proyecto.Avanzar.Services.implement;
 
 import com.Proyecto.Avanzar.Models.Productos;
-import com.Proyecto.Avanzar.Models.Usuario;
 import com.Proyecto.Avanzar.Repository.ProductosRepository;
 import com.Proyecto.Avanzar.Services.service.ProductosService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +29,10 @@ public class ProductosServiceImpl extends GenericServiceImpl<Productos, Long> im
     public List<Productos> FiltradoProdxEstadoInactivo() {
         return productosDao.FiltradoProdxEstadoInactivo();
     }
+
+    @Override
+    public List<Productos> ProductosxEmprendedora(Long id) {
+        return productosDao.ProductosxEmprendedora(id);
+    }
+
 }

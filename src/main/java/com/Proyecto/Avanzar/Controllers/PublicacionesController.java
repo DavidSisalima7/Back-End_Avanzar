@@ -122,7 +122,7 @@ public class PublicacionesController {
     @GetMapping("/listar")
     public ResponseEntity<List<Publicaciones>> obtenerListas() {
         try {
-            List<Publicaciones> publicaciones = publicacionesService.findByAll();
+            List<Publicaciones> publicaciones = publicacionesRepository.listar();
 
             // Itera sobre la lista de publicaciones y calcula el tiempo transcurrido para cada una
             for (Publicaciones publicacion : publicaciones) {
@@ -183,19 +183,7 @@ public class PublicacionesController {
         }
     }
 
-    /*
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id) {
 
-        try {
-            publicacionesService.delete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al elminar");
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }*/
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Publicaciones> getById(@PathVariable("id") Long id) {
@@ -206,6 +194,22 @@ public class PublicacionesController {
         }
     }
     
-  
+  @GetMapping("/listarProducto")
+    public ResponseEntity<List<Publicaciones>> listarProductos() {
+        try {
+            return new ResponseEntity<>(publicacionesRepository.listarProductos(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/listarServicio")
+    public ResponseEntity<List<Publicaciones>> listarServicios() {
+        try {
+            return new ResponseEntity<>(publicacionesRepository.listarServicios(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
 }

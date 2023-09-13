@@ -20,8 +20,7 @@ public class CategoriaProducto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCategoriaProducto;
     private String nombreCategoria;
-    private String descripcion;
-    private boolean estado;
+
 
     //Relaciones
     //Relacion CategoriaProducto
@@ -29,5 +28,8 @@ public class CategoriaProducto implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "categoriaProducto")
     private Set<Productos> listaProductos = new HashSet<>();
 
-
+    public CategoriaProducto(Long idCategoriaProducto, String nombreCategoria) {
+        this.idCategoriaProducto = idCategoriaProducto;
+        this.nombreCategoria = nombreCategoria;
+    }
 }
