@@ -4,6 +4,7 @@ package com.Proyecto.Avanzar.Controllers;
 import com.Proyecto.Avanzar.Models.Categoria;
 
 
+import com.Proyecto.Avanzar.Models.Rol;
 import com.Proyecto.Avanzar.Models.Vendedor;
 import com.Proyecto.Avanzar.Services.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @CrossOrigin(origins = { "*" })
@@ -41,25 +43,6 @@ public class CategoriaController {
         return categoriaService.delete(id);
     }
 
-    @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Categoria> actualizar(@PathVariable Long id, @RequestBody Categoria p) {
-        Categoria categoria = categoriaService.findById(id);
-        if (categoria == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            try {
-                categoria.setNombreCategoria(p.getNombreCategoria());
-                categoria.setDescripcion(p.getDescripcion());
-                categoria.setEstado(p.isEstado());
-                categoria.setListapublicaciones(p.getListapublicaciones());
-
-                return new ResponseEntity<>(categoriaService.save(categoria), HttpStatus.CREATED);
-            } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-
-        }
-    }
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Categoria> getById(@PathVariable("id") Long id) {
@@ -70,5 +53,14 @@ public class CategoriaController {
         }
     }
 
+    @PostConstruct
+    public void init() {
+        Categoria categoria1 = new Categoria(1L, "Productos");
+        Categoria categoria2 = new Categoria(2L, "Servicios");
+
+
+        categoriaService.save(categoria1);
+        categoriaService.save(categoria2);
+    }
 
 }
