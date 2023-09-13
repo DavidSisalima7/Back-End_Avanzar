@@ -3,12 +3,14 @@ package com.Proyecto.Avanzar.Controllers;
 
 import com.Proyecto.Avanzar.Models.CategoriaProducto;
 import com.Proyecto.Avanzar.Models.CategoriaServicio;
+import com.Proyecto.Avanzar.Models.Rol;
 import com.Proyecto.Avanzar.Services.service.CategoriaServicioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @CrossOrigin(origins = { "*" })
@@ -39,24 +41,6 @@ public class CategoriaServicioController {
         return categoriaServicioService.delete(id);
     }
 
-    @PutMapping("/actualizar/{id}")
-    public ResponseEntity<CategoriaServicio> actualizar(@PathVariable Long id,@RequestBody CategoriaServicio p) {
-        CategoriaServicio categoriaServicio = categoriaServicioService.findById(id);
-        if (categoriaServicio == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            try {
-                categoriaServicio.setNombreCategoria(p.getNombreCategoria());
-                categoriaServicio.setDescripcion(p.getDescripcion());
-                categoriaServicio.setEstado(p.isEstado());
-
-                return new ResponseEntity<>(categoriaServicioService.save(categoriaServicio), HttpStatus.CREATED);
-            } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-
-        }
-    }
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<CategoriaServicio> getById(@PathVariable("id") Long id) {
@@ -65,5 +49,16 @@ public class CategoriaServicioController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostConstruct
+    public void init() {
+        CategoriaServicio categoriaServicio1 = new CategoriaServicio(1L, "Belleza");
+        CategoriaServicio categoriaServicio2 = new CategoriaServicio(2L, "Costura");
+        CategoriaServicio categoriaServicio3 = new CategoriaServicio(3L, "Hogar");
+
+        categoriaServicioService.save(categoriaServicio1);
+        categoriaServicioService.save(categoriaServicio2);
+        categoriaServicioService.save(categoriaServicio3);
     }
 }
