@@ -4,12 +4,14 @@ package com.Proyecto.Avanzar.Controllers;
 import com.Proyecto.Avanzar.Models.CategoriaProducto;
 
 import com.Proyecto.Avanzar.Models.Publicaciones;
+import com.Proyecto.Avanzar.Models.Rol;
 import com.Proyecto.Avanzar.Services.service.CategoriaProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @CrossOrigin(origins = { "*" })
@@ -41,23 +43,6 @@ public class CategoriaProductoController {
         return categoriaProductoService.delete(id);
     }
 
-    @PutMapping("/actualizar/{id}")
-    public ResponseEntity<CategoriaProducto> actualizar(@PathVariable Long id,@RequestBody CategoriaProducto p) {
-        CategoriaProducto categoriaProducto = categoriaProductoService.findById(id);
-        if (categoriaProducto == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            try {
-                categoriaProducto.setDescripcion(p.getDescripcion());
-                categoriaProducto.setEstado(p.isEstado());
-                return new ResponseEntity<>(categoriaProductoService.save(categoriaProducto), HttpStatus.CREATED);
-            } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-
-        }
-    }
-
     @GetMapping("/buscar/{id}")
     public ResponseEntity<CategoriaProducto> getById(@PathVariable("id") Long id) {
         try {
@@ -65,6 +50,20 @@ public class CategoriaProductoController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostConstruct
+    public void init() {
+        CategoriaProducto categoriaProducto1 = new CategoriaProducto(1L, "Gastronomia");
+        CategoriaProducto categoriaProducto2 = new CategoriaProducto(2L, "Vestimenta");
+        CategoriaProducto categoriaProducto3 = new CategoriaProducto(3L, "Hogar");
+        CategoriaProducto categoriaProducto4 = new CategoriaProducto(4L, "Manualidades");
+
+
+        categoriaProductoService.save(categoriaProducto1);
+        categoriaProductoService.save(categoriaProducto2);
+        categoriaProductoService.save(categoriaProducto3);
+        categoriaProductoService.save(categoriaProducto4);
     }
 }
 

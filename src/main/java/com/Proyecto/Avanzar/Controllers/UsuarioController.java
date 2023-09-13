@@ -249,6 +249,8 @@ public class UsuarioController {
 
 
 
+
+
     @GetMapping("/listar")
     public ResponseEntity<List<Usuario>> obtenerLista() {
         try {
@@ -287,7 +289,6 @@ public class UsuarioController {
                 usu.setName(p.getName());
                 usu.setVisible(p.isVisible());
                 usu.setUsername(p.getUsername());
-                usu.setPassword(this.bCryptPasswordEncoder.encode(p.getPassword()));
                 return new ResponseEntity<>(usuarioService.save(usu), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -295,6 +296,8 @@ public class UsuarioController {
 
         }
     }
+
+
 
     @PutMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {

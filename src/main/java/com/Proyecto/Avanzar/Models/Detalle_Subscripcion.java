@@ -23,6 +23,16 @@ public class Detalle_Subscripcion implements Serializable {
     private Date fechaFin;
     private boolean estado;
 
+    //constructor para recuperar ciertos datos y despues comparar y ver si exede el limite de publicaciones
+    public Detalle_Subscripcion( Date fechaInicio, Date fechaFin, Long idVendedor, int numPublicaciones) {
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.vendedor=new Vendedor();
+        this.vendedor.setIdVendedor(idVendedor);
+        this.subscripcion=new Subscripcion();
+        this.subscripcion.setNumPublicaciones(numPublicaciones);
+    }
+
 
     //Relacion Subscripcion
     @ManyToOne(fetch = FetchType.EAGER)

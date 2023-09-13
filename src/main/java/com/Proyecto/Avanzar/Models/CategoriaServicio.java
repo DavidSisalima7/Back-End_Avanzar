@@ -21,8 +21,11 @@ public class CategoriaServicio implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCategoriaServicio;
     private String nombreCategoria;
-    private String descripcion;
-    private boolean estado;
+
+    public CategoriaServicio(Long idCategoriaServicio, String nombreCategoria) {
+        this.idCategoriaServicio = idCategoriaServicio;
+        this.nombreCategoria = nombreCategoria;
+    }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "categoriaServicio")
     @JsonIgnore

@@ -26,6 +26,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.persistence.ElementCollection;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @CrossOrigin(origins = { "*" })
 @RestController
@@ -203,5 +205,23 @@ public class PublicacionesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+  @GetMapping("/listarProducto")
+    public ResponseEntity<List<Publicaciones>> listarProductos() {
+        try {
+            return new ResponseEntity<>(publicacionesRepository.listarProductos(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
+    @GetMapping("/listarServicio")
+    public ResponseEntity<List<Publicaciones>> listarServicios() {
+        try {
+            return new ResponseEntity<>(publicacionesRepository.listarServicios(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
 }
