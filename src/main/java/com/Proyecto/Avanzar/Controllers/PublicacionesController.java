@@ -120,7 +120,7 @@ public class PublicacionesController {
     @GetMapping("/listar")
     public ResponseEntity<List<Publicaciones>> obtenerListas() {
         try {
-            List<Publicaciones> publicaciones = publicacionesService.findByAll();
+            List<Publicaciones> publicaciones = publicacionesRepository.listar();
 
             // Itera sobre la lista de publicaciones y calcula el tiempo transcurrido para cada una
             for (Publicaciones publicacion : publicaciones) {
