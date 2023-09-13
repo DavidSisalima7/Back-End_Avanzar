@@ -183,19 +183,7 @@ public class PublicacionesController {
         }
     }
 
-    /*
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id) {
 
-        try {
-            publicacionesService.delete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al elminar");
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }*/
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Publicaciones> getById(@PathVariable("id") Long id) {
