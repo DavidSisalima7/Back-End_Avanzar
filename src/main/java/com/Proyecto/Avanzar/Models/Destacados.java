@@ -10,12 +10,13 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "likes")
-public class Likes implements Serializable {
+@Table(name = "destacados")
+public class Destacados implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idLike;
+    private Long idDestacado;
     private String fecha;
+    private boolean estadoDestacado;
     //Relaciones
     //Relacion Publicacion
     @ManyToOne(fetch = FetchType.EAGER)
@@ -25,8 +26,5 @@ public class Likes implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
 
-    //Relacion Tipo Like
-    @ManyToOne(fetch = FetchType.EAGER)
-    private TipoLike tipoLikes;
 
 }

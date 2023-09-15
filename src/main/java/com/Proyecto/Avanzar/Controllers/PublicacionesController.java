@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@CrossOrigin(origins = { "*" })
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping("/api/publicaciones")
 public class PublicacionesController {
@@ -66,7 +66,6 @@ public class PublicacionesController {
             Publicaciones r = objectMapper.readValue(publicacionJson, Publicaciones.class);
             System.out.println("Publicacion convertida JSON: " + r.toString());
 
-
             if (multipartFiles != null && !multipartFiles.isEmpty()) {
                 List<String> urls = new ArrayList<>();
 
@@ -88,7 +87,6 @@ public class PublicacionesController {
             }
             return new ResponseEntity<>(publicacionesService.save(r), HttpStatus.CREATED);
 
-
         } catch (Exception e) {
             System.out.println("Error al convertir el JSON de la publicación.");
             System.out.println(e);
@@ -107,7 +105,6 @@ public class PublicacionesController {
                 .body(file);
 
     }
-
 
     @PostMapping("/registrar")
     public ResponseEntity<Publicaciones> registrarPublicacion(@RequestBody Publicaciones publicacion) {
@@ -136,7 +133,6 @@ public class PublicacionesController {
         }
     }
 
-
     @GetMapping("/listaPublicacionesXProductos/{vendedorId}")
     public List<Publicaciones> getPublicacionesProductos(@PathVariable Long vendedorId) {
         return publicacionesRepository.listarPublicacionesConProductos(vendedorId);
@@ -146,7 +142,6 @@ public class PublicacionesController {
     public List<Publicaciones> getPublicacionesServicios(@PathVariable Long vendedorId) {
         return publicacionesRepository.listarPublicacionesConServicios(vendedorId);
     }
-
 
     @PutMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
@@ -164,7 +159,7 @@ public class PublicacionesController {
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Publicaciones> actualizar(@PathVariable Long id,@RequestBody Publicaciones p) {
+    public ResponseEntity<Publicaciones> actualizar(@PathVariable Long id, @RequestBody Publicaciones p) {
         Publicaciones publicaciones = publicacionesService.findById(id);
         if (publicaciones == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -183,8 +178,6 @@ public class PublicacionesController {
         }
     }
 
-
-
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Publicaciones> getById(@PathVariable("id") Long id) {
         try {
@@ -193,8 +186,8 @@ public class PublicacionesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-  @GetMapping("/listarProducto")
+
+    @GetMapping("/listarProducto/{id}")
     public ResponseEntity<List<Publicaciones>> listarProductos() {
         try {
             return new ResponseEntity<>(publicacionesRepository.listarProductos(), HttpStatus.OK);
@@ -211,5 +204,16 @@ public class PublicacionesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
+    @GetMapping("/listarDestacados/{id}")
+
+    public ResponseEntity<List<Publicaciones>> listarDestacados(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(publicacionesRepository.listarDestacados(id), HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
