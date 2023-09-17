@@ -21,7 +21,9 @@ public class Servicios implements Serializable {
     private Long idServicio;
     private String nombreServicio;
     private String descripcionServicio;
-    private double precioServicio;
+    private double precioInicialServicio;
+    private double precioFinalServicio;
+    private double precioFijoServicio;
     private boolean estado;
 
     private int cantidadDisponible;
