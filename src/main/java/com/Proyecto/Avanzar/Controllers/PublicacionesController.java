@@ -85,6 +85,7 @@ public class PublicacionesController {
                 List<String> imagenesPredefinidas = new ArrayList<>();
                 r.setImagenes(imagenesPredefinidas);
             }
+            r.setEstado(false);
             return new ResponseEntity<>(publicacionesService.save(r), HttpStatus.CREATED);
 
         } catch (Exception e) {
@@ -109,6 +110,7 @@ public class PublicacionesController {
     @PostMapping("/registrar")
     public ResponseEntity<Publicaciones> registrarPublicacion(@RequestBody Publicaciones publicacion) {
         try {
+            publicacion.setEstado(false);
             return new ResponseEntity<>(publicacionesService.save(publicacion), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -167,6 +169,7 @@ public class PublicacionesController {
             try {
                 publicaciones.setTituloPublicacion(p.getTituloPublicacion());
                 publicaciones.setDescripcionPublicacion(p.getDescripcionPublicacion());
+                //implementar verificaion otra vez por que puede ser cambiado el metodo e ignorar la seguridad 
                 publicaciones.setEstado(p.isEstado());
                 publicaciones.setVendedor(p.getVendedor());
 

@@ -1,9 +1,8 @@
 package com.Proyecto.Avanzar.Controllers;
 
 import com.Proyecto.Avanzar.Models.Detalle_Subscripcion;
-import com.Proyecto.Avanzar.Models.Subscripcion;
+import com.Proyecto.Avanzar.Models.dto.mensajeAlertasDto;
 import com.Proyecto.Avanzar.Services.service.Detalle_SubscripcionService;
-import com.Proyecto.Avanzar.Services.service.PublicacionesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +20,8 @@ public class Detalle_SubcripcionController {
     @Autowired
     Detalle_SubscripcionService subscripcionService;
 
-    @Autowired 
-    PublicacionesService servPub;
-            
+
+
     @PostMapping("/registrar")
     public ResponseEntity<Detalle_Subscripcion> crear(@RequestBody Detalle_Subscripcion r) {
         try {
@@ -63,25 +61,23 @@ public class Detalle_SubcripcionController {
         }
     }
 
-    //obtener fechas de suscripción para verificar si excede el limite 
+    //limite de pulbicaciones
     //segun el paquete que tenga free gold premiun
     @GetMapping("/comprobarLimite")
-    public ResponseEntity<Boolean> limitPost(Authentication aut) {
+    public ResponseEntity<mensajeAlertasDto> limitPost(Authentication aut) {
         UserDetails uDet = (UserDetails) aut.getPrincipal();
-        Detalle_Subscripcion subscripcion = subscripcionService.dataSuscripUser(uDet.getUsername());
-        if (subscripcion == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
+        return subscripcionService.dataSuscripUser(uDet.getUsername());
        
-            
-            if(servPub.countPubli(subscripcion.getFechaInicio(), subscripcion.getFechaFin(), subscripcion.getVendedor().getIdVendedor())<subscripcion.getSubscripcion().getNumPublicaciones()){
-                return new ResponseEntity<>(true, HttpStatus.OK);
-            }else{
-                return new ResponseEntity<>(false, HttpStatus.OK);
-            }
-            
-
-  
-        }
     }
+    
+    //limite de publicaciones activas 
+    //segun en paquete que tenga 
+    @GetMapping("/comprobarPubAct")
+    public ResponseEntity<mensajeAlertasDto>limitActiPost(Authentication aut){
+        UserDetails uDet = (UserDetails) aut.getPrincipal();
+        return subscripcionService.limitPubAct(uDet.getUsername());
+    }
+    
+    
+
 }
