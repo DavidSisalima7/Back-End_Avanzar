@@ -60,4 +60,15 @@ public class EmailDto {
         }
     }
 
+    public boolean sendAlertSuscrip(){
+        try{
+            Path paht = Paths.get("src/main/java/com/Proyecto/Avanzar/Models/dto/RenovSuscripNoti.html").toAbsolutePath();
+            String htmlContent = new String(Files.readAllBytes(paht));
+            this.text=htmlContent;
+            return true;
+        }catch(IOException ex){
+            System.out.println("Error al cargar el html alertSuscrip");
+            return false;
+        }
+    }
 }

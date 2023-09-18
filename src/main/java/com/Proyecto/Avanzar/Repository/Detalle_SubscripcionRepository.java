@@ -13,7 +13,7 @@ public interface Detalle_SubscripcionRepository extends JpaRepository<Detalle_Su
 
     //no borrar puede ser util en el futuro 
 
-    @Query("SELECT NEW Detalle_Subscripcion( d.fechaInicio,d.fechaFin, v.idVendedor ,d.subscripcion.NumPublicaciones) FROM Detalle_Subscripcion d"
+    @Query("SELECT NEW Detalle_Subscripcion( v.idVendedor ,d.subscripcion.idSubscripcion, d.subscripcion.NumPublicaciones) FROM Detalle_Subscripcion d"
             + " JOIN Vendedor v ON  d.vendedor.idVendedor=v.idVendedor JOIN Usuario u ON v.usuario.id =u.id AND u.username= :user")
     Detalle_Subscripcion dataSuscripUser(@Param("user") String username);
 

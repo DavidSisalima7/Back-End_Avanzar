@@ -24,13 +24,13 @@ public class Detalle_Subscripcion implements Serializable {
     private boolean estado;
 
     //constructor para recuperar ciertos datos y despues comparar y ver si exede el limite de publicaciones
-    public Detalle_Subscripcion( Date fechaInicio, Date fechaFin, Long idVendedor, int numPublicaciones) {
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+    public Detalle_Subscripcion(  Long idVendedor, Long idSubscripcion,int num_publicaciones) {
         this.vendedor=new Vendedor();
         this.vendedor.setIdVendedor(idVendedor);
         this.subscripcion=new Subscripcion();
-        this.subscripcion.setNumPublicaciones(numPublicaciones);
+        this.subscripcion.setNumPublicaciones(num_publicaciones);
+        this.subscripcion.setIdSubscripcion(idSubscripcion);
+
     }
 
 
