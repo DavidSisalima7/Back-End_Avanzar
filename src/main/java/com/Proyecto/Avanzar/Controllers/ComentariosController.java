@@ -2,6 +2,8 @@ package com.Proyecto.Avanzar.Controllers;
 
 
 import com.Proyecto.Avanzar.Models.Comentarios;
+import com.Proyecto.Avanzar.Models.Publicaciones;
+import com.Proyecto.Avanzar.Models.Usuario;
 import com.Proyecto.Avanzar.Services.service.ComentariosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import java.util.List;
 public class ComentariosController {
     @Autowired
     ComentariosService comentariosService;
+
     @PostMapping("/registrar")
     public ResponseEntity<Comentarios> crear(@RequestBody Comentarios r) {
         try {
@@ -25,6 +28,21 @@ public class ComentariosController {
         }
     }
 
+    // Endpoint spara obtener todos los comentarios de una publicación específica
+    @GetMapping("/listar2/{publicacionId}")
+   public ResponseEntity<List<Comentarios>> obtenerComentariosPorPublicacion(@PathVariable Publicaciones publicacionId ) {
+        try {
+            List<Comentarios> comentarios = comentariosService.findByPublicacionAndUsuario(publicacionId);
+            return new ResponseEntity<>(comentarios, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+   //Edpoind para guardar los comentarios de acuerdo al usuario que inicio sesion.
+
+
+    // Endpoint para eliminar un comentario en una publicación por su ID
+
     @GetMapping("/listar")
     public ResponseEntity<List<Comentarios>> obtenerLista() {
         try {
@@ -33,6 +51,7 @@ public class ComentariosController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Comentarios comentarios) {
         return comentariosService.delete(id);
