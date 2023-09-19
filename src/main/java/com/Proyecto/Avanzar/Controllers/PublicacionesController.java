@@ -199,15 +199,6 @@ public class PublicacionesController {
         }
     }
 
-    @GetMapping("/listarProducto")
-    public ResponseEntity<List<Publicaciones>> listarProductosN() {
-        try {
-            return new ResponseEntity<>(publicacionesRepository.listarProductos(), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @GetMapping("/listarServicio")
     public ResponseEntity<List<Publicaciones>> listarServicios() {
         try {
