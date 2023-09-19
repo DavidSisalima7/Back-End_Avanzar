@@ -208,6 +208,15 @@ public class PublicacionesController {
         }
     }
 
+    @GetMapping("/listarProducto")
+    public ResponseEntity<List<Publicaciones>> listarProducto() {
+        try {
+            return new ResponseEntity<>(publicacionesRepository.listarProductos(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/listarDestacados/{id}")
 
     public ResponseEntity<List<Publicaciones>> listarDestacados(@PathVariable("id") Long id) {
