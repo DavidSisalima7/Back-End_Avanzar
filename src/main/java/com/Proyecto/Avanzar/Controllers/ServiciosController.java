@@ -55,7 +55,9 @@ public class ServiciosController {
             try {
                 productos.setNombreServicio(p.getNombreServicio());
                 productos.setDescripcionServicio(p.getDescripcionServicio());
-                productos.setPrecioServicio(p.getPrecioServicio());
+                productos.setPrecioInicialServicio(p.getPrecioInicialServicio());
+                productos.setPrecioFinalServicio(p.getPrecioFinalServicio());
+                productos.setPrecioFijoServicio(p.getPrecioFijoServicio());
                 productos.setEstado(p.isEstado());
                 productos.setListapublicaciones(p.getListapublicaciones());
                 return new ResponseEntity<>(serviciosService.save(productos), HttpStatus.CREATED);

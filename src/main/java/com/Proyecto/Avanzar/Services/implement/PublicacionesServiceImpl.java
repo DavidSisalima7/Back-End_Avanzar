@@ -19,9 +19,14 @@ public class PublicacionesServiceImpl extends GenericServiceImpl<Publicaciones, 
     }
 
     @Override
-    public Long countPubli(Date fechaInicio, Date FechaFin, Long idVenFK) {
+    public Long countPubli(Long idVenFK) {
     
-        return publicacionesDao.countByFechaPublicacionBetweenAndVendedor_idVendedor(fechaInicio, FechaFin, idVenFK);
+        return publicacionesDao.countByVendedor_idVendedorAndVisibleTrue(idVenFK);
     
+    }
+
+    @Override
+    public Long countPubliEstatus(Long idVenFk) {
+        return publicacionesDao.countByVendedor_idVendedorAndEstadoTrueAndVisibleTrue(idVenFk);
     }
 }

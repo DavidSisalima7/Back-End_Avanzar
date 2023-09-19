@@ -50,7 +50,9 @@ public class ProductosController {
         } else {
             try {
                 productos.setNombreProducto(p.getNombreProducto());
-                productos.setPrecioProducto(p.getPrecioProducto());
+                productos.setPrecioInicialProducto(p.getPrecioInicialProducto());
+                productos.setPrecioFinalProducto(p.getPrecioFinalProducto());
+                productos.setPrecioFijoProducto(p.getPrecioFijoProducto());
                 productos.setCantidadDisponible(p.getCantidadDisponible());
                 productos.setPesoProducto(p.getPesoProducto());
                 productos.setCategoriaProducto(p.getCategoriaProducto());

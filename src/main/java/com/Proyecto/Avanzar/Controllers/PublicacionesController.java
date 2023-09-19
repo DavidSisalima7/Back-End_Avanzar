@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@CrossOrigin(origins = { "*" })
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping("/api/publicaciones")
 public class PublicacionesController {
@@ -66,7 +66,6 @@ public class PublicacionesController {
             Publicaciones r = objectMapper.readValue(publicacionJson, Publicaciones.class);
             System.out.println("Publicacion convertida JSON: " + r.toString());
 
-
             if (multipartFiles != null && !multipartFiles.isEmpty()) {
                 List<String> urls = new ArrayList<>();
 
@@ -86,8 +85,8 @@ public class PublicacionesController {
                 List<String> imagenesPredefinidas = new ArrayList<>();
                 r.setImagenes(imagenesPredefinidas);
             }
+            r.setEstado(false);
             return new ResponseEntity<>(publicacionesService.save(r), HttpStatus.CREATED);
-
 
         } catch (Exception e) {
             System.out.println("Error al convertir el JSON de la publicación.");
@@ -108,10 +107,10 @@ public class PublicacionesController {
 
     }
 
-
     @PostMapping("/registrar")
     public ResponseEntity<Publicaciones> registrarPublicacion(@RequestBody Publicaciones publicacion) {
         try {
+            publicacion.setEstado(false);
             return new ResponseEntity<>(publicacionesService.save(publicacion), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -122,7 +121,7 @@ public class PublicacionesController {
     @GetMapping("/listar")
     public ResponseEntity<List<Publicaciones>> obtenerListas() {
         try {
-            List<Publicaciones> publicaciones = publicacionesService.findByAll();
+            List<Publicaciones> publicaciones = publicacionesRepository.listar();
 
             // Itera sobre la lista de publicaciones y calcula el tiempo transcurrido para cada una
             for (Publicaciones publicacion : publicaciones) {
@@ -136,7 +135,6 @@ public class PublicacionesController {
         }
     }
 
-
     @GetMapping("/listaPublicacionesXProductos/{vendedorId}")
     public List<Publicaciones> getPublicacionesProductos(@PathVariable Long vendedorId) {
         return publicacionesRepository.listarPublicacionesConProductos(vendedorId);
@@ -146,7 +144,6 @@ public class PublicacionesController {
     public List<Publicaciones> getPublicacionesServicios(@PathVariable Long vendedorId) {
         return publicacionesRepository.listarPublicacionesConServicios(vendedorId);
     }
-
 
     @PutMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
@@ -164,7 +161,7 @@ public class PublicacionesController {
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Publicaciones> actualizar(@PathVariable Long id,@RequestBody Publicaciones p) {
+    public ResponseEntity<Publicaciones> actualizar(@PathVariable Long id, @RequestBody Publicaciones p) {
         Publicaciones publicaciones = publicacionesService.findById(id);
         if (publicaciones == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -172,6 +169,7 @@ public class PublicacionesController {
             try {
                 publicaciones.setTituloPublicacion(p.getTituloPublicacion());
                 publicaciones.setDescripcionPublicacion(p.getDescripcionPublicacion());
+                //implementar verificaion otra vez por que puede ser cambiado el metodo e ignorar la seguridad 
                 publicaciones.setEstado(p.isEstado());
                 publicaciones.setVendedor(p.getVendedor());
 
@@ -183,20 +181,6 @@ public class PublicacionesController {
         }
     }
 
-    /*
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id) {
-
-        try {
-            publicacionesService.delete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al elminar");
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }*/
-
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Publicaciones> getById(@PathVariable("id") Long id) {
         try {
@@ -205,8 +189,8 @@ public class PublicacionesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-  @GetMapping("/listarProducto")
+
+    @GetMapping("/listarProducto/{id}")
     public ResponseEntity<List<Publicaciones>> listarProductos() {
         try {
             return new ResponseEntity<>(publicacionesRepository.listarProductos(), HttpStatus.OK);
@@ -223,5 +207,16 @@ public class PublicacionesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
+    @GetMapping("/listarDestacados/{id}")
+
+    public ResponseEntity<List<Publicaciones>> listarDestacados(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(publicacionesRepository.listarDestacados(id), HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

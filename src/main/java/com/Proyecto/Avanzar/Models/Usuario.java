@@ -47,7 +47,7 @@ public class Usuario implements UserDetails {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
     @JsonIgnore
-    private Set<Likes> listaLikes = new HashSet<>();
+    private Set<Destacados> listaLikes = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
     @JsonIgnore

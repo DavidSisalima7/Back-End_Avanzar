@@ -20,7 +20,9 @@ public class Productos implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idProducto;
     private String nombreProducto;
-    private double precioProducto;
+    private double precioInicialProducto;
+    private double precioFinalProducto;
+    private double precioFijoProducto;
     private int cantidadDisponible;
     private String descripcionProducto;
     private boolean estadoProducto;

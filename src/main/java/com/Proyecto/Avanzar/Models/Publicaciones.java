@@ -52,7 +52,7 @@ public class Publicaciones implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "publicaciones")
     @JsonIgnore
-    private Set<Likes> listalikes = new HashSet<>();
+    private Set<Destacados> listadestacados = new HashSet<>();
 
 
 }
