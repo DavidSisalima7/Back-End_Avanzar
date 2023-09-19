@@ -25,7 +25,7 @@ public class Comentarios implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
 
-    //Relacion Publicacion
     @ManyToOne(fetch = FetchType.EAGER)
-    private Publicaciones publicaciones;
+    @JoinColumn(name = "idpublicacion")
+    private Publicaciones publicacion;
 }

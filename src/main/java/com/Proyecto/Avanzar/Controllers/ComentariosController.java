@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("/api/comentarios")
+    @RequestMapping("/api/comentarios")
 public class ComentariosController {
     @Autowired
     ComentariosService comentariosService;
@@ -33,6 +33,18 @@ public class ComentariosController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/listaid/{idPublicacion}")
+    public ResponseEntity<List<Comentarios>> obtenerComentariosPorId(@PathVariable Long idPublicacion) {
+        try {
+            List<Comentarios> comentarios = (List<Comentarios>) comentariosService.findById(idPublicacion);
+            return new ResponseEntity<>(comentarios, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Comentarios comentarios) {
         return comentariosService.delete(id);
@@ -47,7 +59,7 @@ public class ComentariosController {
             try {
                 comentarios.setTexto(p.getTexto());
                 comentarios.setFecha(p.getFecha());
-                comentarios.setPublicaciones(p.getPublicaciones());
+                comentarios.setPublicacion(p.getPublicacion());
                 comentarios.setUsuario(p.getUsuario());
                 return new ResponseEntity<>(comentariosService.save(comentarios), HttpStatus.CREATED);
             } catch (Exception e) {

@@ -46,7 +46,7 @@ public class Publicaciones implements Serializable {
 
     //Relacion TipoPost no se ha definido aun
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "publicaciones")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "publicacion")
     @JsonIgnore
     private Set<Comentarios> listacomentarios = new HashSet<>();
 

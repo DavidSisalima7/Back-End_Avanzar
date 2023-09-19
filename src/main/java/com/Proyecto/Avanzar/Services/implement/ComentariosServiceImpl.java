@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ComentariosServiceImpl extends GenericServiceImpl<Comentarios, Long> implements ComentariosService {
     @Autowired
@@ -14,6 +16,22 @@ public class ComentariosServiceImpl extends GenericServiceImpl<Comentarios, Long
 
     @Override
     public CrudRepository<Comentarios, Long> getDao() {
+        return comentariosDao;
+    }
+
+    @Override
+    public Comentarios saveComentario(Comentarios comentario) {
         return null;
     }
+
+    @Override
+    public void deleteComentario(Long comentarioId) {
+
+    }
+/*
+    @Override
+    public List<Comentarios> findByPublicacionId(Long publicacionId) {
+
+        return comentariosDao.findByPublicacionId(publicacionId);
+    }*/
 }
