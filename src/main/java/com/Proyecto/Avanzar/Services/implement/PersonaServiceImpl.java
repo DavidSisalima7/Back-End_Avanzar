@@ -43,4 +43,9 @@ public class PersonaServiceImpl extends GenericServiceImpl<Persona, Long> implem
     public Map<String, Object> contarRegistrosEnTablas() {
         return repository.contarRegistrosEnTablas();
     }
+
+    @Override
+    public Map<String, Object> contarRegistrosEnTablasE(Long vendedorId) {
+        return repository.contarRegistrosEnTablasE(vendedorId);
+    }
 }

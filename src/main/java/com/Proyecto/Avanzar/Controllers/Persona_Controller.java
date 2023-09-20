@@ -158,4 +158,13 @@ public class Persona_Controller {
 
     }
 
+    @GetMapping("/data2/{vendedorId}")
+    public ResponseEntity<Map<String, Object>> obtenerResumen2(@PathVariable Long vendedorId) {
+        try {
+            Map<String, Object> resumen = Service.contarRegistrosEnTablasE(vendedorId);
+            return new ResponseEntity<>(resumen, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
