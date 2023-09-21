@@ -2,7 +2,9 @@ package com.Proyecto.Avanzar.Controllers;
 
 
 import com.Proyecto.Avanzar.Models.Comentarios;
+import com.Proyecto.Avanzar.Models.ComentariosDto;
 import com.Proyecto.Avanzar.Services.service.ComentariosService;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +20,12 @@ public class ComentariosController {
     ComentariosService comentariosService;
     @PostMapping("/registrar")
     public ResponseEntity<Comentarios> crear(@RequestBody Comentarios r) {
+        
         try {
+            r.setFecha(new Date());
             return new ResponseEntity<>(comentariosService.save(r), HttpStatus.CREATED);
         } catch (Exception e) {
+            System.out.println(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -55,6 +60,11 @@ public class ComentariosController {
             }
 
         }
+    }
+    
+    @GetMapping("/listCommentP/{id}/{page}")
+    public ResponseEntity<List<ComentariosDto>>listCommentsP(@PathVariable Long id, @PathVariable int page){
+        return comentariosService.listCommentPost(id, page);
     }
 }
  //el comentario si se debe eliminar
