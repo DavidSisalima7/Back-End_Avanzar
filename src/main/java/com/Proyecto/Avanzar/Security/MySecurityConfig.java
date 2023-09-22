@@ -58,12 +58,12 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/usuarios/**","/api/usuarios/registrar/{rolId}/**","/api/usuarios/actualizar/{id}/**","/api/usuarios/registrarConFoto/{rolId}/**",
                         "/api/usuarios/buscaruser/{username}/**","/api/usuarios/buscar/{username}/**","/api/usuariorol/listarol/**","/api/usuariorol/nombreRol/{usuarioId}/**",
                         "/swagger-ui/**","api/usuarios/actualizarUsuarioConFoto/{usuarioId}/**",
-                        "/api/categoria/**", "/api/categoriaProducto/**", "/api/categoriaServicio/registrar/**",
-                        "/api/comentarios/registrar/**", "/api/likes/registrar/**", "/api/productos/**","/api/publicaciones/**",
-                        "/api/servicios/**", "/api/subscripcion/registrar/**", "/api/tipoLike/registrar/**", "/api/vendedor/**","/api/usuarios/upload/**","/api/usuarios/**","/api/email/**",
-                        "/api/categoria/registrar/**", "/api/categoriaProducto/registrar/**", "/api/categoriaServicio/registrar/**",
-                        "/api/comentarios/registrar/**", "/api/likes/registrar/**", "/api/productos/**","/api/publicaciones/registrar/**",
-                        "/api/servicios/**", "/api/subscripcion/registrar/**", "/api/tipoLike/registrar/**", "/api/vendedor/registrar/**","/api/usuarios/upload/**","/api/usuarios/**").permitAll()
+                        "/api/categoria/**", "/api/categoriaProducto/**", "/api/categoriaServicio/**",
+                        "/api/comentarios/**", "/api/likes/**", "/api/productos/**","/api/publicaciones/**",
+                        "/api/servicios/**", "/api/subscripcion/**", "/api/tipoLike/**", "/api/vendedor/**","/api/usuarios/upload/**","/api/usuarios/**","/api/email/**",
+                        "/api/categoriaProducto/**", "/api/categoriaServicio/**", "/api/detalleSubscripcion/**",
+                        "/api/productos/**","/api/publicaciones/**",
+                        "/api/servicios/**", "/api/tipoLike/**","/api/usuarios/upload/**","/api/usuarios/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
                 .and()
