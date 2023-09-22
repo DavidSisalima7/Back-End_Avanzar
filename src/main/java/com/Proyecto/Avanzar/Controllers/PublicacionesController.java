@@ -202,7 +202,14 @@ public class PublicacionesController {
     @GetMapping("/listarServicio")
     public ResponseEntity<List<Publicaciones>> listarServicios() {
         try {
-            return new ResponseEntity<>(publicacionesRepository.listarServicios(), HttpStatus.OK);
+            List<Publicaciones> publicaciones = publicacionesRepository.listarServicios();
+            // Itera sobre la lista de publicaciones y calcula el tiempo transcurrido para cada una
+            for (Publicaciones publicacion : publicaciones) {
+                String tiempoTranscurrido = TiempoTranscurridoUtil.calcularTiempoTranscurridoFormateado(publicacion.getFechaPublicacion());
+                publicacion.setTiempoTranscurrido(tiempoTranscurrido);
+            }
+
+            return new ResponseEntity<>(publicaciones, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -211,7 +218,14 @@ public class PublicacionesController {
     @GetMapping("/listarProducto")
     public ResponseEntity<List<Publicaciones>> listarProducto() {
         try {
-            return new ResponseEntity<>(publicacionesRepository.listarProductos(), HttpStatus.OK);
+            List<Publicaciones> publicaciones = publicacionesRepository.listarProductos();
+            // Itera sobre la lista de publicaciones y calcula el tiempo transcurrido para cada una
+            for (Publicaciones publicacion : publicaciones) {
+                String tiempoTranscurrido = TiempoTranscurridoUtil.calcularTiempoTranscurridoFormateado(publicacion.getFechaPublicacion());
+                publicacion.setTiempoTranscurrido(tiempoTranscurrido);
+            }
+
+            return new ResponseEntity<>(publicaciones, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
