@@ -128,4 +128,8 @@ public class Detalle_SubcripcionService extends GenericServiceImpl<Detalle_Subsc
 
     }
 
+    public Detalle_Subscripcion obtenerDetalleSubscripcionPorVendedorId(Long vendedorId) {
+        return repository.obtenerDetalleSubscripcionPorVendedorId(vendedorId);
+    }
+
 }

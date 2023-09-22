@@ -7,6 +7,7 @@ import com.Proyecto.Avanzar.Models.Subscripcion;
 import com.Proyecto.Avanzar.Models.Vendedor;
 import com.Proyecto.Avanzar.Models.dto.mensajeAlertasDto;
 import com.Proyecto.Avanzar.Repository.Detalle_SubscripcionRepository;
+import com.Proyecto.Avanzar.Services.implement.Detalle_SubcripcionService;
 import com.Proyecto.Avanzar.Services.service.Detalle_SubscripcionService;
 import com.Proyecto.Avanzar.Services.service.SubscripcionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,6 +139,16 @@ public class Detalle_SubcripcionController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
 
+
+    @GetMapping("/extraerMembresia/{vendedorId}")
+    public ResponseEntity<Detalle_Subscripcion> obtenerDetallePorVendedorId(@PathVariable Long vendedorId) {
+        Detalle_Subscripcion detalleSubscripcion = DetallesubscripcionService.obtenerDetalleSubscripcionPorVendedorId(vendedorId);
+
+        if (detalleSubscripcion != null) {
+            return ResponseEntity.ok(detalleSubscripcion);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

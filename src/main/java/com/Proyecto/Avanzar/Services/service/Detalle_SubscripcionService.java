@@ -9,4 +9,6 @@ public interface Detalle_SubscripcionService extends GenericService<Detalle_Subs
     ResponseEntity<mensajeAlertasDto> dataSuscripUser(String username);
     
     ResponseEntity<mensajeAlertasDto> limitPubAct(String username);
+
+    Detalle_Subscripcion obtenerDetalleSubscripcionPorVendedorId(Long vendedorId);
 }
