@@ -79,4 +79,13 @@ public class SubscripcionController {
 
         }
     }
+
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<Subscripcion> getById(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<Subscripcion>(subscripcionService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
