@@ -6,6 +6,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Getter
@@ -17,9 +19,20 @@ public class Comentarios implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idComentario;
+    @NotNull(message = "Comentario vacío")
+    @Size(max = 230, message = "El comentario no debe tener más de 250 caracteres")
     private String texto;
     private Date fecha;
 
+    public Comentarios(Date fecha,String texto,String avatar, String name){
+        this.fecha= fecha;
+        this.texto=texto;
+        this.usuario=new Usuario();
+        this.usuario.setAvatar(avatar);
+        this.usuario.setName(name);
+        
+    }
+    
     //Relaciones
     //Relacion Usuario
     @ManyToOne(fetch = FetchType.EAGER)
