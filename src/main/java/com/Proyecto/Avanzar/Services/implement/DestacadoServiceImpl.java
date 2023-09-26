@@ -16,4 +16,9 @@ public class DestacadoServiceImpl extends GenericServiceImpl<Destacados, Long> i
     public CrudRepository<Destacados, Long> getDao() {
         return likesDao;
     }
+
+    public boolean existeDestacado(Long idPublicacion, Long id) {
+        // consulta en la base de datos para verificar si existe un destacado con los IDs proporcionados.
+        return likesDao.existsByPublicacionesIdPublicacionAndUsuarioId(idPublicacion, id);
+    }
 }

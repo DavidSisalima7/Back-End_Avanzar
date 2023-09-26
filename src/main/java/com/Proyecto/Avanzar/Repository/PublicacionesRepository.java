@@ -29,7 +29,7 @@ public interface PublicacionesRepository extends JpaRepository<Publicaciones, Lo
 
   //otra forma 
   //Long countByFechaPublicacionBetweenAndVendedor_Id(Date fechaInicio, Date fechaFin, Long vendedorId);
-    @Query(value = "SELECT * FROM publicaciones WHERE servicios_id_servicio IS NOT NULL AND visible=true AND vendedor_id_vendedor = :vendedorId ORDER BY fecha_publicacion DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM publicaciones WHERE servicios_id_servicio IS NOT NULL AND estado=true AND vendedor_id_vendedor = :vendedorId ORDER BY fecha_publicacion DESC", nativeQuery = true)
     public List<Publicaciones> listarPublicacionesConServicios(@Param("vendedorId") Long vendedorId);
 
 
@@ -39,6 +39,6 @@ public interface PublicacionesRepository extends JpaRepository<Publicaciones, Lo
     @Query(value = "SELECT * FROM publicaciones WHERE productos_id_producto IS NOT NULL AND estado=true ORDER BY fecha_publicacion DESC", nativeQuery = true)
     public List<Publicaciones> listarProductos();
     
-    @Query(value="SELECT * FROM publicaciones p JOIN destacados d ON p.id_publicacion=d.publicaciones_id_publicacion AND d.usuario_id = :idUser", nativeQuery = true)
+    @Query(value="SELECT * FROM publicaciones p JOIN destacados d ON p.id_publicacion=d.publicaciones_id_publicacion AND d.usuario_id = :idUser AND estado=true", nativeQuery = true)
     List<Publicaciones> listarDestacados(@Param("idUser")Long id);
 }

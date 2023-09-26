@@ -1,6 +1,10 @@
 package com.Proyecto.Avanzar.Controllers;
 
 import com.Proyecto.Avanzar.Models.Destacados;
+import com.Proyecto.Avanzar.Models.Publicaciones;
+import com.Proyecto.Avanzar.Repository.DestacadoRepository;
+import com.Proyecto.Avanzar.Services.implement.DestacadoServiceImpl;
+import com.Proyecto.Avanzar.Services.service.PublicacionesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +20,43 @@ public class DestacadosController {
 
     @Autowired
     DestacadoService likesService;
+    @Autowired
+    DestacadoServiceImpl destacadoRepository;
 
+    @Autowired
+    PublicacionesService publicacionesService;
+
+    @PostMapping("/registrar")
+    public ResponseEntity<?> crear(@RequestBody Destacados r) {
+        // Verificar si ya existe un registro con el mismo publicacion_id y usuario_id
+        boolean yaDestacado = destacadoRepository.existeDestacado(r.getPublicaciones().getIdPublicacion(), r.getUsuario().getId());
+
+        if (yaDestacado) {
+            return new ResponseEntity<>("El usuario ya ha destacado esta publicación.", HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            // Guardar el registro en Destacados
+            Destacados nuevoDestacado = likesService.save(r);
+
+            // Cargar la entidad Publicaciones que deseas actualizar
+            Publicaciones publicacion = publicacionesService.findById(r.getPublicaciones().getIdPublicacion());
+
+            if (publicacion != null) {
+                // Actualizar el campo visible en la entidad Publicaciones para que quede en el fronted el icono de color rojo
+                publicacion.setVisible(true);
+                // Guardar la entidad Publicaciones actualizada en la base de datos
+                publicacionesService.save(publicacion);
+            }
+
+            return new ResponseEntity<>(nuevoDestacado, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    /*
     @PostMapping("/registrar")
     public ResponseEntity<Destacados> crear(@RequestBody Destacados r) {
         try {
@@ -24,7 +64,7 @@ public class DestacadosController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
     @GetMapping("/listar")
     public ResponseEntity<List<Destacados>> obtenerLista() {
