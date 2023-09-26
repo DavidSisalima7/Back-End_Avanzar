@@ -16,4 +16,6 @@ public interface PersonaService extends GenericService<Persona, Long>{
     public Persona findByCorreo(String correo);
 
     public Map<String, Object> contarRegistrosEnTablas();
+
+    Map<String, Object> contarRegistrosEnTablasE(Long vendedorId);
 }
