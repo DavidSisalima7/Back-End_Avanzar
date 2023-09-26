@@ -30,8 +30,8 @@ public class SubscripcionController {
     public void init() {
 
         Subscripcion subscripcion1 = new Subscripcion(1L, "FREE", 0, 3 );
-        Subscripcion subscripcion2 = new Subscripcion(2L, "GOLD", 5, 6 );
-        Subscripcion subscripcion3 = new Subscripcion(3L, "PREMIUM", 10, 10 );
+        Subscripcion subscripcion2 = new Subscripcion(2L, "PREMIUM SILVER", 5, 7 );
+        Subscripcion subscripcion3 = new Subscripcion(3L, "PREMIUM GOLD", 10, 12 );
 
         subscripcionService.save(subscripcion1);
         subscripcionService.save(subscripcion2);
