@@ -6,6 +6,7 @@ import com.Proyecto.Avanzar.Repository.DestacadoRepository;
 import com.Proyecto.Avanzar.Services.implement.DestacadoServiceImpl;
 import com.Proyecto.Avanzar.Services.service.PublicacionesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,9 @@ public class DestacadosController {
 
     @Autowired
     PublicacionesService publicacionesService;
+
+    @Autowired
+    DestacadoRepository destacadoRep;
 
     @PostMapping("/registrar")
     public ResponseEntity<?> crear(@RequestBody Destacados r) {
@@ -75,11 +79,23 @@ public class DestacadosController {
         }
     }
 
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Destacados likes) {
-        return likesService.delete(id);
+    @GetMapping("/listConId/{id}")
+
+    public ResponseEntity<List<Destacados>> listarDestacados(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(destacadoRep.listDestacados(id), HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<?> borrarFavorito(@PathVariable Long id) {
+
+        return new ResponseEntity<>(likesService.borrarFavorito(id), HttpStatus.OK);
+
+    }
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Destacados> actualizar(@PathVariable Long id, @RequestBody Destacados p) {
         Destacados likes = likesService.findById(id);

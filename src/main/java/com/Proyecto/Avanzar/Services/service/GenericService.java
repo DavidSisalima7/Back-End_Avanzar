@@ -14,6 +14,6 @@ public interface GenericService <T, ID extends Serializable> {
 
 	    public ResponseEntity<?> delete(ID id);
 
-		public void deleteEntity(T entity);
+		public void deleteEntity(ID id);
 
 }

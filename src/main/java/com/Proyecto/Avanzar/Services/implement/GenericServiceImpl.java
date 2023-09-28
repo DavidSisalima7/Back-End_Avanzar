@@ -42,7 +42,7 @@ public abstract class GenericServiceImpl <T, ID extends Serializable> implements
     }
 
     @Override
-    public void deleteEntity(T entity) {
-        getDao().delete(entity);
+    public void deleteEntity(ID id) {
+        getDao().deleteById(id);
     }
 }
