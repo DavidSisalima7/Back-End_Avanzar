@@ -3,6 +3,7 @@ package com.Proyecto.Avanzar.Controllers;
 
 import com.Proyecto.Avanzar.Models.Comentarios;
 import com.Proyecto.Avanzar.Models.ComentariosDto;
+import com.Proyecto.Avanzar.Models.Productos;
 import com.Proyecto.Avanzar.Services.service.ComentariosService;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,11 @@ public class ComentariosController {
     @GetMapping("/listCommentP/{id}/{page}")
     public ResponseEntity<List<ComentariosDto>>listCommentsP(@PathVariable Long id, @PathVariable int page){
         return comentariosService.listCommentPost(id, page);
+    }
+    @GetMapping("/Comentarioxus/{id}")
+    public ResponseEntity<List<Comentarios>> ComentariosxUsuario(@PathVariable("id") Long id) {
+        List<Comentarios> prod = comentariosService.ComentariosxUsuario(id);
+        return new ResponseEntity<>(prod, HttpStatus.OK);
     }
 }
  //el comentario si se debe eliminar

@@ -46,6 +46,12 @@ public class ComentariosServiceImpl extends GenericServiceImpl<Comentarios, Long
         }catch(Exception e){
               return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
+
     }
+
+    @Override
+    public List<Comentarios> ComentariosxUsuario(Long id) {
+        return comentariosDao.ComentariosxUsuario(id);
+    }
+
 }
