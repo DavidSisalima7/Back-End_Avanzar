@@ -26,6 +26,9 @@ public interface PublicacionesRepository extends JpaRepository<Publicaciones, Lo
     
     //contar las publicaciones visibles 
     Long countByVendedor_idVendedorAndVisibleTrueAndEstadoTrue(Long vendedorId);
+    
+    //contar las publicaciones que no estan eliminadas
+    Long countByVendedor_idVendedorAndVisibleTrue(Long vendedorId);
 
   //otra forma 
   //Long countByFechaPublicacionBetweenAndVendedor_Id(Date fechaInicio, Date fechaFin, Long vendedorId);
