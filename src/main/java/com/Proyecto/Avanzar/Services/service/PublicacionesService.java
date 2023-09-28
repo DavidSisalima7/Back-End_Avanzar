@@ -1,4 +1,5 @@
 package com.Proyecto.Avanzar.Services.service;
+import com.Proyecto.Avanzar.Models.Comentarios;
 import com.Proyecto.Avanzar.Models.Publicaciones;
 import com.Proyecto.Avanzar.Models.TiempoTranscurridoUtil;
 
@@ -13,4 +14,6 @@ public interface PublicacionesService extends GenericService<Publicaciones, Long
     Long countPubliEstatus(Long idVenFk);
 
     ResponseEntity<List<Publicaciones>> informacionPublicacionCommentarios(Long idUsu);
+    
+    List<Publicaciones> listarPublicacionesVendedor(Long idVendedor);
 }

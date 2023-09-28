@@ -64,4 +64,7 @@ public interface PublicacionesRepository extends JpaRepository<Publicaciones, Lo
     @Query("SELECT NEW Publicaciones(p.idPublicacion, p.tituloPublicacion,p.categoria.nombreCategoria ,COUNT(c.publicaciones.idPublicacion) ) FROM Publicaciones p LEFT JOIN Comentarios c ON p.idPublicacion="
             + "c.publicaciones.idPublicacion JOIN Vendedor v ON v.idVendedor= p.vendedor.idVendedor AND p.visible=true AND v.usuario.id= :idUsu GROUP BY p.idPublicacion, p.tituloPublicacion ,p.categoria.nombreCategoria")
     List<Publicaciones> informacionPublicacionCommentarios(@Param("idUsu")Long id,Pageable pageable);
+    
+    @Query(value=" select * from publicaciones where vendedor_id_vendedor =:idVendedor", nativeQuery = true)
+    List<Publicaciones> listarPublicacionesVendedor(@Param("idVendedor")Long id);
 }

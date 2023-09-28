@@ -44,4 +44,9 @@ public class PublicacionesServiceImpl extends GenericServiceImpl<Publicaciones, 
         
         
     }
+
+    @Override
+    public List<Publicaciones> listarPublicacionesVendedor(Long idVendedor) {
+        return publicacionesDao.listarPublicacionesVendedor(idVendedor);
+    }
 }
