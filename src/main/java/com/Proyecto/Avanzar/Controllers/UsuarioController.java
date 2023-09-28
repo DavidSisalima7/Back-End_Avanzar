@@ -245,10 +245,8 @@ public class UsuarioController {
         rolService.save(usuario2);
         rolService.save(usuario3);
         rolService.save(usuario4);
+
     }
-
-
-
 
 
     @GetMapping("/listar")
