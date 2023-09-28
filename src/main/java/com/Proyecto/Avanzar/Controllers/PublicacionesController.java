@@ -242,4 +242,16 @@ public class PublicacionesController {
         }
     }
 
+    
+    //recuperar informacion de las publicaciones y comentarios
+    @GetMapping("/recuperarInfoPubliComent/{id}")
+    public ResponseEntity<List<Publicaciones>>informacionPublicacionCommentarios(@PathVariable("id")Long id ){
+        try{
+            return publicacionesService.informacionPublicacionCommentarios(id);
+            
+        }catch (Exception e){
+            
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

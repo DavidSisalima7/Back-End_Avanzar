@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import javax.transaction.Transactional;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 
 public interface PublicacionesRepository extends JpaRepository<Publicaciones, Long> {
@@ -54,4 +55,10 @@ public interface PublicacionesRepository extends JpaRepository<Publicaciones, Lo
     @Transactional
     @Query(value = "UPDATE Publicaciones  SET estado = false WHERE id_publicacion IN (:idPubli)", nativeQuery = true)
     void updateStateSuscripCaducado(@Param("idPubli") List<Long> idPublicacion);      
+    
+    //recupero la informa cion de de la publicacion y la cantidad de comentarios 
+    //para poder graficar
+    @Query("SELECT NEW Publicaciones(p.idPublicacion, p.tituloPublicacion,p.categoria.nombreCategoria ,COUNT(c.publicaciones.idPublicacion) ) FROM Publicaciones p LEFT JOIN Comentarios c ON p.idPublicacion="
+            + "c.publicaciones.idPublicacion JOIN Vendedor v ON v.idVendedor= p.vendedor.idVendedor AND p.visible=true AND v.usuario.id= :idUsu GROUP BY p.idPublicacion, p.tituloPublicacion ,p.categoria.nombreCategoria")
+    List<Publicaciones> informacionPublicacionCommentarios(@Param("idUsu")Long id,Pageable pageable);
 }

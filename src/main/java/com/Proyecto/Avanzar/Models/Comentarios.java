@@ -24,7 +24,8 @@ public class Comentarios implements Serializable {
     private String texto;
     private Date fecha;
 
-    public Comentarios(Date fecha,String texto,String avatar, String name){
+    public Comentarios(Long id, Date fecha,String texto,String avatar, String name){
+        this.idComentario=id;
         this.fecha= fecha;
         this.texto=texto;
         this.usuario=new Usuario();

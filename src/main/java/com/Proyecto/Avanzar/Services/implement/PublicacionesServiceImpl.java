@@ -4,8 +4,13 @@ import com.Proyecto.Avanzar.Models.Publicaciones;
 import com.Proyecto.Avanzar.Repository.PublicacionesRepository;
 import com.Proyecto.Avanzar.Services.service.PublicacionesService;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,5 +33,15 @@ public class PublicacionesServiceImpl extends GenericServiceImpl<Publicaciones, 
     @Override
     public Long countPubliEstatus(Long idVenFk) {
         return publicacionesDao.countByVendedor_idVendedorAndVisibleTrueAndEstadoTrue(idVenFk);
+    }
+
+    @Override
+    public ResponseEntity<List<Publicaciones>> informacionPublicacionCommentarios(Long idUsu) {
+        
+        Pageable pageable= PageRequest.of(0, 12);
+        
+        return new ResponseEntity<>(publicacionesDao.informacionPublicacionCommentarios(idUsu, pageable), HttpStatus.OK);
+        
+        
     }
 }

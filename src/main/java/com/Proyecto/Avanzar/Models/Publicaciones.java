@@ -25,6 +25,15 @@ public class Publicaciones implements Serializable {
     private String tiempoTranscurrido;
     private boolean visible;
 
+    public Publicaciones(Long idPublicacion, String tituloPublicacion,String nombreCategoria, Long comenntCount) {
+        this.idPublicacion = idPublicacion;
+        this.tituloPublicacion = tituloPublicacion;
+        this.tiempoTranscurrido=comenntCount+"";
+        this.categoria= new Categoria();
+        this.categoria.setNombreCategoria(nombreCategoria);
+    
+    }
+    
     @ElementCollection
     private List<String> imagenes = new ArrayList<>();
     //Relaciones
