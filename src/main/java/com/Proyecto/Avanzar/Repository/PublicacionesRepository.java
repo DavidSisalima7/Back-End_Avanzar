@@ -41,4 +41,6 @@ public interface PublicacionesRepository extends JpaRepository<Publicaciones, Lo
     
     @Query(value="SELECT * FROM publicaciones p JOIN destacados d ON p.id_publicacion=d.publicaciones_id_publicacion AND d.usuario_id = :idUser", nativeQuery = true)
     List<Publicaciones> listarDestacados(@Param("idUser")Long id);
+    @Query(value=" select * from publicaciones where vendedor_id_vendedor =:idVendedor", nativeQuery = true)
+    List<Publicaciones> listarPublicacionesVendedor(@Param("idVendedor")Long id);
 }

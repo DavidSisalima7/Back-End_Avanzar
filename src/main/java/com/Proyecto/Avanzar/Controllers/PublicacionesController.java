@@ -242,4 +242,10 @@ public class PublicacionesController {
         }
     }
 
+    @GetMapping("/PublicacionxVendedor/{id}")
+    public ResponseEntity<List<Publicaciones>> listarPublicacionesVendedor(@PathVariable("id") Long id) {
+        List<Publicaciones> prod = publicacionesRepository.listarPublicacionesVendedor(id);
+        return new ResponseEntity<>(prod, HttpStatus.OK);
+    }
+
 }

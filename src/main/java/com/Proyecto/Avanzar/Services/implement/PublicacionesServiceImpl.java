@@ -4,6 +4,8 @@ import com.Proyecto.Avanzar.Models.Publicaciones;
 import com.Proyecto.Avanzar.Repository.PublicacionesRepository;
 import com.Proyecto.Avanzar.Services.service.PublicacionesService;
 import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
@@ -28,5 +30,10 @@ public class PublicacionesServiceImpl extends GenericServiceImpl<Publicaciones, 
     @Override
     public Long countPubliEstatus(Long idVenFk) {
         return publicacionesDao.countByVendedor_idVendedorAndEstadoTrueAndVisibleTrue(idVenFk);
+    }
+
+    @Override
+    public List<Publicaciones> listarPublicacionesVendedor(Long idVendedor) {
+        return publicacionesDao.listarPublicacionesVendedor(idVendedor);
     }
 }
