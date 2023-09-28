@@ -26,7 +26,7 @@ public class PublicacionesServiceImpl extends GenericServiceImpl<Publicaciones, 
     @Override
     public Long countPubli(Long idVenFK) {
     
-        return publicacionesDao.countByVendedor_idVendedorAndVisibleTrueAndEstadoTrue(idVenFK);
+        return publicacionesDao.countByVendedor_idVendedorAndVisibleTrue(idVenFK);
     
     }
 
