@@ -12,6 +12,7 @@ import lombok.Data;
  */
 @Data
 public class ComentariosDto {
+    private Long id;
     private String name;
     private String texto;
     private String tiempoTranscurrido;

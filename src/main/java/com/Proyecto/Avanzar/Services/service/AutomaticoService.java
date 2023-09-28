@@ -6,13 +6,12 @@ package com.Proyecto.Avanzar.Services.service;
 
 import com.Proyecto.Avanzar.Models.dto.EmailDto;
 import com.Proyecto.Avanzar.Repository.PersonaRepository;
+import com.Proyecto.Avanzar.Repository.PublicacionesRepository;
+import com.Proyecto.Avanzar.Repository.VendedorRepository;
 import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,13 +22,19 @@ import org.springframework.stereotype.Service;
  * @author gt618
  */
 @Service
-public class NotificarAutomaticoSubscripService {
+public class AutomaticoService {
 
     @Autowired
     private JavaMailSender mail;
 
     @Autowired
     private PersonaRepository repoPer;
+
+    @Autowired
+    private PublicacionesRepository repoPubli;
+
+    @Autowired
+    private VendedorRepository repoVen;
 
     @Scheduled(cron = "0 0 17 * * *")
     public void notificarSubscripCaducar() {
@@ -57,6 +62,35 @@ public class NotificarAutomaticoSubscripService {
                 System.out.println("Error al enviar email renovación suscripción");
             }
         }
+    }
+
+    @Scheduled(cron = "0 0 23 * * *")
+    public void reinciarSupcripción() {
+        //vendedores que caduco su suscripcion
+        //ver los id vendedores donde la fecha limite coincide con el currentDate
+        //verificara hasta 3 dias despues de la caducidad por seguridad
+        List<Long> listIdVenLimite = repoVen.listarUsuariosSuscripVencida();
+
+        if (!listIdVenLimite.isEmpty()) {
+            //buscar los id vendedor donde tenga mas 
+            List<Long> listIdvenPublicExced = repoPubli.listarIdVenDesacPublicFree(listIdVenLimite);
+            for (Long id : listIdvenPublicExced) {
+                //desactivar y dejar solo 3 publicaciones activas
+                List<Long> listIdPublicDesac = repoPubli.listarIdPublicDesac(id);
+
+                if (listIdPublicDesac.size() > 3) {
+                    // Eliminar los primeros 3 elementos
+           
+                    for (int i = 0; i < 3; i++) {
+                        listIdPublicDesac.remove(0);
+                    }
+                        
+                   repoPubli.updateStateSuscripCaducado(listIdPublicDesac);
+                }
+
+            }
+        }
+
     }
 
 }

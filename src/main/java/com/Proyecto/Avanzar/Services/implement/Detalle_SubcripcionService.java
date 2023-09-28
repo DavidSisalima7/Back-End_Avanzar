@@ -44,10 +44,10 @@ public class Detalle_SubcripcionService extends GenericServiceImpl<Detalle_Subsc
 
             switch (Integer.parseInt(subscripcion.getSubscripcion().getIdSubscripcion() + "")) {
                 case 1 -> {
-                    if (servPub.countPubli(subscripcion.getVendedor().getIdVendedor()) >= 7) {
+                    if (servPub.countPubli(subscripcion.getVendedor().getIdVendedor()) >= 12) {
                         mensAlert.setBanderaBol(false);
-                        mensAlert.setTitle("Suscripción FREE");
-                        mensAlert.setBody("Solo puede crear 7 publicaciones,<br> actualize la suscripción para crear más.");
+                        mensAlert.setTitle("Usuario");
+                        mensAlert.setBody("Solo puede crear 12 publicaciones");
 
                     } else {
                         //se crea
@@ -59,18 +59,18 @@ public class Detalle_SubcripcionService extends GenericServiceImpl<Detalle_Subsc
                 case 2 -> {
                     if (servPub.countPubli(subscripcion.getVendedor().getIdVendedor()) >= 12) {
                         mensAlert.setBanderaBol(false);
-                        mensAlert.setTitle("Suscripción GOLD");
-                        mensAlert.setBody("Solo puede crear 12 publicaciones,<br> actualize la suscripción para crear más.");
+                        mensAlert.setTitle("Usuario");
+                        mensAlert.setBody("Solo puede crear 12 publicaciones");
                     } else {
                         mensAlert.setBanderaBol(true);
                     }
                 }
 
                 case 3 -> {
-                    if (servPub.countPubli(subscripcion.getVendedor().getIdVendedor()) >= 15) {
+                    if (servPub.countPubli(subscripcion.getVendedor().getIdVendedor()) >= 12) {
                         mensAlert.setBanderaBol(false);
-                        mensAlert.setTitle("Suscripción PREMIUM");
-                        mensAlert.setBody("Solo puede crear 15 publicaciones");
+                        mensAlert.setTitle("Usuario");
+                        mensAlert.setBody("Solo puede crear 12 publicaciones");
                     } else {
                         mensAlert.setBanderaBol(true);
                     }
@@ -108,7 +108,7 @@ public class Detalle_SubcripcionService extends GenericServiceImpl<Detalle_Subsc
                     case 6 -> {
                         mensAlert.setBanderaBol(false);
                         mensAlert.setTitle("Suscripción GOLD");
-                        mensAlert.setBody("Solo puede activar 6 publicaciones,<br> actualize la suscripción para activar más.");
+                        mensAlert.setBody("Solo puede activar 7 publicaciones,<br> actualize la suscripción para activar más.");
                     }
                     case 10 -> {
                         mensAlert.setBanderaBol(false);
@@ -128,6 +128,7 @@ public class Detalle_SubcripcionService extends GenericServiceImpl<Detalle_Subsc
 
     }
 
+    @Override
     public Detalle_Subscripcion obtenerDetalleSubscripcionPorVendedorId(Long vendedorId) {
         return repository.obtenerDetalleSubscripcionPorVendedorId(vendedorId);
     }

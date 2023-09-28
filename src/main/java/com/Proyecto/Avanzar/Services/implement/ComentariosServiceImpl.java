@@ -34,6 +34,7 @@ public class ComentariosServiceImpl extends GenericServiceImpl<Comentarios, Long
             List<Comentarios> comments=comentariosDao.listCommentPost(idPubli,pageable);
             for(Comentarios comen :comments){
                 ComentariosDto comenDto= new ComentariosDto();
+                comenDto.setId(comen.getIdComentario());
                 comenDto.setAvatar(comen.getUsuario().getAvatar());
                 comenDto.setName(comen.getUsuario().getName());
                 comenDto.setTiempoTranscurrido(TiempoTranscurridoUtil.calcularTiempoTranscurridoFormateado(comen.getFecha()));
@@ -47,5 +48,18 @@ public class ComentariosServiceImpl extends GenericServiceImpl<Comentarios, Long
               return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         
+    }
+
+    @Override
+    public ResponseEntity<?> borrarComentario(Long idPubli) {
+    
+       try{
+           comentariosDao.borrarComentario(idPubli);
+           return new ResponseEntity<>(HttpStatus.OK);
+       }catch(Exception e){
+           System.out.println(e);
+           return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+       }
+    
     }
 }

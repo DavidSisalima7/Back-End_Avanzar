@@ -1,6 +1,5 @@
 package com.Proyecto.Avanzar.Controllers;
 
-
 import com.Proyecto.Avanzar.Models.Comentarios;
 import com.Proyecto.Avanzar.Models.ComentariosDto;
 import com.Proyecto.Avanzar.Services.service.ComentariosService;
@@ -12,15 +11,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = { "*" })
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping("/api/comentarios")
 public class ComentariosController {
+
     @Autowired
     ComentariosService comentariosService;
+
     @PostMapping("/registrar")
     public ResponseEntity<Comentarios> crear(@RequestBody Comentarios r) {
-        
+
         try {
             r.setFecha(new Date());
             return new ResponseEntity<>(comentariosService.save(r), HttpStatus.CREATED);
@@ -38,13 +39,14 @@ public class ComentariosController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Comentarios comentarios) {
         return comentariosService.delete(id);
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Comentarios> actualizar(@PathVariable Long id,@RequestBody Comentarios p) {
+    public ResponseEntity<Comentarios> actualizar(@PathVariable Long id, @RequestBody Comentarios p) {
         Comentarios comentarios = comentariosService.findById(id);
         if (comentarios == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -61,10 +63,17 @@ public class ComentariosController {
 
         }
     }
-    
+
     @GetMapping("/listCommentP/{id}/{page}")
-    public ResponseEntity<List<ComentariosDto>>listCommentsP(@PathVariable Long id, @PathVariable int page){
+    public ResponseEntity<List<ComentariosDto>> listCommentsP(@PathVariable Long id, @PathVariable int page) {
         return comentariosService.listCommentPost(id, page);
+    }
+
+    @DeleteMapping("/deleteComment/{id}")
+    public ResponseEntity<?> deletComment(@PathVariable Long id) {
+
+        return new ResponseEntity<>(comentariosService.borrarComentario(id), HttpStatus.OK);
+
     }
 }
  //el comentario si se debe eliminar
