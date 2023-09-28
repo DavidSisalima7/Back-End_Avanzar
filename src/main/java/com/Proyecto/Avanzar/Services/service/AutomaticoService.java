@@ -5,6 +5,7 @@
 package com.Proyecto.Avanzar.Services.service;
 
 import com.Proyecto.Avanzar.Models.dto.EmailDto;
+import com.Proyecto.Avanzar.Repository.Detalle_SubscripcionRepository;
 import com.Proyecto.Avanzar.Repository.PersonaRepository;
 import com.Proyecto.Avanzar.Repository.PublicacionesRepository;
 import com.Proyecto.Avanzar.Repository.VendedorRepository;
@@ -35,6 +36,9 @@ public class AutomaticoService {
 
     @Autowired
     private VendedorRepository repoVen;
+    
+    @Autowired 
+    private Detalle_SubscripcionRepository repoDetSub;
 
     @Scheduled(cron = "0 0 17 * * *")
     public void notificarSubscripCaducar() {
@@ -72,8 +76,12 @@ public class AutomaticoService {
         List<Long> listIdVenLimite = repoVen.listarUsuariosSuscripVencida();
 
         if (!listIdVenLimite.isEmpty()) {
+
             //buscar los id vendedor donde tenga mas 
             List<Long> listIdvenPublicExced = repoPubli.listarIdVenDesacPublicFree(listIdVenLimite);
+            //actualiza el idsuscipcion a free 1
+            repoDetSub.updateFreeSuscrip(listIdVenLimite);
+            
             for (Long id : listIdvenPublicExced) {
                 //desactivar y dejar solo 3 publicaciones activas
                 List<Long> listIdPublicDesac = repoPubli.listarIdPublicDesac(id);

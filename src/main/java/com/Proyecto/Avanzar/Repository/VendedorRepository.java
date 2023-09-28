@@ -15,6 +15,6 @@ public interface VendedorRepository extends JpaRepository<Vendedor, Long> {
 
     Vendedor getVendedoresByUsuarioId(Long userId);
     
-    @Query(value="SELECT vendedor_id_vendedor FROM Detalle_Subscripcion d WHERE Date(d.fecha_fin)<= Date(CURRENT_DATE) AND DATE(CURRENT_DATE)< Date(d.fecha_fin + INTERVAL '3 days')", nativeQuery = true)
+    @Query(value="SELECT vendedor_id_vendedor FROM Detalle_Subscripcion d WHERE Date(d.fecha_fin)<= Date(CURRENT_DATE) AND DATE(CURRENT_DATE)< Date(d.fecha_fin + INTERVAL '3 days') AND subscripcion_id_subscripcion!=1", nativeQuery = true)
     List<Long> listarUsuariosSuscripVencida();
 }

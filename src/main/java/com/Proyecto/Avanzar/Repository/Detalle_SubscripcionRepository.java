@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import javax.transaction.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
 
 @Repository
 public interface Detalle_SubscripcionRepository extends JpaRepository<Detalle_Subscripcion, Long> {
@@ -27,4 +29,10 @@ public interface Detalle_SubscripcionRepository extends JpaRepository<Detalle_Su
     // Utiliza la anotación @Query para crear la consulta SQL parametrizada
     @Query("SELECT ds FROM Detalle_Subscripcion ds WHERE ds.vendedor.idVendedor = :vendedorId")
     public Detalle_Subscripcion obtenerDetalleSubscripcionPorVendedorId(Long vendedorId);
+    
+    
+    @Modifying
+    @Transactional
+    @Query(value="UPDATE Detalle_Subscripcion SET subscripcion_id_subscripcion = 1 WHERE vendedor_id_vendedor IN (:idVen)", nativeQuery = true)
+    void updateFreeSuscrip(@Param("idVen") List<Long> idVen);
 }
