@@ -1,6 +1,7 @@
 package com.Proyecto.Avanzar.Services.implement;
 
 import com.Proyecto.Avanzar.Models.Publicaciones;
+import com.Proyecto.Avanzar.Models.Usuario;
 import com.Proyecto.Avanzar.Repository.PublicacionesRepository;
 import com.Proyecto.Avanzar.Services.service.PublicacionesService;
 import java.util.Date;
@@ -48,5 +49,10 @@ public class PublicacionesServiceImpl extends GenericServiceImpl<Publicaciones, 
     @Override
     public List<Publicaciones> listarPublicacionesVendedor(Long idVendedor) {
         return publicacionesDao.listarPublicacionesVendedor(idVendedor);
+    }
+
+    @Override
+    public Publicaciones obtenerPublicaciones(String tituloPublicacion) {
+        return publicacionesDao.findBytituloPublicacion(tituloPublicacion);
     }
 }

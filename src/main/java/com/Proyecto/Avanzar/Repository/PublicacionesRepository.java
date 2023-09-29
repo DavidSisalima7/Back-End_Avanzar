@@ -2,6 +2,8 @@ package com.Proyecto.Avanzar.Repository;
 
 import com.Proyecto.Avanzar.Models.Publicaciones;
 import java.util.Date;
+
+import com.Proyecto.Avanzar.Models.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -36,10 +38,10 @@ public interface PublicacionesRepository extends JpaRepository<Publicaciones, Lo
     public List<Publicaciones> listarPublicacionesConServicios(@Param("vendedorId") Long vendedorId);
 
 
-    @Query(value = "SELECT * FROM publicaciones WHERE servicios_id_servicio IS NOT NULL AND estado=true ORDER BY fecha_publicacion DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM publicaciones WHERE servicios_id_servicio IS NOT NULL ORDER BY fecha_publicacion DESC", nativeQuery = true)
     public List<Publicaciones> listarServicios();
 
-    @Query(value = "SELECT * FROM publicaciones WHERE productos_id_producto IS NOT NULL AND estado=true ORDER BY fecha_publicacion DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM publicaciones WHERE productos_id_producto IS NOT NULL ORDER BY fecha_publicacion DESC", nativeQuery = true)
     public List<Publicaciones> listarProductos();
     
     @Query(value="SELECT * FROM publicaciones p JOIN destacados d ON p.id_publicacion=d.publicaciones_id_publicacion AND d.usuario_id = :idUser AND estado=true", nativeQuery = true)
@@ -67,4 +69,8 @@ public interface PublicacionesRepository extends JpaRepository<Publicaciones, Lo
     
     @Query(value=" select * from publicaciones where vendedor_id_vendedor =:idVendedor", nativeQuery = true)
     List<Publicaciones> listarPublicacionesVendedor(@Param("idVendedor")Long id);
+
+    @Query(value = "SELECT *\n"
+            + "\tFROM publicaciones WHERE titulo_publicacion = :tituloPublicacion and visible = true", nativeQuery = true)
+    public Publicaciones findBytituloPublicacion(String tituloPublicacion);
 }
