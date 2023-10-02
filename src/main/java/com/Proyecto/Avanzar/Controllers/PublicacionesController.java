@@ -152,6 +152,7 @@ public class PublicacionesController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                a.setVisible(false);
                 a.setEstado(false);
                 return new ResponseEntity<>(publicacionesService.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
