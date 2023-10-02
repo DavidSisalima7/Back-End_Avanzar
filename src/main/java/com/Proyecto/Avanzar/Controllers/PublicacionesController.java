@@ -172,6 +172,7 @@ public class PublicacionesController {
                 publicaciones.setDescripcionPublicacion(p.getDescripcionPublicacion());
                 //implementar verificaion otra vez por que puede ser cambiado el metodo e ignorar la seguridad 
                 publicaciones.setEstado(p.isEstado());
+                publicaciones.setVisible(p.isVisible());
                 publicaciones.setVendedor(p.getVendedor());
 
                 return new ResponseEntity<>(publicacionesService.save(publicaciones), HttpStatus.CREATED);
@@ -263,4 +264,25 @@ public class PublicacionesController {
         return new ResponseEntity<>(prod, HttpStatus.OK);
     }
 
+    @GetMapping("/buscarPublicacion/{tituloPublicacion}")
+    public Publicaciones obtenerPublicaciones(@PathVariable("tituloPublicacion") String tituloPublicacion) {
+        return publicacionesService.obtenerPublicaciones(tituloPublicacion);
+    }
+
+    @PutMapping("/actualizarN/{id}")
+    public ResponseEntity<Publicaciones> actualizarN(@PathVariable Long id, @RequestBody Publicaciones p) {
+        Publicaciones publicaciones = publicacionesService.findById(id);
+        if (publicaciones == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                publicaciones.setEstado(p.isEstado());
+                publicaciones.setVisible(p.isVisible());
+                return new ResponseEntity<>(publicacionesService.save(publicaciones), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
+    }
 }
