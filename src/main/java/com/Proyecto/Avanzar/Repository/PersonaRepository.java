@@ -46,7 +46,7 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
             "SUM(CASE WHEN u.visible = true AND u.enabled = true THEN 1 ELSE 0 END) AS EmprendedorasActivas, " +
             "(SELECT COUNT(*) FROM publicaciones p WHERE p.vendedor_id_vendedor = :vendedorId) AS TotalPublicaciones, " +
             "(SELECT COUNT(*) FROM publicaciones p WHERE p.vendedor_id_vendedor = :vendedorId AND p.categoria_id_categoria = 1) AS PublicacionesProductos, "+
-            "(SELECT COUNT(*) FROM publicaciones p WHERE p.vendedor_id_vendedor = :vendedorId AND p.categoria_id_categoria = 2) AS PublicacionesServicios "+
+             "(SELECT COUNT(*) FROM publicaciones p WHERE p.vendedor_id_vendedor = :vendedorId AND p.categoria_id_categoria = 2) AS PublicacionesServicios "+
             "FROM " +
             "usuario_rol ur " +
             "INNER JOIN usuarios u ON ur.usuario_id = u.id " +

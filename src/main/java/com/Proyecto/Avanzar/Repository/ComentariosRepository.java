@@ -3,6 +3,8 @@ package com.Proyecto.Avanzar.Repository;
 import com.Proyecto.Avanzar.Models.Comentarios;
 import java.util.List;
 import javax.transaction.Transactional;
+
+import com.Proyecto.Avanzar.Models.Productos;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -18,4 +20,8 @@ public interface ComentariosRepository extends JpaRepository<Comentarios, Long> 
     @Transactional
     @Query("DELETE FROM Comentarios c WHERE c.idComentario = :id")
     void borrarComentario(@Param("id") Long id);
+
+    @Query("SELECT c FROM Comentarios c JOIN Usuario us ON c.usuario.id=us.id AND us.id = :id")
+    List<Comentarios> ComentariosxUsuario(@Param("id") Long id);
+
 }
