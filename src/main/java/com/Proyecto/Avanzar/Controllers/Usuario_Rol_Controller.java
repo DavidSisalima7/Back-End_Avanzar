@@ -19,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usuariorol")
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:4200")
 public class Usuario_Rol_Controller {
     @Autowired
     private UsuarioRolService usuarioService;
