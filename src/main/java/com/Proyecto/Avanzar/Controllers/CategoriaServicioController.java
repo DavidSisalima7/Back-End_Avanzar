@@ -54,11 +54,22 @@ public class CategoriaServicioController {
     @PostConstruct
     public void init() {
         CategoriaServicio categoriaServicio1 = new CategoriaServicio(1L, "Belleza");
-        CategoriaServicio categoriaServicio2 = new CategoriaServicio(2L, "Costura");
-        CategoriaServicio categoriaServicio3 = new CategoriaServicio(3L, "Hogar");
+        CategoriaServicio categoriaServicio2 = new CategoriaServicio(2L, "Cocina");
+        CategoriaServicio categoriaServicio3 = new CategoriaServicio(3L, "Costura");
+        CategoriaServicio categoriaServicio4 = new CategoriaServicio(4L, "Salud");
+        CategoriaServicio categoriaServicio5 = new CategoriaServicio(5L, "Asesoria");
+        CategoriaServicio categoriaServicio6 = new CategoriaServicio(6L, "Limpieza");
+        CategoriaServicio categoriaServicio7 = new CategoriaServicio(7L, "Eventos");
+        CategoriaServicio categoriaServicio8 = new CategoriaServicio(8L, "Otros");
+
 
         categoriaServicioService.save(categoriaServicio1);
         categoriaServicioService.save(categoriaServicio2);
         categoriaServicioService.save(categoriaServicio3);
+        categoriaServicioService.save(categoriaServicio4);
+        categoriaServicioService.save(categoriaServicio5);
+        categoriaServicioService.save(categoriaServicio6);
+        categoriaServicioService.save(categoriaServicio7);
+        categoriaServicioService.save(categoriaServicio8);
     }
 }

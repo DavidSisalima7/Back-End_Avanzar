@@ -58,12 +58,16 @@ public class CategoriaProductoController {
         CategoriaProducto categoriaProducto2 = new CategoriaProducto(2L, "Vestimenta");
         CategoriaProducto categoriaProducto3 = new CategoriaProducto(3L, "Hogar");
         CategoriaProducto categoriaProducto4 = new CategoriaProducto(4L, "Manualidades");
+        CategoriaProducto categoriaProducto5 = new CategoriaProducto(5L, "Costura");
+        CategoriaProducto categoriaProducto6 = new CategoriaProducto(6L, "Otros");
 
 
         categoriaProductoService.save(categoriaProducto1);
         categoriaProductoService.save(categoriaProducto2);
         categoriaProductoService.save(categoriaProducto3);
         categoriaProductoService.save(categoriaProducto4);
+        categoriaProductoService.save(categoriaProducto5);
+        categoriaProductoService.save(categoriaProducto6);
     }
 }
 
