@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"https://evamarket.ec", "http://159.65.232.22"})
 @RestController
 @RequestMapping("/api/publicaciones")
 public class PublicacionesController {

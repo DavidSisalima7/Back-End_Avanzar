@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"https://evamarket.ec", "http://159.65.232.22"})
 @RestController
 @RequestMapping("/api/email")
 public class EmailController {
@@ -72,7 +72,7 @@ public class EmailController {
 
         if (persoService.findByCorreo(e.getTo()) != null) {
             
-            code = ramdomCode(9, 6, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+            code = ramdomCode(8, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
             
             if (usuarioService.resetPass(e.getTo(), code) > 0) {
                 try {

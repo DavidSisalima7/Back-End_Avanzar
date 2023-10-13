@@ -19,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usuariorol")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = {"https://evamarket.ec", "http://159.65.232.22"})
 public class Usuario_Rol_Controller {
     @Autowired
     private UsuarioRolService usuarioService;

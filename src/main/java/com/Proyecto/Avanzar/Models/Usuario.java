@@ -16,6 +16,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Setter
@@ -34,6 +36,7 @@ public class Usuario implements UserDetails {
     private String avatar;
     private String password;
     private boolean enabled = true;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Persona persona;
@@ -57,6 +60,7 @@ public class Usuario implements UserDetails {
 
     @JsonIgnore
     private Set<Comentarios> listacomentarios = new HashSet<>();
+
 
     @JsonIgnore
     @Override

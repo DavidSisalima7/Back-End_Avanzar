@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = {"https://evamarket.ec", "http://159.65.232.22"})
 @RestController
 @RequestMapping("/api/subscripcion")
 public class SubscripcionController {

@@ -23,7 +23,8 @@ import java.security.Principal;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = {"https://evamarket.ec", "http://159.65.232.22"})
+
 @RequestMapping("/api/login")
 public class AuthenticationController {
 
@@ -71,6 +72,7 @@ public class AuthenticationController {
     @GetMapping("/usuarioActual")
     public Usuario obtenerUsuarioActual(@RequestHeader("Authorization") String token) {
         // Extraer el token del encabezado (se debe encontrar en el formato "Bearer <token>")
+
         String extractedToken = token.replace("Bearer ", "");
 
         // Utilizar el token para obtener el nombre de usuario

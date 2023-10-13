@@ -17,7 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = {"https://evamarket.ec", "http://159.65.232.22"})
 @RestController
 @RequestMapping("/api/vendedor")
 public class VendedorController {

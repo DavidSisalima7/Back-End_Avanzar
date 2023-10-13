@@ -31,7 +31,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = {"https://evamarket.ec", "http://159.65.232.22"})
 //@AllArgsConstructor
 public class UsuarioController {
     @Autowired

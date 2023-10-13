@@ -16,12 +16,32 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
+
+        // Permitir solicitudes desde cualquier origen (ajusta según tus necesidades)
+        config.addAllowedOrigin("https://evamarket.ec");
+        config.addAllowedOrigin("http://159.65.232.22");
+
+
+        // Permitir solicitudes con estos métodos
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("DELETE");
+
+        // Permitir encabezados adicionales
+        config.addAllowedHeader("Origin");
+        config.addAllowedHeader("Content-Type");
+        config.addAllowedHeader("Accept");
+        config.addAllowedHeader("Authorization"); // Agregado para permitir encabezado de autorización
+
+        // Permitir credenciales (por ejemplo, cookies)
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://example.com"));
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+
+        // Configuración de exposición de encabezados
+        config.setExposedHeaders(Arrays.asList("Authorization"));
+
         source.registerCorsConfiguration("/**", config);
+
         return new CorsFilter(source);
     }
-
 }
